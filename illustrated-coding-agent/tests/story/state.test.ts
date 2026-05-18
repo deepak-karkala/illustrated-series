@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import { createDefaultSession } from '../../src/simulator/reducer';
-import { DEFAULT_SESSION_STATE } from '../../src/story/state';
 
 describe('session state', () => {
   it('creates a default session with teaser mode enabled', () => {
