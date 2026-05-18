@@ -1,7 +1,8 @@
+import { AppShell } from './app-shell/AppShell';
+import { createDefaultSession } from './simulator/reducer';
+
 export function App() {
-  return (
-    <div className="app">
-      <h1>The Illustrated Coding Agent</h1>
-    </div>
-  );
+  const session = createDefaultSession();
+
+  return <AppShell state={session} />;
 }
