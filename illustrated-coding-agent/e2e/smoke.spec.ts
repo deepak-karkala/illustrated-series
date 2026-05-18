@@ -13,10 +13,9 @@ test('page loads and renders the teaser viewport', async ({ page }) => {
 test('teaser renders the system diagram SVG', async ({ page }) => {
   await page.goto('/');
 
-  const svg = page.locator('svg');
+  const svg = page.getByRole('img', { name: 'Coding agent system diagram' });
   await expect(svg).toBeVisible();
-
-  await expect(svg).toHaveAttribute('aria-label', 'Coding agent system diagram');
+  await expect(svg.first()).toBeVisible();
 });
 
 test('page applies paper background color from DESIGN.md tokens', async ({ page }) => {
