@@ -22,13 +22,14 @@ function getContentForScene(sceneId: SceneId) {
   return INTRO_CONTENT.filter((c) => c.sceneId === sceneId);
 }
 
-function getDiagramForChapter(
-  chapterId: ChapterId,
-  vm: ReturnType<typeof selectViewModel>,
-) {
+function StickyDiagram({
+  chapterId,
+  vm,
+}: {
+  chapterId: ChapterId;
+  vm: ReturnType<typeof selectViewModel>;
+}) {
   switch (chapterId) {
-    case 'hook':
-      return null;
     case 'illusion-break':
       return <ModelOnlyScene />;
     case 'harness-reveal':
@@ -109,21 +110,20 @@ export function AppShell({ state, dispatch }: AppShellProps) {
         annotations={vm.teaserAnnotations}
       />
 
-      {(['hook', 'illusion-break', 'harness-reveal'] as ChapterId[]).map((chId) => {
-        const content = getContentForScene(getSceneIds(chId)[0]);
-        const label = CHAPTER_LABELS[chId];
-        const diagram = getDiagramForChapter(chId, vm);
+      <div className="app-body">
+        <div className="narrative-column">
+          {(['hook', 'illusion-break', 'harness-reveal'] as ChapterId[]).map((chId) => {
+            const content = getContentForScene(getSceneIds(chId)[0]);
+            const label = CHAPTER_LABELS[chId];
 
-        return (
-          <section
-            key={chId}
-            id={`chapter-${chId}`}
-            data-chapter={chId}
-            data-scene={getSceneIds(chId)[0]}
-            className={`chapter-section ${chapterId === chId ? 'chapter-active' : ''}`}
-          >
-            <div className="chapter-content">
-              <div className="chapter-copy">
+            return (
+              <section
+                key={chId}
+                id={`chapter-${chId}`}
+                data-chapter={chId}
+                data-scene={getSceneIds(chId)[0]}
+                className={`narrative-section ${chapterId === chId ? 'section-active' : ''}`}
+              >
                 <span className="chapter-number">{label.number}</span>
                 <h2 className="chapter-title">{label.title}</h2>
                 {content.map((block) => (
@@ -132,28 +132,22 @@ export function AppShell({ state, dispatch }: AppShellProps) {
                     <p className="chapter-body">{block.body}</p>
                   </div>
                 ))}
-              </div>
-              {diagram && <div className="chapter-diagram">{diagram}</div>}
-            </div>
-          </section>
-        );
-      })}
+              </section>
+            );
+          })}
 
-      {frScenes.map((scId, i) => {
-        const content = getContentForScene(scId);
-        const diagram = getDiagramForChapter('flight-recorder', vm);
-        const frNumber = `4.${i + 1}`;
+          {frScenes.map((scId, i) => {
+            const content = getContentForScene(scId);
+            const frNumber = `4.${i + 1}`;
 
-        return (
-          <section
-            key={scId}
-            id={`scene-${scId}`}
-            data-chapter="flight-recorder"
-            data-scene={scId}
-            className={`chapter-section ${sceneId === scId ? 'chapter-active' : ''}`}
-          >
-            <div className="chapter-content">
-              <div className="chapter-copy">
+            return (
+              <section
+                key={scId}
+                id={`scene-${scId}`}
+                data-chapter="flight-recorder"
+                data-scene={scId}
+                className={`narrative-section ${sceneId === scId ? 'section-active' : ''}`}
+              >
                 <span className="chapter-number">{frNumber}</span>
                 <h2 className="chapter-title">{FR_SCENE_LABELS[scId] ?? scId}</h2>
                 {content.map((block) => (
@@ -162,12 +156,15 @@ export function AppShell({ state, dispatch }: AppShellProps) {
                     <p className="chapter-body">{block.body}</p>
                   </div>
                 ))}
-              </div>
-              {diagram && <div className="chapter-diagram">{diagram}</div>}
-            </div>
-          </section>
-        );
-      })}
+              </section>
+            );
+          })}
+        </div>
+
+        <aside className="sticky-panel" key={chapterId}>
+          <StickyDiagram chapterId={chapterId} vm={vm} />
+        </aside>
+      </div>
     </main>
   );
 }

@@ -31,53 +31,38 @@ h1, h2, h3, h4 {
   min-height: 100svh;
 }
 
-p {
-  max-width: var(--narrative-measure);
+.app-body {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  display: flex;
+  gap: var(--space-3xl);
+  align-items: flex-start;
+  padding: 0 var(--space-xl);
 }
 
-.chapter-section {
+.narrative-column {
+  flex: 1 1 0;
+  min-width: 0;
+  padding-bottom: var(--space-4xl);
+}
+
+.narrative-section {
   min-height: 100vh;
   min-height: 100svh;
   display: flex;
-  align-items: center;
-  padding: var(--space-4xl) var(--space-xl);
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-3xl) 0;
   scroll-snap-align: start;
-}
-
-.chapter-content {
-  max-width: var(--max-content-width);
-  margin: 0 auto;
-  width: 100%;
-  display: flex;
-  gap: var(--space-4xl);
-  align-items: flex-start;
-}
-
-.chapter-copy {
   max-width: var(--narrative-measure);
-  flex: 1 1 0;
-  min-width: 0;
 }
 
-.chapter-diagram {
-  flex: 0 0 420px;
+.sticky-panel {
+  flex: 0 0 440px;
   max-width: 100%;
   position: sticky;
   top: var(--space-4xl);
   align-self: flex-start;
-}
-
-@media (max-width: 1023px) {
-  .chapter-content {
-    flex-direction: column;
-    gap: var(--space-2xl);
-  }
-
-  .chapter-diagram {
-    flex: 0 0 auto;
-    position: static;
-    width: 100%;
-  }
 }
 
 .chapter-number {
@@ -120,9 +105,27 @@ p {
   line-height: 1.7;
 }
 
-@media (max-width: 767px) {
-  .chapter-section {
-    padding: var(--space-2xl) var(--space-md);
+p {
+  max-width: var(--narrative-measure);
+}
+
+@media (max-width: 1023px) {
+  .app-body {
+    flex-direction: column;
+    gap: var(--space-xl);
+    padding: 0 var(--space-md);
+  }
+
+  .sticky-panel {
+    flex: 0 0 auto;
+    position: static;
+    width: 100%;
+    top: auto;
+  }
+
+  .narrative-section {
+    min-height: auto;
+    padding: var(--space-2xl) 0;
   }
 }
 
