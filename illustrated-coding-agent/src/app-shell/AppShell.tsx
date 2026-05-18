@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import type { StorySessionState, ChapterId, SceneId } from '../story/state';
+import type { StorySessionState, ChapterId, SceneId, FailureToggles } from '../story/state';
 import type { SessionAction } from '../simulator/reducer';
 import { INTRO_CONTENT } from '../story/content';
 import { selectViewModel } from '../simulator/selectors';
@@ -10,6 +10,7 @@ import { TeaserScene } from './TeaserScene';
 import { ModelOnlyScene } from '../notation/ModelOnlyScene';
 import { HarnessFramingScene } from '../notation/HarnessFramingScene';
 import { FlightRecorderPanel } from './FlightRecorderPanel';
+import { FailureModeToggles } from './FailureModeToggles';
 import './TeaserScene.css';
 import './FlightRecorderPanel.css';
 
@@ -25,20 +26,26 @@ function getContentForScene(sceneId: SceneId) {
 function StickyDiagram({
   chapterId,
   vm,
+  toggles,
+  dispatch,
 }: {
   chapterId: ChapterId;
   vm: ReturnType<typeof selectViewModel>;
+  toggles: FailureToggles;
+  dispatch: React.Dispatch<SessionAction>;
 }) {
-  switch (chapterId) {
-    case 'illusion-break':
-      return <ModelOnlyScene />;
-    case 'harness-reveal':
-      return <HarnessFramingScene />;
-    case 'flight-recorder':
-      return <FlightRecorderPanel panel={vm.panelProps} timelineSteps={vm.timelineSteps} recoveryCopy={vm.recoveryCopy} />;
-    default:
-      return null;
-  }
+  return (
+    <>
+      {chapterId === 'flight-recorder' && (
+        <FailureModeToggles toggles={toggles} dispatch={dispatch} />
+      )}
+      {chapterId === 'illusion-break' && <ModelOnlyScene />}
+      {chapterId === 'harness-reveal' && <HarnessFramingScene />}
+      {chapterId === 'flight-recorder' && (
+        <FlightRecorderPanel panel={vm.panelProps} timelineSteps={vm.timelineSteps} recoveryCopy={vm.recoveryCopy} />
+      )}
+    </>
+  );
 }
 
 type ChapterLabel = Record<ChapterId, { number: string; title: string; subtitle: string }>;
@@ -83,6 +90,8 @@ const FR_SCENE_LABELS: Record<string, string> = {
   'context-pressure': 'Context Pressure',
   'compaction': 'Compaction',
   'memory-retrieval': 'Memory & Continuity',
+  'failure-permission-blocked': 'When the Gate Says No',
+  'failure-tool-failure': 'When a Tool Fails',
 };
 
 export function AppShell({ state, dispatch }: AppShellProps) {
@@ -162,7 +171,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
         </div>
 
         <aside className="sticky-panel" key={chapterId}>
-          <StickyDiagram chapterId={chapterId} vm={vm} />
+          <StickyDiagram chapterId={chapterId} vm={vm} toggles={validated.state.failureToggles} dispatch={dispatch} />
         </aside>
       </div>
     </main>
