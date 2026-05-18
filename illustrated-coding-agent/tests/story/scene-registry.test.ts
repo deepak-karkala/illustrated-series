@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   CHAPTER_ORDER,
   CHAPTER_SCENES,
-  INTRO_SCENE_DEFINITIONS,
+  SCENE_DEFINITIONS,
   getSceneIds,
   getChapterId,
   getSceneDefinition,
@@ -55,7 +55,7 @@ describe('scene-to-chapter reverse lookup', () => {
   });
 
   it('maps every defined scene to a valid chapter', () => {
-    for (const def of INTRO_SCENE_DEFINITIONS) {
+    for (const def of SCENE_DEFINITIONS) {
       const chId = getChapterId(def.sceneId);
       expect(chId).not.toBeNull();
       expect(CHAPTER_ORDER).toContain(chId!);
@@ -115,7 +115,7 @@ describe('scene definitions', () => {
   it('every intro scene definition references existing content blocks', () => {
     const allContentIds = new Set(INTRO_CONTENT.map((c) => c.id));
 
-    for (const def of INTRO_SCENE_DEFINITIONS) {
+    for (const def of SCENE_DEFINITIONS) {
       for (const blockId of def.contentBlockIds) {
         expect(allContentIds.has(blockId)).toBe(true);
       }
@@ -123,7 +123,7 @@ describe('scene definitions', () => {
   });
 
   it('every intro scene definition has a valid chapterId', () => {
-    for (const def of INTRO_SCENE_DEFINITIONS) {
+    for (const def of SCENE_DEFINITIONS) {
       expect(CHAPTER_ORDER).toContain(def.chapterId);
     }
   });

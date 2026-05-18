@@ -6,7 +6,7 @@ export { INTRO_CONTENT } from './content';
 export {
   CHAPTER_ORDER,
   CHAPTER_SCENES,
-  INTRO_SCENE_DEFINITIONS,
+  SCENE_DEFINITIONS,
   getSceneIds,
   getChapterId,
   getSceneDefinition,

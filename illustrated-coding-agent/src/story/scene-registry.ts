@@ -28,7 +28,7 @@ export const CHAPTER_SCENES: Record<ChapterId, SceneId[]> = {
   'appendix': ['appendix-method'],
 };
 
-export const INTRO_SCENE_DEFINITIONS: SceneDefinition[] = [
+export const SCENE_DEFINITIONS: SceneDefinition[] = [
   {
     sceneId: 'teaser-cross-section',
     chapterId: 'hook',
@@ -70,6 +70,72 @@ export const INTRO_SCENE_DEFINITIONS: SceneDefinition[] = [
     allowedToggles: [],
     emphasis: 'simulator',
   },
+  {
+    sceneId: 'first-loop',
+    chapterId: 'flight-recorder',
+    contentBlockIds: ['loop-intro', 'loop-request-intake'],
+    targetSimulatorStateId: 'first-loop',
+    annotations: [
+      { id: 'a-timeline', label: 'Agent timeline', position: 'top', colorVar: '--color-harness' },
+    ],
+    allowedToggles: [],
+    emphasis: 'simulator',
+  },
+  {
+    sceneId: 'tool-invocation',
+    chapterId: 'flight-recorder',
+    contentBlockIds: ['tool-invocation-intro', 'tool-dispatch'],
+    targetSimulatorStateId: 'tool-invocation',
+    annotations: [
+      { id: 'a-tool-card', label: 'Tool card', position: 'right', colorVar: '--color-tool' },
+    ],
+    allowedToggles: [],
+    emphasis: 'balanced',
+  },
+  {
+    sceneId: 'permission-gate',
+    chapterId: 'flight-recorder',
+    contentBlockIds: ['permission-intro', 'permission-approval'],
+    targetSimulatorStateId: 'permission-gate',
+    annotations: [
+      { id: 'a-gate', label: 'Permission gate', position: 'top', colorVar: '--color-warning' },
+    ],
+    allowedToggles: [],
+    emphasis: 'balanced',
+  },
+  {
+    sceneId: 'context-pressure',
+    chapterId: 'flight-recorder',
+    contentBlockIds: ['context-intro', 'context-pressure-body'],
+    targetSimulatorStateId: 'context-pressure',
+    annotations: [
+      { id: 'a-context-meter', label: 'Context meter', position: 'right', colorVar: '--color-memory' },
+    ],
+    allowedToggles: [],
+    emphasis: 'simulator',
+  },
+  {
+    sceneId: 'compaction',
+    chapterId: 'flight-recorder',
+    contentBlockIds: ['compaction-intro', 'compaction-tradeoff'],
+    targetSimulatorStateId: 'compaction',
+    annotations: [
+      { id: 'a-compaction', label: 'Compaction', position: 'right', colorVar: '--color-memory' },
+    ],
+    allowedToggles: [],
+    emphasis: 'simulator',
+  },
+  {
+    sceneId: 'memory-retrieval',
+    chapterId: 'flight-recorder',
+    contentBlockIds: ['memory-intro', 'memory-retrieval-body'],
+    targetSimulatorStateId: 'memory-retrieval',
+    annotations: [
+      { id: 'a-memory', label: 'Memory retrieval', position: 'right', colorVar: '--color-memory' },
+    ],
+    allowedToggles: [],
+    emphasis: 'balanced',
+  },
 ];
 
 export function getSceneIds(chapterId: ChapterId): SceneId[] {
@@ -84,7 +150,7 @@ export function getChapterId(sceneId: SceneId): ChapterId | null {
 }
 
 export function getSceneDefinition(sceneId: SceneId): SceneDefinition | null {
-  return INTRO_SCENE_DEFINITIONS.find((s) => s.sceneId === sceneId) ?? null;
+  return SCENE_DEFINITIONS.find((s) => s.sceneId === sceneId) ?? null;
 }
 
 export function getNextScene(currentSceneId: SceneId): SceneId | null {
