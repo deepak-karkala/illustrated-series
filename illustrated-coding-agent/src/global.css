@@ -48,10 +48,36 @@ p {
   max-width: var(--max-content-width);
   margin: 0 auto;
   width: 100%;
+  display: flex;
+  gap: var(--space-4xl);
+  align-items: flex-start;
 }
 
 .chapter-copy {
   max-width: var(--narrative-measure);
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.chapter-diagram {
+  flex: 0 0 420px;
+  max-width: 100%;
+  position: sticky;
+  top: var(--space-4xl);
+  align-self: flex-start;
+}
+
+@media (max-width: 1023px) {
+  .chapter-content {
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .chapter-diagram {
+    flex: 0 0 auto;
+    position: static;
+    width: 100%;
+  }
 }
 
 .chapter-number {

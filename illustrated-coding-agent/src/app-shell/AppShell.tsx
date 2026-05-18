@@ -6,6 +6,8 @@ import { INTRO_CONTENT } from '../story/content';
 import { selectViewModel } from '../simulator/selectors';
 import { useScrollChapter } from './useScrollChapter';
 import { TeaserScene } from './TeaserScene';
+import { ModelOnlyScene } from '../notation/ModelOnlyScene';
+import { HarnessFramingScene } from '../notation/HarnessFramingScene';
 import './TeaserScene.css';
 
 interface AppShellProps {
@@ -15,6 +17,19 @@ interface AppShellProps {
 
 function getContentForChapter(chapterId: ChapterId) {
   return INTRO_CONTENT.filter((c) => c.chapterId === chapterId);
+}
+
+function getDiagramForChapter(chapterId: ChapterId) {
+  switch (chapterId) {
+    case 'hook':
+      return null;
+    case 'illusion-break':
+      return <ModelOnlyScene />;
+    case 'harness-reveal':
+      return <HarnessFramingScene />;
+    default:
+      return null;
+  }
 }
 
 type ChapterLabel = Record<ChapterId, { number: string; title: string; subtitle: string }>;
@@ -73,6 +88,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
       {(['hook', 'illusion-break', 'harness-reveal'] as ChapterId[]).map((chId) => {
         const content = getContentForChapter(chId);
         const label = CHAPTER_LABELS[chId];
+        const diagram = getDiagramForChapter(chId);
 
         return (
           <section
@@ -92,6 +108,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
                   </div>
                 ))}
               </div>
+              {diagram && <div className="chapter-diagram">{diagram}</div>}
             </div>
           </section>
         );

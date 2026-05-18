@@ -1,0 +1,213 @@
+export function ModelOnlyScene() {
+  return (
+    <svg
+      viewBox="0 0 400 300"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ width: '100%', maxWidth: 400 }}
+      role="img"
+      aria-label="Model-only diagram showing the model cannot reach tools, files, or memory"
+    >
+      <rect
+        x={140}
+        y={110}
+        width={120}
+        height={60}
+        rx={8}
+        fill="var(--color-model)"
+        fillOpacity={0.12}
+        stroke="var(--color-model)"
+        strokeWidth={1.5}
+      />
+      <text
+        x={200}
+        y={137}
+        fontFamily="var(--font-mono)"
+        fontSize={11}
+        fontWeight={600}
+        fill="var(--color-model)"
+        textAnchor="middle"
+      >
+        MODEL
+      </text>
+      <text
+        x={200}
+        y={154}
+        fontFamily="var(--font-mono)"
+        fontSize={8}
+        fill="var(--color-model)"
+        textAnchor="middle"
+        fillOpacity={0.7}
+      >
+        reasoning engine
+      </text>
+
+      <rect
+        x={250}
+        y={40}
+        width={120}
+        height={46}
+        rx={6}
+        fill="none"
+        stroke="var(--color-warning)"
+        strokeWidth={1.5}
+        strokeDasharray="4 3"
+      />
+      <text
+        x={310}
+        y={58}
+        fontFamily="var(--font-mono)"
+        fontSize={9}
+        fill="var(--color-warning)"
+        textAnchor="middle"
+      >
+        read_file
+      </text>
+      <text
+        x={310}
+        y={73}
+        fontFamily="var(--font-mono)"
+        fontSize={7}
+        fill="var(--color-warning)"
+        textAnchor="middle"
+        fillOpacity={0.7}
+      >
+        unavailable
+      </text>
+      <line
+        x1={200}
+        y1={130}
+        x2={250}
+        y2={63}
+        stroke="var(--color-warning)"
+        strokeWidth={1}
+        strokeDasharray="4 3"
+      />
+      <text
+        x={220}
+        y={95}
+        fontFamily="var(--font-mono)"
+        fontSize={8}
+        fill="var(--color-warning)"
+        textAnchor="middle"
+      >
+        ✕
+      </text>
+
+      <rect
+        x={120}
+        y={230}
+        width={110}
+        height={40}
+        rx={6}
+        fill="none"
+        stroke="var(--color-warning)"
+        strokeWidth={1.5}
+        strokeDasharray="4 3"
+      />
+      <text
+        x={175}
+        y={248}
+        fontFamily="var(--font-mono)"
+        fontSize={9}
+        fill="var(--color-warning)"
+        textAnchor="middle"
+      >
+        Memory
+      </text>
+      <text
+        x={175}
+        y={261}
+        fontFamily="var(--font-mono)"
+        fontSize={7}
+        fill="var(--color-warning)"
+        textAnchor="middle"
+        fillOpacity={0.7}
+      >
+        no state persistence
+      </text>
+      <line
+        x1={180}
+        y1={170}
+        x2={175}
+        y2={230}
+        stroke="var(--color-warning)"
+        strokeWidth={1}
+        strokeDasharray="4 3"
+      />
+      <text
+        x={195}
+        y={198}
+        fontFamily="var(--font-mono)"
+        fontSize={8}
+        fill="var(--color-warning)"
+        textAnchor="middle"
+      >
+        ✕
+      </text>
+
+      <rect
+        x={50}
+        y={40}
+        width={110}
+        height={40}
+        rx={6}
+        fill="none"
+        stroke="var(--color-warning)"
+        strokeWidth={1.5}
+        strokeDasharray="4 3"
+      />
+      <text
+        x={105}
+        y={58}
+        fontFamily="var(--font-mono)"
+        fontSize={9}
+        fill="var(--color-warning)"
+        textAnchor="middle"
+      >
+        Filesystem
+      </text>
+      <text
+        x={105}
+        y={71}
+        fontFamily="var(--font-mono)"
+        fontSize={7}
+        fill="var(--color-warning)"
+        textAnchor="middle"
+        fillOpacity={0.7}
+      >
+        no access
+      </text>
+      <line
+        x1={155}
+        y1={120}
+        x2={105}
+        y2={80}
+        stroke="var(--color-warning)"
+        strokeWidth={1}
+        strokeDasharray="4 3"
+      />
+      <text
+        x={130}
+        y={98}
+        fontFamily="var(--font-mono)"
+        fontSize={8}
+        fill="var(--color-warning)"
+        textAnchor="middle"
+      >
+        ✕
+      </text>
+
+      <text
+        x={200}
+        y={20}
+        fontFamily="var(--font-ui)"
+        fontSize={12}
+        fontWeight={600}
+        fill="var(--color-warning)"
+        textAnchor="middle"
+      >
+        The model alone has no hands, no eyes, no memory.
+      </text>
+    </svg>
+  );
+}
