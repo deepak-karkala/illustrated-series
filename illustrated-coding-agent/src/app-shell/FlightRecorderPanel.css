@@ -79,6 +79,21 @@
   color: var(--color-memory);
 }
 
+.fr-recovery {
+  border-left: 3px solid var(--color-warning);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-paper-deep);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.fr-recovery-text {
+  font-family: var(--font-body);
+  font-size: var(--type-body-sm);
+  color: var(--color-ink-soft);
+  line-height: 1.7;
+  max-width: none;
+}
+
 .fr-permission-allowed {
   background: var(--color-success);
   background-opacity: 0.08;

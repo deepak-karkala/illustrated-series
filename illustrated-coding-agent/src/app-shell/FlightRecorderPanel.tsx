@@ -5,6 +5,7 @@ import { ContextMeter } from '../notation/ContextMeter';
 interface FlightRecorderPanelProps {
   panel: SimulatorPanelProps;
   timelineSteps: TimelineStep[];
+  recoveryCopy: string | null;
 }
 
 const CONTEXT_ITEMS: Record<string, { label: string; colorVar: string }[]> = {
@@ -34,7 +35,7 @@ function getContextItems(fillPercent: number) {
   return CONTEXT_ITEMS.request;
 }
 
-export function FlightRecorderPanel({ panel, timelineSteps }: FlightRecorderPanelProps) {
+export function FlightRecorderPanel({ panel, timelineSteps, recoveryCopy }: FlightRecorderPanelProps) {
   const contextItems = getContextItems(panel.contextFillPercent);
 
   return (
@@ -82,6 +83,11 @@ export function FlightRecorderPanel({ panel, timelineSteps }: FlightRecorderPane
             {panel.memoryArtifactType === 'compressed' && '🧠 Compaction saved 3 blocks → 1 summary'}
             {panel.memoryArtifactType === 'retrieved' && '🧠 Retrieved session notes from last run'}
           </span>
+        </div>
+      )}
+      {recoveryCopy && (
+        <div className="fr-recovery">
+          <p className="fr-recovery-text">{recoveryCopy}</p>
         </div>
       )}
     </div>

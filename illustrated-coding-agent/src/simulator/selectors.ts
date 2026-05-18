@@ -1,4 +1,4 @@
-import type { StorySessionState, SceneId } from '../story/state';
+import type { StorySessionState, SceneId, FailureToggles } from '../story/state';
 import type { DerivedViewModel, TimelineStep, SimulatorPanelProps } from '../story/view-model';
 
 const ALL_TIMELINE_STEPS: TimelineStep[] = [
@@ -38,18 +38,8 @@ function timelineForScene(sceneId: SceneId): TimelineStep[] {
   } as TimelineStep));
 }
 
-function panelForScene(sceneId: SceneId): SimulatorPanelProps {
-  const defaults: SimulatorPanelProps = {
-    timelineSteps: [],
-    contextFillPercent: 45,
-    activeToolLabel: null,
-    toolResultSummary: null,
-    permissionState: 'none',
-    memoryArtifactType: 'none',
-    harnessVisible: true,
-  };
-
-  const sceneProps: Partial<Record<SceneId, Partial<SimulatorPanelProps>>> = {
+function basePanelForScene(sceneId: SceneId): SimulatorPanelProps {
+  const sceneProps: Record<string, Partial<SimulatorPanelProps>> = {
     'first-loop': {
       contextFillPercent: 45,
       activeToolLabel: 'read_file',
@@ -88,19 +78,77 @@ function panelForScene(sceneId: SceneId): SimulatorPanelProps {
       permissionState: 'none',
       memoryArtifactType: 'retrieved',
     },
+    'failure-permission-blocked': {
+      contextFillPercent: 65,
+      activeToolLabel: 'bash',
+      toolResultSummary: null,
+      permissionState: 'blocked',
+    },
+    'failure-tool-failure': {
+      contextFillPercent: 58,
+      activeToolLabel: 'run_build',
+      toolResultSummary: 'Exit code 1: compilation error',
+      permissionState: 'allowed',
+    },
+  };
+
+  const defaults: SimulatorPanelProps = {
+    timelineSteps: [],
+    contextFillPercent: 45,
+    activeToolLabel: null,
+    toolResultSummary: null,
+    permissionState: 'none',
+    memoryArtifactType: 'none',
+    harnessVisible: true,
   };
 
   return { ...defaults, ...(sceneProps[sceneId] ?? {}) };
 }
 
+function applyFailureToggles(
+  base: SimulatorPanelProps,
+  toggles: FailureToggles,
+): { panel: SimulatorPanelProps; recoveryCopy: string | null } {
+  if (!toggles.permissionBlocked && !toggles.toolFailure) {
+    return { panel: base, recoveryCopy: null };
+  }
+
+  const panel = { ...base };
+  let recoveryCopy: string | null = null;
+
+  if (toggles.permissionBlocked) {
+    panel.permissionState = 'blocked';
+    recoveryCopy =
+      'The permission pipeline intercepted a risky action — a command that could affect files outside the sandbox. The harness denied it and returned a structured reason. The agent read the denial, re-planned, and found an alternative that worked within the allowed boundaries. This is the harness protecting the system — not a bug, a feature.';
+  }
+
+  if (toggles.toolFailure) {
+    panel.activeToolLabel = panel.activeToolLabel ?? 'run_test';
+    panel.toolResultSummary = 'Exit code 2: test assertion failed';
+    recoveryCopy =
+      'The tool executed but returned a failure. The agent read the error output — a test assertion that did not match — traced it back to a logic error in the generated code, and corrected it. Recovery, not blind retry, is what separates durable agents from brittle ones. The harness preserved the error context and let the model reason about it.';
+  }
+
+  if (toggles.permissionBlocked && toggles.toolFailure) {
+    recoveryCopy =
+      'Both failure modes are active. The agent first hit a permission block, then encountered a tool failure on the alternate path. This is what real debugging looks like — layered problems, not single-point fixes. The harness tracked both failures and the agent navigated through them sequentially.';
+  }
+
+  return { panel, recoveryCopy };
+}
+
 export function selectViewModel(state: StorySessionState): DerivedViewModel {
   const timelineSteps = timelineForScene(state.sceneId);
-  const panelProps = panelForScene(state.sceneId);
+  const basePanel = basePanelForScene(state.sceneId);
+  const { panel: degradedPanel, recoveryCopy } = applyFailureToggles(
+    basePanel,
+    state.failureToggles,
+  );
 
   return {
     timelineSteps,
     panelProps: {
-      ...panelProps,
+      ...degradedPanel,
       timelineSteps,
     },
     drawerProps: {
@@ -137,7 +185,7 @@ export function selectViewModel(state: StorySessionState): DerivedViewModel {
         width: 160,
       },
     ],
-    recoveryCopy: null,
+    recoveryCopy,
     mobileDisclosureState: 'none',
   };
 }

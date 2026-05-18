@@ -35,7 +35,7 @@ function StickyDiagram({
     case 'harness-reveal':
       return <HarnessFramingScene />;
     case 'flight-recorder':
-      return <FlightRecorderPanel panel={vm.panelProps} timelineSteps={vm.timelineSteps} />;
+      return <FlightRecorderPanel panel={vm.panelProps} timelineSteps={vm.timelineSteps} recoveryCopy={vm.recoveryCopy} />;
     default:
       return null;
   }
