@@ -136,6 +136,28 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     allowedToggles: [],
     emphasis: 'balanced',
   },
+  {
+    sceneId: 'failure-permission-blocked',
+    chapterId: 'flight-recorder',
+    contentBlockIds: ['failure-permission-intro', 'failure-permission-recovery'],
+    targetSimulatorStateId: 'failure-permission-blocked',
+    annotations: [
+      { id: 'a-perm-blocked', label: 'Permission denied', position: 'top', colorVar: '--color-warning' },
+    ],
+    allowedToggles: [],
+    emphasis: 'simulator',
+  },
+  {
+    sceneId: 'failure-tool-failure',
+    chapterId: 'flight-recorder',
+    contentBlockIds: ['failure-tool-intro', 'failure-tool-recovery'],
+    targetSimulatorStateId: 'failure-tool-failure',
+    annotations: [
+      { id: 'a-tool-fail', label: 'Tool failed', position: 'top', colorVar: '--color-warning' },
+    ],
+    allowedToggles: [],
+    emphasis: 'simulator',
+  },
 ];
 
 export function getSceneIds(chapterId: ChapterId): SceneId[] {
