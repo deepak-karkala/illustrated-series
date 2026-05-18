@@ -1,0 +1,69 @@
+/* Design tokens — single source of truth */
+/* Values from DESIGN.md */
+
+:root {
+  /* ── Type scale ── */
+  --type-hero: clamp(3.25rem, 6vw, 6rem);
+  --type-display: clamp(2.2rem, 4vw, 3.75rem);
+  --type-h1: 2.25rem;
+  --type-h2: 1.75rem;
+  --type-h3: 1.25rem;
+  --type-body-lg: 1.125rem;
+  --type-body: 1rem;
+  --type-body-sm: 0.9375rem;
+  --type-ui: 0.875rem;
+  --type-mono: 0.8125rem;
+
+  /* ── Core palette ── */
+  --color-paper: #F4F0E8;
+  --color-paper-deep: #E7DED1;
+  --color-ink: #1F2522;
+  --color-ink-soft: #48514C;
+  --color-metal: #97A29A;
+  --color-metal-deep: #6E7A73;
+
+  /* ── Semantic system colors ── */
+  --color-human: #C66A3D;
+  --color-harness: #2E6A57;
+  --color-model: #8D5A97;
+  --color-tool: #2E5FA8;
+  --color-memory: #7B6A3E;
+  --color-warning: #B24A3A;
+  --color-success: #3E7F54;
+
+  /* ── Spacing scale ── */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+
+  /* ── Border radius ── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  /* ── Motion ── */
+  --duration-micro: 80ms;
+  --duration-short: 160ms;
+  --duration-medium: 240ms;
+  --duration-long: 360ms;
+  --ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-exit: cubic-bezier(0.55, 0, 0.75, 0.19);
+  --ease-move: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Layout ── */
+  --max-content-width: 1280px;
+  --narrative-measure: 65ch;
+
+  /* ── Typography families ── */
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Source Serif 4', serif;
+  --font-ui: 'Instrument Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
