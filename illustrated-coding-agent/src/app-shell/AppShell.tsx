@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
-import type { StorySessionState } from '../story/state';
+import type { StorySessionState, ChapterId, SceneId } from '../story/state';
 import type { SessionAction } from '../simulator/reducer';
-import type { ChapterId } from '../story/state';
 import { INTRO_CONTENT } from '../story/content';
 import { selectViewModel } from '../simulator/selectors';
+import { validateAndNormalize } from '../simulator/validation';
+import { getSceneIds } from '../story/scene-registry';
 import { useScrollChapter } from './useScrollChapter';
 import { TeaserScene } from './TeaserScene';
 import { ModelOnlyScene } from '../notation/ModelOnlyScene';
@@ -17,8 +18,8 @@ interface AppShellProps {
   dispatch: React.Dispatch<SessionAction>;
 }
 
-function getContentForChapter(chapterId: ChapterId) {
-  return INTRO_CONTENT.filter((c) => c.chapterId === chapterId);
+function getContentForScene(sceneId: SceneId) {
+  return INTRO_CONTENT.filter((c) => c.sceneId === sceneId);
 }
 
 function getDiagramForChapter(
@@ -74,9 +75,19 @@ const CHAPTER_LABELS: ChapterLabel = {
   },
 };
 
+const FR_SCENE_LABELS: Record<string, string> = {
+  'first-loop': 'The Core Loop',
+  'tool-invocation': 'Tool Dispatch',
+  'permission-gate': 'Permission Boundary',
+  'context-pressure': 'Context Pressure',
+  'compaction': 'Compaction',
+  'memory-retrieval': 'Memory & Continuity',
+};
+
 export function AppShell({ state, dispatch }: AppShellProps) {
   const { chapterId, sceneId } = useScrollChapter();
-  const vm = selectViewModel(state);
+  const validated = validateAndNormalize(state);
+  const vm = selectViewModel(validated.state);
 
   useEffect(() => {
     if (chapterId !== state.chapterId || sceneId !== state.sceneId) {
@@ -88,6 +99,8 @@ export function AppShell({ state, dispatch }: AppShellProps) {
   const teaserHeading = INTRO_CONTENT.find((c) => c.id === 'hook-heading')?.heading ?? '';
   const teaserSubheading = INTRO_CONTENT.find((c) => c.id === 'hook-heading')?.body ?? '';
 
+  const frScenes = getSceneIds('flight-recorder');
+
   return (
     <main className="app-shell">
       <TeaserScene
@@ -96,8 +109,8 @@ export function AppShell({ state, dispatch }: AppShellProps) {
         annotations={vm.teaserAnnotations}
       />
 
-      {(['hook', 'illusion-break', 'harness-reveal', 'flight-recorder'] as ChapterId[]).map((chId) => {
-        const content = getContentForChapter(chId);
+      {(['hook', 'illusion-break', 'harness-reveal'] as ChapterId[]).map((chId) => {
+        const content = getContentForScene(getSceneIds(chId)[0]);
         const label = CHAPTER_LABELS[chId];
         const diagram = getDiagramForChapter(chId, vm);
 
@@ -106,12 +119,43 @@ export function AppShell({ state, dispatch }: AppShellProps) {
             key={chId}
             id={`chapter-${chId}`}
             data-chapter={chId}
+            data-scene={getSceneIds(chId)[0]}
             className={`chapter-section ${chapterId === chId ? 'chapter-active' : ''}`}
           >
             <div className="chapter-content">
               <div className="chapter-copy">
                 <span className="chapter-number">{label.number}</span>
                 <h2 className="chapter-title">{label.title}</h2>
+                {content.map((block) => (
+                  <div key={block.id} className="chapter-block">
+                    <h3 className="chapter-heading">{block.heading}</h3>
+                    <p className="chapter-body">{block.body}</p>
+                  </div>
+                ))}
+              </div>
+              {diagram && <div className="chapter-diagram">{diagram}</div>}
+            </div>
+          </section>
+        );
+      })}
+
+      {frScenes.map((scId, i) => {
+        const content = getContentForScene(scId);
+        const diagram = getDiagramForChapter('flight-recorder', vm);
+        const frNumber = `4.${i + 1}`;
+
+        return (
+          <section
+            key={scId}
+            id={`scene-${scId}`}
+            data-chapter="flight-recorder"
+            data-scene={scId}
+            className={`chapter-section ${sceneId === scId ? 'chapter-active' : ''}`}
+          >
+            <div className="chapter-content">
+              <div className="chapter-copy">
+                <span className="chapter-number">{frNumber}</span>
+                <h2 className="chapter-title">{FR_SCENE_LABELS[scId] ?? scId}</h2>
                 {content.map((block) => (
                   <div key={block.id} className="chapter-block">
                     <h3 className="chapter-heading">{block.heading}</h3>

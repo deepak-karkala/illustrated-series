@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
 import type { ChapterId, SceneId } from '../story/state';
-import { CHAPTER_ORDER, getSceneIds } from '../story/scene-registry';
 
 export function useScrollChapter(): { chapterId: ChapterId; sceneId: SceneId } {
   const [active, setActive] = useState<{ chapterId: ChapterId; sceneId: SceneId }>({
@@ -10,31 +9,31 @@ export function useScrollChapter(): { chapterId: ChapterId; sceneId: SceneId } {
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
-    const entries = new Map<string, IntersectionObserverEntry>();
+    const entries = new Map<Element, IntersectionObserverEntry>();
 
     observerRef.current = new IntersectionObserver(
       (obsEntries) => {
         for (const entry of obsEntries) {
-          entries.set(entry.target.id, entry);
+          entries.set(entry.target, entry);
         }
 
-        let bestChapterId: ChapterId = 'hook';
+        let bestChapter: ChapterId = 'hook';
+        let bestScene: SceneId = 'teaser-cross-section';
         let bestRatio = 0;
 
-        for (const chId of CHAPTER_ORDER) {
-          const entry = entries.get(`chapter-${chId}`);
-          if (entry && entry.intersectionRatio > bestRatio) {
+        for (const [el, entry] of entries) {
+          if (entry.intersectionRatio > bestRatio) {
             bestRatio = entry.intersectionRatio;
-            bestChapterId = chId;
+            const ch = el.getAttribute('data-chapter') as ChapterId | null;
+            const sc = el.getAttribute('data-scene') as SceneId | null;
+            if (ch) bestChapter = ch;
+            if (sc) bestScene = sc;
           }
         }
 
-        const scenes = getSceneIds(bestChapterId);
-        const sceneId = scenes[0];
-
         setActive((prev) => {
-          if (prev.chapterId === bestChapterId && prev.sceneId === sceneId) return prev;
-          return { chapterId: bestChapterId, sceneId };
+          if (prev.chapterId === bestChapter && prev.sceneId === bestScene) return prev;
+          return { chapterId: bestChapter, sceneId: bestScene };
         });
       },
       { threshold: [0, 0.25, 0.5, 0.75, 1] },
@@ -47,7 +46,7 @@ export function useScrollChapter(): { chapterId: ChapterId; sceneId: SceneId } {
     const observer = observerRef.current;
     if (!observer) return;
 
-    const elements = document.querySelectorAll('[data-chapter]');
+    const elements = document.querySelectorAll('[data-scene]');
     for (const el of elements) {
       observer.observe(el);
     }

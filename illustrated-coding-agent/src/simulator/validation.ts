@@ -1,4 +1,4 @@
-import type { StorySessionState, ChapterId, SceneId, LensMode } from '../story/state';
+import type { StorySessionState, ChapterId, LensMode } from '../story/state';
 import { getChapterId, getSceneIds, SCENE_DEFINITIONS } from '../story/scene-registry';
 
 const VALID_CHAPTER_IDS = new Set<ChapterId>([
