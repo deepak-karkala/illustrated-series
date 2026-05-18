@@ -68,20 +68,24 @@ const CHAPTER_LABELS: ChapterLabel = {
 };
 
 export function AppShell({ state, dispatch }: AppShellProps) {
-  const { chapterId } = useScrollChapter();
+  const { chapterId, sceneId } = useScrollChapter();
   const vm = selectViewModel(state);
 
   useEffect(() => {
-    if (chapterId !== state.chapterId) {
+    if (chapterId !== state.chapterId || sceneId !== state.sceneId) {
       dispatch({ type: 'SET_CHAPTER', chapterId });
+      dispatch({ type: 'SET_SCENE', sceneId });
     }
-  }, [chapterId, state.chapterId, dispatch]);
+  }, [chapterId, sceneId, state.chapterId, state.sceneId, dispatch]);
+
+  const teaserHeading = INTRO_CONTENT.find((c) => c.id === 'hook-heading')?.heading ?? '';
+  const teaserSubheading = INTRO_CONTENT.find((c) => c.id === 'hook-heading')?.body ?? '';
 
   return (
     <main className="app-shell">
       <TeaserScene
-        heading={CHAPTER_LABELS.hook.subtitle}
-        subheading="Under the hood, every coding agent is a model nested inside a harness — an orchestration layer that decides what the model can see, do, remember, and recover from. This is the machine, cut open."
+        heading={teaserHeading}
+        subheading={teaserSubheading}
         annotations={vm.teaserAnnotations}
       />
 

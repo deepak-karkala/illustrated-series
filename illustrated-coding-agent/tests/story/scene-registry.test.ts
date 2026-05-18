@@ -10,7 +10,7 @@ import {
   getPrevScene,
 } from '../../src/story/scene-registry';
 import { INTRO_CONTENT } from '../../src/story/content';
-import type { ChapterId, SceneId } from '../../src/story/state';
+import type { SceneId } from '../../src/story/state';
 
 describe('chapter-to-scene mapping', () => {
   it('maps hook chapter to teaser-cross-section scene', () => {
