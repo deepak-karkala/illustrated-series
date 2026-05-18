@@ -1,0 +1,110 @@
+.flight-recorder-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  background: var(--color-paper);
+  border: 1px solid var(--color-metal);
+  border-radius: var(--radius-lg);
+}
+
+.fr-timeline {
+  overflow-x: auto;
+  padding-bottom: var(--space-xs);
+}
+
+.fr-context {
+  /* no extra padding needed */
+}
+
+.fr-tool-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.fr-tool-chip {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+}
+
+.fr-tool-result {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--color-ink-soft);
+}
+
+.fr-permission-indicator {
+  display: flex;
+  align-items: center;
+}
+
+.fr-permission-chip {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid;
+}
+
+.fr-permission-checking {
+  background: var(--color-paper-deep);
+  border-color: var(--color-warning);
+  color: var(--color-warning);
+}
+
+.fr-permission-allowed {
+  background: var(--color-paper-deep);
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.fr-permission-blocked {
+  background: var(--color-paper-deep);
+  border-color: var(--color-warning);
+  color: var(--color-warning);
+}
+
+.fr-memory-chip {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  padding: 5px 12px;
+  border-radius: var(--radius-md);
+  background: var(--color-paper-deep);
+  border: 1px solid var(--color-memory);
+  color: var(--color-memory);
+}
+
+.fr-permission-allowed {
+  background: var(--color-success);
+  background-opacity: 0.08;
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.fr-permission-blocked {
+  background: var(--color-warning);
+  background-opacity: 0.1;
+  border-color: var(--color-warning);
+  color: var(--color-warning);
+}
+
+.fr-memory-indicator {
+  display: flex;
+  align-items: center;
+}
+
+.fr-memory-chip {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  padding: 5px 12px;
+  border-radius: var(--radius-md);
+  background: var(--color-memory);
+  background-opacity: 0.08;
+  border: 1px solid var(--color-memory);
+  color: var(--color-memory);
+}

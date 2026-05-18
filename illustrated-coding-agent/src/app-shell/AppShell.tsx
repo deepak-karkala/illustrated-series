@@ -8,7 +8,9 @@ import { useScrollChapter } from './useScrollChapter';
 import { TeaserScene } from './TeaserScene';
 import { ModelOnlyScene } from '../notation/ModelOnlyScene';
 import { HarnessFramingScene } from '../notation/HarnessFramingScene';
+import { FlightRecorderPanel } from './FlightRecorderPanel';
 import './TeaserScene.css';
+import './FlightRecorderPanel.css';
 
 interface AppShellProps {
   state: StorySessionState;
@@ -19,7 +21,10 @@ function getContentForChapter(chapterId: ChapterId) {
   return INTRO_CONTENT.filter((c) => c.chapterId === chapterId);
 }
 
-function getDiagramForChapter(chapterId: ChapterId) {
+function getDiagramForChapter(
+  chapterId: ChapterId,
+  vm: ReturnType<typeof selectViewModel>,
+) {
   switch (chapterId) {
     case 'hook':
       return null;
@@ -27,6 +32,8 @@ function getDiagramForChapter(chapterId: ChapterId) {
       return <ModelOnlyScene />;
     case 'harness-reveal':
       return <HarnessFramingScene />;
+    case 'flight-recorder':
+      return <FlightRecorderPanel panel={vm.panelProps} timelineSteps={vm.timelineSteps} />;
     default:
       return null;
   }
@@ -89,10 +96,10 @@ export function AppShell({ state, dispatch }: AppShellProps) {
         annotations={vm.teaserAnnotations}
       />
 
-      {(['hook', 'illusion-break', 'harness-reveal'] as ChapterId[]).map((chId) => {
+      {(['hook', 'illusion-break', 'harness-reveal', 'flight-recorder'] as ChapterId[]).map((chId) => {
         const content = getContentForChapter(chId);
         const label = CHAPTER_LABELS[chId];
-        const diagram = getDiagramForChapter(chId);
+        const diagram = getDiagramForChapter(chId, vm);
 
         return (
           <section
