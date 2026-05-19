@@ -99,7 +99,9 @@ function basePanelForScene(sceneId: SceneId): SimulatorPanelProps {
     activeToolLabel: null,
     toolResultSummary: null,
     permissionState: 'none',
+    permissionLabel: '',
     memoryArtifactType: 'working',
+    memoryLabel: 'Working set',
     harnessVisible: true,
   };
 
@@ -154,6 +156,8 @@ export function selectViewModel(state: StorySessionState): DerivedViewModel {
     timelineSteps: lensTimeline,
     activeToolLabel: lensLabels?.toolLabel ?? degradedPanel.activeToolLabel,
     toolResultSummary: lensLabels?.toolResult ?? degradedPanel.toolResultSummary,
+    permissionLabel: lensLabels?.permissionLabel(degradedPanel.permissionState) ?? degradedPanel.permissionLabel,
+    memoryLabel: lensLabels?.memoryLabel(degradedPanel.memoryArtifactType) ?? degradedPanel.memoryLabel,
   };
 
   return {

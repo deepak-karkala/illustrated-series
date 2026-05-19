@@ -13,7 +13,9 @@ export interface SimulatorPanelProps {
   activeToolLabel: string | null;
   toolResultSummary: string | null;
   permissionState: 'none' | 'checking' | 'allowed' | 'blocked';
+  permissionLabel: string;
   memoryArtifactType: 'none' | 'working' | 'compressed' | 'retrieved' | 'stale';
+  memoryLabel: string;
   harnessVisible: boolean;
 }
 

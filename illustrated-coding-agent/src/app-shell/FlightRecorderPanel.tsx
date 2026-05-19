@@ -103,9 +103,11 @@ export function FlightRecorderPanel({ panel, timelineSteps, recoveryCopy }: Flig
       {panel.permissionState !== 'none' && (
         <div className="fr-permission-indicator">
           <span className={`fr-permission-chip fr-permission-${panel.permissionState}`}>
-            {panel.permissionState === 'checking' && '⏳ Checking permissions…'}
-            {panel.permissionState === 'allowed' && '✓ Allowed'}
-            {panel.permissionState === 'blocked' && '✗ Blocked'}
+            {panel.permissionLabel || (
+              panel.permissionState === 'checking' ? '⏳ Checking permissions…' :
+              panel.permissionState === 'allowed' ? '✓ Allowed' :
+              '✗ Blocked'
+            )}
           </span>
         </div>
       )}
@@ -115,6 +117,7 @@ export function FlightRecorderPanel({ panel, timelineSteps, recoveryCopy }: Flig
           variant={
             panel.memoryArtifactType === 'none' ? 'working' : panel.memoryArtifactType
           }
+          label={panel.memoryLabel}
         />
       </div>
 
