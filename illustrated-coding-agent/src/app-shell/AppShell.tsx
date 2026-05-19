@@ -12,8 +12,11 @@ import { HarnessFramingScene } from '../notation/HarnessFramingScene';
 import { FlightRecorderPanel } from './FlightRecorderPanel';
 import { FailureModeToggles } from './FailureModeToggles';
 import { LensToggle } from './LensToggle';
+import { StateDrawer } from './StateDrawer';
+import { DrawerToggle } from './DrawerToggle';
 import './TeaserScene.css';
 import './FlightRecorderPanel.css';
+import './StateDrawer.css';
 
 interface AppShellProps {
   state: StorySessionState;
@@ -45,6 +48,7 @@ function StickyDiagram({
         <>
           <LensToggle lensMode={lensMode} dispatch={dispatch} />
           <FailureModeToggles toggles={toggles} dispatch={dispatch} />
+          <DrawerToggle onClick={() => dispatch({ type: 'TOGGLE_DRAWER' })} />
         </>
       )}
       {chapterId === 'illusion-break' && <ModelOnlyScene />}
@@ -184,6 +188,13 @@ export function AppShell({ state, dispatch }: AppShellProps) {
           <StickyDiagram chapterId={chapterId} vm={vm} toggles={validated.state.failureToggles} lensMode={lensMode} dispatch={dispatch} />
         </aside>
       </div>
+
+      <StateDrawer
+        drawer={vm.drawerProps}
+        panel={vm.panelProps}
+        open={validated.state.drawerOpen}
+        onClose={() => dispatch({ type: 'TOGGLE_DRAWER' })}
+      />
     </main>
   );
 }
