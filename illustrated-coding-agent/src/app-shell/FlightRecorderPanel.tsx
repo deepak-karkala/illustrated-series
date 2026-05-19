@@ -40,7 +40,6 @@ export function FlightRecorderPanel({ panel, timelineSteps, recoveryCopy }: Flig
   const contextItems = getContextItems(panel.contextFillPercent);
   const isPressure = panel.contextFillPercent >= 80;
   const isCompaction = panel.memoryArtifactType === 'compressed';
-  const isRetrieval = panel.memoryArtifactType === 'retrieved';
 
   return (
     <div className="flight-recorder-panel">
@@ -111,13 +110,13 @@ export function FlightRecorderPanel({ panel, timelineSteps, recoveryCopy }: Flig
         </div>
       )}
 
-      {(isCompaction || isRetrieval) && (
-        <div className="fr-memory-visual">
-          <MemoryArtifact
-            variant={isCompaction ? 'compressed' : 'retrieved'}
-          />
-        </div>
-      )}
+      <div className="fr-memory-visual">
+        <MemoryArtifact
+          variant={
+            panel.memoryArtifactType === 'none' ? 'working' : panel.memoryArtifactType
+          }
+        />
+      </div>
 
       {recoveryCopy && (
         <div className="fr-recovery">

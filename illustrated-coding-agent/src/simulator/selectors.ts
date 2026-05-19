@@ -98,7 +98,7 @@ function basePanelForScene(sceneId: SceneId): SimulatorPanelProps {
     activeToolLabel: null,
     toolResultSummary: null,
     permissionState: 'none',
-    memoryArtifactType: 'none',
+    memoryArtifactType: 'working',
     harnessVisible: true,
   };
 
@@ -130,6 +130,7 @@ function applyFailureToggles(
   }
 
   if (toggles.permissionBlocked && toggles.toolFailure) {
+    panel.memoryArtifactType = 'stale';
     recoveryCopy =
       'Both failure modes are active. The agent first hit a permission block, then encountered a tool failure on the alternate path. This is what real debugging looks like — layered problems, not single-point fixes. The harness tracked both failures and the agent navigated through them sequentially.';
   }

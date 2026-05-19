@@ -54,13 +54,13 @@ describe('context state derivation', () => {
 });
 
 describe('memory artifact type derivation', () => {
-  it('most scenes have no memory artifact', () => {
+  it('most scenes show working memory artifact', () => {
     const session = createDefaultSession();
 
     for (const sceneId of ['first-loop', 'tool-invocation', 'permission-gate', 'context-pressure'] as const) {
       const s = reduceSession(session, { type: 'SET_SCENE', sceneId });
       const vm = selectViewModel(s);
-      expect(vm.panelProps.memoryArtifactType).toBe('none');
+      expect(vm.panelProps.memoryArtifactType).toBe('working');
     }
   });
 
@@ -90,13 +90,43 @@ describe('memory artifact type derivation', () => {
     );
   });
 
-  it('memory artifact type resets to none on non-memory scenes', () => {
+  it('memory artifact type resets to working on non-memory scenes', () => {
     const session = createDefaultSession();
     const compS = reduceSession(session, { type: 'SET_SCENE', sceneId: 'compaction' });
     expect(selectViewModel(compS).panelProps.memoryArtifactType).toBe('compressed');
 
     const nextS = reduceSession(compS, { type: 'SET_SCENE', sceneId: 'first-loop' });
-    expect(selectViewModel(nextS).panelProps.memoryArtifactType).toBe('none');
+    expect(selectViewModel(nextS).panelProps.memoryArtifactType).toBe('working');
+  });
+});
+
+describe('all four memory artifact variants', () => {
+  it('emits working by default for active FR scenes', () => {
+    const session = createDefaultSession();
+    const s = reduceSession(session, { type: 'SET_SCENE', sceneId: 'first-loop' });
+    expect(selectViewModel(s).panelProps.memoryArtifactType).toBe('working');
+  });
+
+  it('emits compressed for compaction scene', () => {
+    const session = createDefaultSession();
+    const s = reduceSession(session, { type: 'SET_SCENE', sceneId: 'compaction' });
+    expect(selectViewModel(s).panelProps.memoryArtifactType).toBe('compressed');
+  });
+
+  it('emits retrieved for memory-retrieval scene', () => {
+    const session = createDefaultSession();
+    const s = reduceSession(session, { type: 'SET_SCENE', sceneId: 'memory-retrieval' });
+    expect(selectViewModel(s).panelProps.memoryArtifactType).toBe('retrieved');
+  });
+
+  it('emits stale when both failure toggles are active', () => {
+    let session = createDefaultSession();
+    session = reduceSession(session, { type: 'TOGGLE_FAILURE', toggleKey: 'permissionBlocked' });
+    session = reduceSession(session, { type: 'TOGGLE_FAILURE', toggleKey: 'toolFailure' });
+    const vm = selectViewModel(session);
+
+    expect(vm.panelProps.memoryArtifactType).toBe('stale');
+    expect(vm.recoveryCopy).toContain('Both failure modes');
   });
 });
 
