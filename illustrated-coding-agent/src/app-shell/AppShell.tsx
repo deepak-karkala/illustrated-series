@@ -140,6 +140,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
 
   return (
     <main className="app-shell">
+      <a href="#chapter-hook" className="skip-link">Skip to content</a>
       <TeaserScene
         heading={teaserHeading}
         subheading={teaserSubheading}
