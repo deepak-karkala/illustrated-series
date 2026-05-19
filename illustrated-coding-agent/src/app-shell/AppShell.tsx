@@ -199,6 +199,9 @@ export function AppShell({ state, dispatch }: AppShellProps) {
               >
                 <span className="chapter-number">{label.number}</span>
                 <h2 className="chapter-title">{label.title}</h2>
+                {content[0] && (
+                  <p className="chapter-body field-guide-intro">{content[0].body}</p>
+                )}
                 <div className="field-guide-heuristics">
                   {content.slice(1).map((block, i) => (
                     <div key={block.id} className="field-guide-heuristic">

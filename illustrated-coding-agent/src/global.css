@@ -142,6 +142,10 @@ p {
   margin-top: var(--space-4xl);
 }
 
+.field-guide-intro {
+  margin-bottom: var(--space-xl);
+}
+
 .field-guide-heuristics {
   display: flex;
   flex-direction: column;
