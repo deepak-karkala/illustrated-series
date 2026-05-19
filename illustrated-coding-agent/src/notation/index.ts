@@ -6,3 +6,4 @@ export { ModelOnlyScene } from './ModelOnlyScene';
 export { HarnessFramingScene } from './HarnessFramingScene';
 export { AgentTimeline } from './AgentTimeline';
 export { ContextMeter } from './ContextMeter';
+export { MemoryArtifact } from './MemoryArtifact';
