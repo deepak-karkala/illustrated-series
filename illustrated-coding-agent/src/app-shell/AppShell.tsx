@@ -14,9 +14,11 @@ import { FailureModeToggles } from './FailureModeToggles';
 import { LensToggle } from './LensToggle';
 import { StateDrawer } from './StateDrawer';
 import { DrawerToggle } from './DrawerToggle';
+import { DevOverlay } from './DevOverlay';
 import './TeaserScene.css';
 import './FlightRecorderPanel.css';
 import './StateDrawer.css';
+import './DevOverlay.css';
 
 interface AppShellProps {
   state: StorySessionState;
@@ -195,6 +197,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
         open={validated.state.drawerOpen}
         onClose={() => dispatch({ type: 'TOGGLE_DRAWER' })}
       />
+      <DevOverlay state={validated.state} warnings={validated.warnings} />
     </main>
   );
 }
