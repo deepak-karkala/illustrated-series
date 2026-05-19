@@ -1,12 +1,12 @@
 import type { StorySessionState } from '../story/state';
+import type { ReactNode } from 'react';
 
-interface DevOverlayProps {
-  state: StorySessionState;
-  warnings: string[];
-}
-
-export function DevOverlay({ state, warnings }: DevOverlayProps) {
-  if (!import.meta.env.DEV) return null;
+export function renderDevOverlay(
+  isDev: boolean,
+  state: StorySessionState,
+  warnings: string[],
+): ReactNode {
+  if (!isDev) return null;
 
   return (
     <div className="dev-overlay">
@@ -63,4 +63,13 @@ export function DevOverlay({ state, warnings }: DevOverlayProps) {
       </div>
     </div>
   );
+}
+
+interface DevOverlayProps {
+  state: StorySessionState;
+  warnings: string[];
+}
+
+export function DevOverlay({ state, warnings }: DevOverlayProps) {
+  return renderDevOverlay(import.meta.env.DEV, state, warnings);
 }

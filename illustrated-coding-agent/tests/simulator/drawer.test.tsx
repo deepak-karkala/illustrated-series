@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { createDefaultSession, reduceSession } from '../../src/simulator/reducer';
 import { selectViewModel } from '../../src/simulator/selectors';
-import { DevOverlay } from '../../src/app-shell/DevOverlay';
+import { DevOverlay, renderDevOverlay } from '../../src/app-shell/DevOverlay';
 import { render, screen } from '@testing-library/react';
 
 describe('drawer state', () => {
@@ -136,7 +136,24 @@ describe('dev overlay gating', () => {
     expect(falseElements.length).toBeGreaterThanOrEqual(1);
   });
 
-  it('import.meta.env.DEV is true during test run', () => {
-    expect(import.meta.env.DEV).toBe(true);
+  it('renderDevOverlay returns null when isDev is false (prod-like)', () => {
+    const state = createDefaultSession();
+    const result = renderDevOverlay(false, state, ['warn']);
+
+    expect(result).toBeNull();
+  });
+
+  it('renderDevOverlay returns content when isDev is true', () => {
+    const state = createDefaultSession();
+    const result = renderDevOverlay(true, state, []);
+
+    expect(result).not.toBeNull();
+  });
+
+  it('DevOverlay uses import.meta.env.DEV as isDev gate', () => {
+    const state = createDefaultSession();
+    render(<DevOverlay state={state} warnings={[]} />);
+
+    expect(screen.getByText('DEBUG')).toBeTruthy();
   });
 });
