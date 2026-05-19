@@ -1,5 +1,6 @@
 import type { StorySessionState, SceneId, FailureToggles } from '../story/state';
 import type { DerivedViewModel, TimelineStep, SimulatorPanelProps } from '../story/view-model';
+import { getLensLabels, applyLensLabels } from '../story/lens-labels';
 
 const ALL_TIMELINE_STEPS: TimelineStep[] = [
   { id: 'l-1', label: 'Request intake', status: 'future' },
@@ -146,12 +147,18 @@ export function selectViewModel(state: StorySessionState): DerivedViewModel {
     state.failureToggles,
   );
 
+  const lensLabels = getLensLabels(state.sceneId, state.lensMode);
+  const lensTimeline = applyLensLabels(timelineSteps, lensLabels);
+  const lensPanel: SimulatorPanelProps = {
+    ...degradedPanel,
+    timelineSteps: lensTimeline,
+    activeToolLabel: lensLabels?.toolLabel ?? degradedPanel.activeToolLabel,
+    toolResultSummary: lensLabels?.toolResult ?? degradedPanel.toolResultSummary,
+  };
+
   return {
-    timelineSteps,
-    panelProps: {
-      ...degradedPanel,
-      timelineSteps,
-    },
+    timelineSteps: lensTimeline,
+    panelProps: lensPanel,
     drawerProps: {
       chapterId: state.chapterId,
       sceneId: state.sceneId,
