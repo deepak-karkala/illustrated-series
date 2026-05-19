@@ -16,6 +16,19 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
+    {
+      name: 'mobile',
+      use: { ...devices['Pixel 5'] },
+      testMatch: /a11y-mobile\.spec\.ts/,
+    },
+    {
+      name: 'reduced-motion',
+      use: {
+        ...devices['Desktop Chrome'],
+        reducedMotion: 'reduce',
+      },
+      testMatch: /a11y-mobile\.spec\.ts/,
+    },
   ],
   webServer: {
     command: 'npm run dev',
