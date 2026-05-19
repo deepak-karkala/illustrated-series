@@ -184,6 +184,53 @@
   }
 }
 
+.lens-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-paper-deep);
+  border: 1px solid var(--color-metal);
+  border-radius: var(--radius-md);
+}
+
+.lens-toggle-label {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  font-weight: 600;
+  color: var(--color-metal-deep);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-right: var(--space-xs);
+}
+
+.lens-toggle-btn {
+  font-family: var(--font-ui);
+  font-size: var(--type-ui);
+  padding: 3px 10px;
+  border: 1px solid var(--color-metal);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  transition: background var(--duration-micro) var(--ease-enter);
+}
+
+.lens-toggle-btn:hover {
+  background: var(--color-paper);
+}
+
+.lens-toggle-active {
+  background: var(--color-harness);
+  border-color: var(--color-harness);
+  color: var(--color-paper);
+}
+
+.lens-toggle-active:hover {
+  background: var(--color-harness);
+  opacity: 0.9;
+}
+
 .failure-toggles {
   display: flex;
   align-items: center;

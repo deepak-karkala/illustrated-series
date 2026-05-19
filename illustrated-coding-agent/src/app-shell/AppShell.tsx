@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import type { StorySessionState, ChapterId, SceneId, FailureToggles } from '../story/state';
+import type { StorySessionState, ChapterId, SceneId, FailureToggles, LensMode } from '../story/state';
 import type { SessionAction } from '../simulator/reducer';
 import { INTRO_CONTENT } from '../story/content';
 import { selectViewModel } from '../simulator/selectors';
@@ -11,6 +11,7 @@ import { ModelOnlyScene } from '../notation/ModelOnlyScene';
 import { HarnessFramingScene } from '../notation/HarnessFramingScene';
 import { FlightRecorderPanel } from './FlightRecorderPanel';
 import { FailureModeToggles } from './FailureModeToggles';
+import { LensToggle } from './LensToggle';
 import './TeaserScene.css';
 import './FlightRecorderPanel.css';
 
@@ -19,25 +20,32 @@ interface AppShellProps {
   dispatch: React.Dispatch<SessionAction>;
 }
 
-function getContentForScene(sceneId: SceneId) {
-  return INTRO_CONTENT.filter((c) => c.sceneId === sceneId);
+function getContentForScene(sceneId: SceneId, lensMode: LensMode) {
+  const sceneContent = INTRO_CONTENT.filter((c) => c.sceneId === sceneId);
+  const lensContent = sceneContent.filter((c) => c.lensMode === lensMode);
+  return lensContent.length > 0 ? lensContent : sceneContent.filter((c) => c.lensMode === 'product');
 }
 
 function StickyDiagram({
   chapterId,
   vm,
   toggles,
+  lensMode,
   dispatch,
 }: {
   chapterId: ChapterId;
   vm: ReturnType<typeof selectViewModel>;
   toggles: FailureToggles;
+  lensMode: LensMode;
   dispatch: React.Dispatch<SessionAction>;
 }) {
   return (
     <>
       {chapterId === 'flight-recorder' && (
-        <FailureModeToggles toggles={toggles} dispatch={dispatch} />
+        <>
+          <LensToggle lensMode={lensMode} dispatch={dispatch} />
+          <FailureModeToggles toggles={toggles} dispatch={dispatch} />
+        </>
       )}
       {chapterId === 'illusion-break' && <ModelOnlyScene />}
       {chapterId === 'harness-reveal' && <HarnessFramingScene />}
@@ -109,6 +117,8 @@ export function AppShell({ state, dispatch }: AppShellProps) {
   const teaserHeading = INTRO_CONTENT.find((c) => c.id === 'hook-heading')?.heading ?? '';
   const teaserSubheading = INTRO_CONTENT.find((c) => c.id === 'hook-heading')?.body ?? '';
 
+  const lensMode = validated.state.lensMode;
+
   const frScenes = getSceneIds('flight-recorder');
 
   return (
@@ -122,7 +132,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
       <div className="app-body">
         <div className="narrative-column">
           {(['hook', 'illusion-break', 'harness-reveal'] as ChapterId[]).map((chId) => {
-            const content = getContentForScene(getSceneIds(chId)[0]);
+            const content = getContentForScene(getSceneIds(chId)[0], lensMode);
             const label = CHAPTER_LABELS[chId];
 
             return (
@@ -146,7 +156,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
           })}
 
           {frScenes.map((scId, i) => {
-            const content = getContentForScene(scId);
+            const content = getContentForScene(scId, lensMode);
             const frNumber = `4.${i + 1}`;
 
             return (
@@ -171,7 +181,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
         </div>
 
         <aside className="sticky-panel" key={chapterId}>
-          <StickyDiagram chapterId={chapterId} vm={vm} toggles={validated.state.failureToggles} dispatch={dispatch} />
+          <StickyDiagram chapterId={chapterId} vm={vm} toggles={validated.state.failureToggles} lensMode={lensMode} dispatch={dispatch} />
         </aside>
       </div>
     </main>
