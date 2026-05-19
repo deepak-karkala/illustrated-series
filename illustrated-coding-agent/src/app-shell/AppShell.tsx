@@ -184,6 +184,59 @@ export function AppShell({ state, dispatch }: AppShellProps) {
               </section>
             );
           })}
+
+          {(['field-guide'] as ChapterId[]).map((chId) => {
+            const content = getContentForScene(getSceneIds(chId)[0], lensMode);
+            const label = CHAPTER_LABELS[chId];
+
+            return (
+              <section
+                key={chId}
+                id={`chapter-${chId}`}
+                data-chapter={chId}
+                data-scene={getSceneIds(chId)[0]}
+                className="field-guide-section"
+              >
+                <span className="chapter-number">{label.number}</span>
+                <h2 className="chapter-title">{label.title}</h2>
+                <div className="field-guide-heuristics">
+                  {content.slice(1).map((block, i) => (
+                    <div key={block.id} className="field-guide-heuristic">
+                      <span className="field-guide-heuristic-number">{i + 1}</span>
+                      <div>
+                        <h3 className="chapter-heading">{block.heading}</h3>
+                        <p className="chapter-body">{block.body}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            );
+          })}
+
+          {(['appendix'] as ChapterId[]).map((chId) => {
+            const content = getContentForScene(getSceneIds(chId)[0], lensMode);
+            const label = CHAPTER_LABELS[chId];
+
+            return (
+              <section
+                key={chId}
+                id={`chapter-${chId}`}
+                data-chapter={chId}
+                data-scene={getSceneIds(chId)[0]}
+                className="appendix-section"
+              >
+                <span className="chapter-number appendix-number">{label.number}</span>
+                <h2 className="chapter-title appendix-title">{label.title}</h2>
+                {content.map((block) => (
+                  <div key={block.id} className="chapter-block appendix-block">
+                    <h3 className="chapter-heading">{block.heading}</h3>
+                    <p className="chapter-body">{block.body}</p>
+                  </div>
+                ))}
+              </section>
+            );
+          })}
         </div>
 
         <aside className="sticky-panel" key={chapterId}>

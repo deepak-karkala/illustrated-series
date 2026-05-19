@@ -158,6 +158,36 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     allowedToggles: [],
     emphasis: 'simulator',
   },
+  {
+    sceneId: 'field-guide-summary',
+    chapterId: 'field-guide',
+    contentBlockIds: [
+      'field-guide-intro',
+      'field-guide-harness',
+      'field-guide-context',
+      'field-guide-boundaries',
+      'field-guide-verify',
+    ],
+    targetSimulatorStateId: 'field-guide',
+    annotations: [],
+    allowedToggles: [],
+    emphasis: 'narrative',
+  },
+  {
+    sceneId: 'appendix-method',
+    chapterId: 'appendix',
+    contentBlockIds: [
+      'appendix-intro',
+      'appendix-corpus',
+      'appendix-simulator',
+      'appendix-reuse',
+      'appendix-consulting',
+    ],
+    targetSimulatorStateId: 'appendix',
+    annotations: [],
+    allowedToggles: [],
+    emphasis: 'narrative',
+  },
 ];
 
 export function getSceneIds(chapterId: ChapterId): SceneId[] {
