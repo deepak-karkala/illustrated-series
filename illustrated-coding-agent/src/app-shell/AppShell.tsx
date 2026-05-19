@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type { StorySessionState, ChapterId, SceneId, FailureToggles, LensMode } from '../story/state';
 import type { SessionAction } from '../simulator/reducer';
 import { INTRO_CONTENT } from '../story/content';
@@ -44,14 +44,25 @@ function StickyDiagram({
   lensMode: LensMode;
   dispatch: React.Dispatch<SessionAction>;
 }) {
+  const [mobileExpanded, setMobileExpanded] = useState(false);
+
   return (
     <>
       {chapterId === 'flight-recorder' && (
-        <>
+        <div className="fr-controls">
           <LensToggle lensMode={lensMode} dispatch={dispatch} />
-          <FailureModeToggles toggles={toggles} dispatch={dispatch} />
-          <DrawerToggle onClick={() => dispatch({ type: 'TOGGLE_DRAWER' })} />
-        </>
+          <button
+            className="fr-controls-expand"
+            onClick={() => setMobileExpanded((v) => !v)}
+            aria-expanded={mobileExpanded}
+          >
+            Controls {mobileExpanded ? '▴' : '▾'}
+          </button>
+          <div className={`fr-controls-secondary${mobileExpanded ? ' fr-controls-visible' : ''}`}>
+            <FailureModeToggles toggles={toggles} dispatch={dispatch} />
+            <DrawerToggle onClick={() => dispatch({ type: 'TOGGLE_DRAWER' })} />
+          </div>
+        </div>
       )}
       {chapterId === 'illusion-break' && <ModelOnlyScene />}
       {chapterId === 'harness-reveal' && <HarnessFramingScene />}
