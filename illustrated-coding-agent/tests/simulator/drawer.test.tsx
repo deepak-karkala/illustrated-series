@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { createDefaultSession, reduceSession } from '../../src/simulator/reducer';
 import { selectViewModel } from '../../src/simulator/selectors';
+import { DevOverlay } from '../../src/app-shell/DevOverlay';
+import { render, screen } from '@testing-library/react';
 
 describe('drawer state', () => {
   it('TOGGLE_DRAWER opens the drawer', () => {
@@ -102,19 +104,39 @@ describe('drawerProps reflect current state', () => {
 });
 
 describe('dev overlay gating', () => {
-  it('import.meta.env.DEV is defined', () => {
-    expect(import.meta.env.DEV).toBeDefined();
+  it('DevOverlay renders DEBUG label in dev builds', () => {
+    const state = createDefaultSession();
+    render(<DevOverlay state={state} warnings={[]} />);
+
+    expect(screen.getByText('DEBUG')).toBeTruthy();
+    expect(screen.getByText(state.chapterId)).toBeTruthy();
+    expect(screen.getByText(state.sceneId)).toBeTruthy();
   });
 
-  it('import.meta.env.PROD is defined', () => {
-    expect(import.meta.env.PROD).toBeDefined();
+  it('DevOverlay renders validation warnings when present', () => {
+    const state = createDefaultSession();
+    render(<DevOverlay state={state} warnings={['test warning A', 'test warning B']} />);
+
+    expect(screen.getByText(/warnings \(2\)/)).toBeTruthy();
+    expect(screen.getByText('test warning A')).toBeTruthy();
+    expect(screen.getByText('test warning B')).toBeTruthy();
   });
 
-  it('DEV and PROD are mutually exclusive', () => {
-    if (import.meta.env.DEV) {
-      expect(import.meta.env.PROD).toBe(false);
-    } else {
-      expect(import.meta.env.PROD).toBe(true);
-    }
+  it('DevOverlay shows failure toggle state', () => {
+    const session = reduceSession(createDefaultSession(), {
+      type: 'TOGGLE_FAILURE',
+      toggleKey: 'permissionBlocked',
+    });
+
+    render(<DevOverlay state={session} warnings={[]} />);
+
+    const trueElements = screen.getAllByText('true');
+    expect(trueElements.length).toBeGreaterThanOrEqual(1);
+    const falseElements = screen.getAllByText('false');
+    expect(falseElements.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it('import.meta.env.DEV is true during test run', () => {
+    expect(import.meta.env.DEV).toBe(true);
   });
 });
