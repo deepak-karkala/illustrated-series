@@ -58,6 +58,11 @@ export function validateAndNormalize(state: StorySessionState): ValidationResult
     normalized.drawerOpen = false;
   }
 
+  if (normalized.mobileControlsOpen !== true && normalized.mobileControlsOpen !== false) {
+    warnings.push('mobileControlsOpen was not boolean, normalizing to false');
+    normalized.mobileControlsOpen = false;
+  }
+
   const sceneDef = SCENE_DEFINITIONS.find((s) => s.sceneId === normalized.sceneId);
   if (sceneDef) {
     normalized.simulatorStateId = sceneDef.targetSimulatorStateId;

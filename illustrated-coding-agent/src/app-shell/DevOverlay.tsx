@@ -49,6 +49,10 @@ export function renderDevOverlay(
           <span className="dev-value">{String(state.drawerOpen)}</span>
         </div>
         <div className="dev-row">
+          <span className="dev-label">mobile-ctrl</span>
+          <span className="dev-value">{String(state.mobileControlsOpen)}</span>
+        </div>
+        <div className="dev-row">
           <span className="dev-label">teaser</span>
           <span className="dev-value">{String(state.teaserMode)}</span>
         </div>
