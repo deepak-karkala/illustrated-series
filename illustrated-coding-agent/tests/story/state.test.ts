@@ -118,6 +118,16 @@ describe('reduceSession', () => {
     expect(result.drawerOpen).toBe(true);
   });
 
+  it('reduces TOGGLE_MOBILE_CONTROLS', () => {
+    const session = createDefaultSession();
+
+    expect(session.mobileControlsOpen).toBe(false);
+
+    const result = reduceSession(session, { type: 'TOGGLE_MOBILE_CONTROLS' });
+
+    expect(result.mobileControlsOpen).toBe(true);
+  });
+
   it('does not mutate original state', () => {
     const session = createDefaultSession();
 

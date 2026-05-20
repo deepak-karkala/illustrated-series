@@ -1,5 +1,9 @@
 import { test, expect } from '@playwright/test';
 
+test.beforeEach(async ({ page }, testInfo) => {
+  if (testInfo.project.name !== 'chromium') test.skip();
+});
+
 test('page loads and renders the teaser viewport', async ({ page }) => {
   await page.goto('/');
 

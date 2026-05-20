@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import type { StorySessionState, ChapterId, SceneId, FailureToggles, LensMode } from '../story/state';
 import type { SessionAction } from '../simulator/reducer';
 import { INTRO_CONTENT } from '../story/content';
@@ -36,16 +36,16 @@ function StickyDiagram({
   vm,
   toggles,
   lensMode,
+  mobileControlsOpen,
   dispatch,
 }: {
   chapterId: ChapterId;
   vm: ReturnType<typeof selectViewModel>;
   toggles: FailureToggles;
   lensMode: LensMode;
+  mobileControlsOpen: boolean;
   dispatch: React.Dispatch<SessionAction>;
 }) {
-  const [mobileExpanded, setMobileExpanded] = useState(false);
-
   return (
     <>
       {chapterId === 'flight-recorder' && (
@@ -53,12 +53,12 @@ function StickyDiagram({
           <LensToggle lensMode={lensMode} dispatch={dispatch} />
           <button
             className="fr-controls-expand"
-            onClick={() => setMobileExpanded((v) => !v)}
-            aria-expanded={mobileExpanded}
+            onClick={() => dispatch({ type: 'TOGGLE_MOBILE_CONTROLS' })}
+            aria-expanded={mobileControlsOpen}
           >
-            Controls {mobileExpanded ? '▴' : '▾'}
+            Controls {mobileControlsOpen ? '▴' : '▾'}
           </button>
-          <div className={`fr-controls-secondary${mobileExpanded ? ' fr-controls-visible' : ''}`}>
+          <div className={`fr-controls-secondary${mobileControlsOpen ? ' fr-controls-visible' : ''}`}>
             <FailureModeToggles toggles={toggles} dispatch={dispatch} />
             <DrawerToggle onClick={() => dispatch({ type: 'TOGGLE_DRAWER' })} />
           </div>
@@ -255,7 +255,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
         </div>
 
         <aside className="sticky-panel" key={chapterId}>
-          <StickyDiagram chapterId={chapterId} vm={vm} toggles={validated.state.failureToggles} lensMode={lensMode} dispatch={dispatch} />
+          <StickyDiagram chapterId={chapterId} vm={vm} toggles={validated.state.failureToggles} lensMode={lensMode} mobileControlsOpen={validated.state.mobileControlsOpen} dispatch={dispatch} />
         </aside>
       </div>
 

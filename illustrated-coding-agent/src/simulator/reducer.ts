@@ -8,6 +8,7 @@ export type SessionAction =
   | { type: 'SET_LENS'; lensMode: LensMode }
   | { type: 'TOGGLE_FAILURE'; toggleKey: keyof FailureToggles }
   | { type: 'TOGGLE_DRAWER' }
+  | { type: 'TOGGLE_MOBILE_CONTROLS' }
   | { type: 'SET_TEASER_MODE'; teaserMode: boolean }
   | { type: 'SET_REDUCED_MOTION'; reducedMotion: boolean };
 
@@ -39,6 +40,8 @@ export function reduceSession(
       };
     case 'TOGGLE_DRAWER':
       return { ...state, drawerOpen: !state.drawerOpen };
+    case 'TOGGLE_MOBILE_CONTROLS':
+      return { ...state, mobileControlsOpen: !state.mobileControlsOpen };
     case 'SET_TEASER_MODE':
       return { ...state, teaserMode: action.teaserMode };
     case 'SET_REDUCED_MOTION':

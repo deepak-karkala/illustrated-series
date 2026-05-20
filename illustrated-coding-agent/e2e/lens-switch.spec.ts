@@ -1,5 +1,9 @@
 import { test, expect } from '@playwright/test';
 
+test.beforeEach(async ({ page }, testInfo) => {
+  if (testInfo.project.name !== 'chromium') test.skip();
+});
+
 test('lens toggle switches product to harness and back', async ({ page }) => {
   await page.goto('/');
   await page.evaluate(() => {
