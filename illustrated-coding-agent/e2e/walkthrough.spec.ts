@@ -84,7 +84,7 @@ test.describe('comprehensive article walkthrough', () => {
     expect(apInView).toBe(true);
   });
 
-  test('only one flight recorder panel exists in the DOM', async ({ page }) => {
+  test('sticky flight recorder panel is a single persistent element', async ({ page }) => {
     await page.goto('/');
 
     await page.evaluate(() => {
@@ -92,15 +92,17 @@ test.describe('comprehensive article walkthrough', () => {
     });
     await page.waitForTimeout(500);
 
-    const count1 = await page.locator('.flight-recorder-panel').count();
-    expect(count1).toBe(1);
+    const panel = page.locator('.flight-recorder-panel');
+    await expect(panel).toBeVisible();
+
+    await panel.evaluate((el) => el.setAttribute('data-persistence-marker', 'true'));
 
     await page.evaluate(() => {
       document.querySelector('[data-scene="compaction"]')?.scrollIntoView({ behavior: 'instant' });
     });
     await page.waitForTimeout(500);
 
-    const count2 = await page.locator('.flight-recorder-panel').count();
-    expect(count2).toBe(1);
+    const afterPanel = page.locator('.flight-recorder-panel[data-persistence-marker="true"]');
+    await expect(afterPanel).toBeVisible();
   });
 });
