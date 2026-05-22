@@ -2,7 +2,7 @@
 
 An interactive scrollytelling web experience that explains how coding agents actually work by turning invisible system state into a visual **Flight Recorder**.
 
-**[Live preview](#)** · 38 commits · 120 tests
+**[Live preview](#)** · 42 commits · 165 tests
 
 ---
 
@@ -143,7 +143,7 @@ Before public release, manually verify on:
 
 ## Design
 
-See [`DESIGN.md`](./illustrated-coding-agent/DESIGN.md) for the full design system.
+See [`DESIGN.md`](./DESIGN.md) for the full design system.
 
 - **Thesis**: Editorial Cutaway Manual — a beautifully typeset technical cutaway where the hidden machine has been opened up
 - **Palette**: Restrained paper/ink/metal tones with semantic system colors (harness green, model purple, tool blue, warning red)
@@ -154,7 +154,7 @@ See [`DESIGN.md`](./illustrated-coding-agent/DESIGN.md) for the full design syst
 
 ## Source Corpus
 
-The project is grounded in a [14-chapter canonical corpus](./illustrated-coding-agent/source-corpus/) built from:
+The project is grounded in a [14-chapter canonical corpus](./source-corpus/) built from:
 
 - First-party product docs (Claude Code, OpenAI Codex SDK)
 - The *Dive into Claude Code* paper (arXiv: 2604.14228)
@@ -169,11 +169,11 @@ Chapters span from *From Chatbot to Coding Agent* through *The Future of Harness
 
 | Document | Purpose |
 |----------|---------|
-| [`DESIGN.md`](./illustrated-coding-agent/DESIGN.md) | Design system: typography, palette, spacing, motion, notation rules |
-| [`the-illustrated-coding-agent-ceo-plan.md`](./illustrated-coding-agent/the-illustrated-coding-agent-ceo-plan.md) | Product scope, build order, failure modes registry |
-| [`the-illustrated-coding-agent-visual-spec.md`](./illustrated-coding-agent/the-illustrated-coding-agent-visual-spec.md) | Notation grammar, actor types, container logic, arrow rules |
-| [`implementation-plan.md`](./illustrated-coding-agent/implementation-plan.md) | Tech architecture, module contracts, test plan |
-| [`implementation-issues.md`](./illustrated-coding-agent/implementation-issues.md) | 10 thin-slice implementation issues with acceptance criteria |
+| [`DESIGN.md`](./DESIGN.md) | Design system: typography, palette, spacing, motion, notation rules |
+| [`the-illustrated-coding-agent-ceo-plan.md`](./the-illustrated-coding-agent-ceo-plan.md) | Product scope, build order, failure modes registry |
+| [`the-illustrated-coding-agent-visual-spec.md`](./the-illustrated-coding-agent-visual-spec.md) | Notation grammar, actor types, container logic, arrow rules |
+| [`implementation-plan.md`](./implementation-plan.md) | Tech architecture, module contracts, test plan |
+| [`implementation-issues.md`](./implementation-issues.md) | 10 thin-slice implementation issues with acceptance criteria |
 
 ---
 

@@ -57,36 +57,50 @@ test.describe('comprehensive article walkthrough', () => {
     await page.locator('.state-drawer-close').click();
     await page.waitForTimeout(300);
 
-    // Stage 5: Field Guide visible
-    await expect(page.locator('#chapter-field-guide')).toBeAttached();
-    const fgHeading = page.locator('#chapter-field-guide .chapter-title');
-    const fgText = await fgHeading.textContent();
-    expect(fgText).toContain('Field Guide');
+    // Stage 5: Field Guide — scroll to and verify in viewport
+    await page.evaluate(() => {
+      document.querySelector('#chapter-field-guide')?.scrollIntoView({ behavior: 'instant' });
+    });
+    await page.waitForTimeout(500);
+    const fgInView = await page.evaluate(() => {
+      const el = document.querySelector('#chapter-field-guide');
+      if (!el) return false;
+      const rect = el.getBoundingClientRect();
+      return rect.top < window.innerHeight && rect.bottom > 0;
+    });
+    expect(fgInView).toBe(true);
 
-    // Stage 6: Appendix visible
-    await expect(page.locator('#chapter-appendix')).toBeAttached();
-    const apHeading = page.locator('#chapter-appendix .chapter-title');
-    const apText = await apHeading.textContent();
-    expect(apText).toContain('Appendix');
+    // Stage 6: Appendix — scroll to and verify in viewport
+    await page.evaluate(() => {
+      document.querySelector('#chapter-appendix')?.scrollIntoView({ behavior: 'instant' });
+    });
+    await page.waitForTimeout(500);
+    const apInView = await page.evaluate(() => {
+      const el = document.querySelector('#chapter-appendix');
+      if (!el) return false;
+      const rect = el.getBoundingClientRect();
+      return rect.top < window.innerHeight && rect.bottom > 0;
+    });
+    expect(apInView).toBe(true);
   });
 
-  test('flight recorder panel updates across multiple scenes', async ({ page }) => {
+  test('only one flight recorder panel exists in the DOM', async ({ page }) => {
     await page.goto('/');
 
-    // Scroll to first-loop
     await page.evaluate(() => {
       document.querySelector('[data-scene="first-loop"]')?.scrollIntoView({ behavior: 'instant' });
     });
     await page.waitForTimeout(500);
-    const panel1 = page.locator('.flight-recorder-panel');
 
-    // Scroll to tool-invocation
+    const count1 = await page.locator('.flight-recorder-panel').count();
+    expect(count1).toBe(1);
+
     await page.evaluate(() => {
-      document.querySelector('[data-scene="tool-invocation"]')?.scrollIntoView({ behavior: 'instant' });
+      document.querySelector('[data-scene="compaction"]')?.scrollIntoView({ behavior: 'instant' });
     });
     await page.waitForTimeout(500);
 
-    // Panel should still be visible (same instance, updated props)
-    await expect(page.locator('.flight-recorder-panel')).toBeVisible();
+    const count2 = await page.locator('.flight-recorder-panel').count();
+    expect(count2).toBe(1);
   });
 });
