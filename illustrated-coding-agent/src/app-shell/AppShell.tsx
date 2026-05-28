@@ -36,10 +36,11 @@ function getContentForScene(sceneId: SceneId, lensMode: LensMode) {
   return lensContent.length > 0 ? lensContent : sceneContent.filter((c) => c.lensMode === 'product');
 }
 
-function getCallouts(content: ContentBlock[]) {
-  const analogy = content.find((c) => c.analogy)?.analogy;
-  const misconception = content.find((c) => c.misconception)?.misconception;
-  const keyInsight = content.find((c) => c.keyInsight)?.keyInsight;
+function getCallouts(sceneId: SceneId, lensContent: ContentBlock[]) {
+  const allSceneBlocks = INTRO_CONTENT.filter((c) => c.sceneId === sceneId);
+  const analogy = allSceneBlocks.find((c) => c.analogy)?.analogy;
+  const misconception = allSceneBlocks.find((c) => c.misconception)?.misconception;
+  const keyInsight = lensContent.find((c) => c.keyInsight)?.keyInsight;
   return { analogy, misconception, keyInsight };
 }
 
@@ -162,8 +163,9 @@ export function AppShell({ state, dispatch }: AppShellProps) {
       <div className="app-body">
         <div className="narrative-column">
           {(['hook', 'illusion-break', 'harness-reveal'] as ChapterId[]).map((chId) => {
-            const content = getContentForScene(getSceneIds(chId)[0], lensMode);
-            const callouts = getCallouts(content);
+            const sceneId = getSceneIds(chId)[0];
+            const content = getContentForScene(sceneId, lensMode);
+            const callouts = getCallouts(sceneId, content);
             const label = CHAPTER_LABELS[chId];
 
             return (
@@ -197,7 +199,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
 
           {frScenes.map((scId, i) => {
             const content = getContentForScene(scId, lensMode);
-            const callouts = getCallouts(content);
+            const callouts = getCallouts(scId, content);
             const frNumber = `4.${i + 1}`;
 
             return (
@@ -230,8 +232,9 @@ export function AppShell({ state, dispatch }: AppShellProps) {
           })}
 
           {(['field-guide'] as ChapterId[]).map((chId) => {
-            const content = getContentForScene(getSceneIds(chId)[0], lensMode);
-            const callouts = getCallouts(content);
+            const sceneId = getSceneIds(chId)[0];
+            const content = getContentForScene(sceneId, lensMode);
+            const callouts = getCallouts(sceneId, content);
             const label = CHAPTER_LABELS[chId];
 
             return (
@@ -272,8 +275,9 @@ export function AppShell({ state, dispatch }: AppShellProps) {
           })}
 
           {(['appendix'] as ChapterId[]).map((chId) => {
-            const content = getContentForScene(getSceneIds(chId)[0], lensMode);
-            const callouts = getCallouts(content);
+            const sceneId = getSceneIds(chId)[0];
+            const content = getContentForScene(sceneId, lensMode);
+            const callouts = getCallouts(sceneId, content);
             const label = CHAPTER_LABELS[chId];
 
             return (

@@ -20,21 +20,17 @@ describe('content callout completeness', () => {
     'appendix-method',
   ];
 
-  function productBlocks(sceneId: SceneId) {
-    return INTRO_CONTENT.filter((c) => c.sceneId === sceneId && c.lensMode === 'product');
-  }
-
-  it('every narrative scene has at least one product-lens analogy', () => {
+  it('every narrative scene has at least one analogy across all lens modes', () => {
     for (const sceneId of narrativeSceneIds) {
-      const blocks = productBlocks(sceneId);
+      const blocks = INTRO_CONTENT.filter((c) => c.sceneId === sceneId);
       const hasAnalogy = blocks.some((c) => c.analogy != null && c.analogy.length > 0);
       expect(hasAnalogy).toBe(true);
     }
   });
 
-  it('every narrative scene has at least one product-lens misconception', () => {
+  it('every narrative scene has at least one misconception across all lens modes', () => {
     for (const sceneId of narrativeSceneIds) {
-      const blocks = productBlocks(sceneId);
+      const blocks = INTRO_CONTENT.filter((c) => c.sceneId === sceneId);
       const hasMisconception = blocks.some(
         (c) => c.misconception != null
           && c.misconception.wrong.length > 0
