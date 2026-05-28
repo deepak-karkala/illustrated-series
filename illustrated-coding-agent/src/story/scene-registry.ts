@@ -41,6 +41,8 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     ],
     allowedToggles: [],
     emphasis: 'simulator',
+    inlineDiagram: 'bare-vs-harnessed',
+    requiresKeyInsight: true,
   },
   {
     sceneId: 'model-only-misconception',
@@ -54,6 +56,8 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     ],
     allowedToggles: [],
     emphasis: 'balanced',
+    inlineDiagram: 'chef-and-kitchen',
+    requiresKeyInsight: true,
   },
   {
     sceneId: 'harness-framing',
@@ -69,6 +73,8 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     ],
     allowedToggles: [],
     emphasis: 'simulator',
+    inlineDiagram: 'harness-subsystems',
+    requiresKeyInsight: true,
   },
   {
     sceneId: 'first-loop',
@@ -80,6 +86,9 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     ],
     allowedToggles: [],
     emphasis: 'simulator',
+    inlineDiagram: 'loop-cycle',
+    requiresKeyInsight: true,
+    progressivePanelComponents: ['timeline'],
   },
   {
     sceneId: 'tool-invocation',
@@ -91,6 +100,9 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     ],
     allowedToggles: [],
     emphasis: 'balanced',
+    inlineDiagram: 'tool-dispatch-sequence',
+    requiresKeyInsight: true,
+    progressivePanelComponents: ['timeline', 'tool-path'],
   },
   {
     sceneId: 'permission-gate',
@@ -102,6 +114,9 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     ],
     allowedToggles: [],
     emphasis: 'balanced',
+    inlineDiagram: 'permission-funnel',
+    requiresKeyInsight: true,
+    progressivePanelComponents: ['timeline', 'tool-path', 'permission-gate'],
   },
   {
     sceneId: 'context-pressure',
@@ -113,6 +128,9 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     ],
     allowedToggles: [],
     emphasis: 'simulator',
+    inlineDiagram: 'context-fill',
+    requiresKeyInsight: true,
+    progressivePanelComponents: ['timeline', 'tool-path', 'permission-gate', 'context-meter'],
   },
   {
     sceneId: 'compaction',
@@ -124,6 +142,9 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     ],
     allowedToggles: [],
     emphasis: 'simulator',
+    inlineDiagram: 'compaction-before-after',
+    requiresKeyInsight: true,
+    progressivePanelComponents: ['timeline', 'tool-path', 'permission-gate', 'context-meter', 'memory-artifact'],
   },
   {
     sceneId: 'memory-retrieval',
@@ -135,6 +156,9 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     ],
     allowedToggles: [],
     emphasis: 'balanced',
+    inlineDiagram: 'session-handoff',
+    requiresKeyInsight: true,
+    progressivePanelComponents: ['timeline', 'tool-path', 'permission-gate', 'context-meter', 'memory-artifact'],
   },
   {
     sceneId: 'failure-permission-blocked',
@@ -146,6 +170,9 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     ],
     allowedToggles: [],
     emphasis: 'simulator',
+    inlineDiagram: 'blocked-action-path',
+    requiresKeyInsight: true,
+    progressivePanelComponents: ['timeline', 'tool-path', 'permission-gate', 'context-meter', 'memory-artifact'],
   },
   {
     sceneId: 'failure-tool-failure',
@@ -157,6 +184,9 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     ],
     allowedToggles: [],
     emphasis: 'simulator',
+    inlineDiagram: 'error-recovery-loop',
+    requiresKeyInsight: true,
+    progressivePanelComponents: ['timeline', 'tool-path', 'permission-gate', 'context-meter', 'memory-artifact'],
   },
   {
     sceneId: 'field-guide-summary',
@@ -172,6 +202,7 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     annotations: [],
     allowedToggles: [],
     emphasis: 'narrative',
+    requiresKeyInsight: true,
   },
   {
     sceneId: 'appendix-method',
@@ -187,6 +218,7 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     annotations: [],
     allowedToggles: [],
     emphasis: 'narrative',
+    requiresKeyInsight: false,
   },
 ];
 

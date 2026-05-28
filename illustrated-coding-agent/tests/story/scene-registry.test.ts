@@ -133,11 +133,63 @@ describe('scene definitions', () => {
     expect(def).not.toBeNull();
     expect(def!.chapterId).toBe('illusion-break');
     expect(def!.emphasis).toBe('balanced');
+    expect(def!.inlineDiagram).toBe('chef-and-kitchen');
   });
 
   it('getSceneDefinition returns null for unknown scenes', () => {
     const def = getSceneDefinition('nonexistent' as SceneId);
     expect(def).toBeNull();
+  });
+
+  it('tracks inline teaching diagrams for hook, reveal, and flight-recorder scenes', () => {
+    for (const def of SCENE_DEFINITIONS) {
+      if (def.chapterId === 'field-guide' || def.chapterId === 'appendix') {
+        expect(def.inlineDiagram).toBeUndefined();
+        continue;
+      }
+
+      expect(def.inlineDiagram).toBeDefined();
+    }
+  });
+
+  it('marks every non-appendix scene as requiring a key insight', () => {
+    for (const def of SCENE_DEFINITIONS) {
+      if (def.chapterId === 'appendix') {
+        expect(def.requiresKeyInsight).toBe(false);
+        continue;
+      }
+
+      expect(def.requiresKeyInsight).toBe(true);
+    }
+  });
+
+  it('progressively grows the flight recorder panel across runtime scenes', () => {
+    const firstLoop = getSceneDefinition('first-loop');
+    const toolInvocation = getSceneDefinition('tool-invocation');
+    const permissionGate = getSceneDefinition('permission-gate');
+    const contextPressure = getSceneDefinition('context-pressure');
+    const compaction = getSceneDefinition('compaction');
+
+    expect(firstLoop?.progressivePanelComponents).toEqual(['timeline']);
+    expect(toolInvocation?.progressivePanelComponents).toEqual(['timeline', 'tool-path']);
+    expect(permissionGate?.progressivePanelComponents).toEqual([
+      'timeline',
+      'tool-path',
+      'permission-gate',
+    ]);
+    expect(contextPressure?.progressivePanelComponents).toEqual([
+      'timeline',
+      'tool-path',
+      'permission-gate',
+      'context-meter',
+    ]);
+    expect(compaction?.progressivePanelComponents).toEqual([
+      'timeline',
+      'tool-path',
+      'permission-gate',
+      'context-meter',
+      'memory-artifact',
+    ]);
   });
 });
 
