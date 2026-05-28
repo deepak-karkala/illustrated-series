@@ -259,6 +259,13 @@ export function AppShell({ state, dispatch }: AppShellProps) {
                     </div>
                   ))}
                 </div>
+                {callouts.misconception && (
+                  <MisconceptionCallout
+                    wrong={callouts.misconception.wrong}
+                    actual={callouts.misconception.actual}
+                    whyItMatters={callouts.misconception.whyItMatters}
+                  />
+                )}
                 {callouts.keyInsight && <KeyInsightCallout insight={callouts.keyInsight} />}
               </section>
             );
@@ -286,6 +293,13 @@ export function AppShell({ state, dispatch }: AppShellProps) {
                     <p className="chapter-body">{block.body}</p>
                   </div>
                 ))}
+                {callouts.misconception && (
+                  <MisconceptionCallout
+                    wrong={callouts.misconception.wrong}
+                    actual={callouts.misconception.actual}
+                    whyItMatters={callouts.misconception.whyItMatters}
+                  />
+                )}
                 {callouts.keyInsight && <KeyInsightCallout insight={callouts.keyInsight} />}
               </section>
             );

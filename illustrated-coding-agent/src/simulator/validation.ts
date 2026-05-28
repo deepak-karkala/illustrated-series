@@ -80,12 +80,18 @@ export function validateContentSchema(): string[] {
   const warnings: string[] = [];
 
   for (const def of SCENE_DEFINITIONS) {
-    const sceneContent = INTRO_CONTENT.filter((c) => c.sceneId === def.sceneId);
+    if (!def.requiresKeyInsight) continue;
 
-    if (def.requiresKeyInsight) {
-      const hasKeyInsight = sceneContent.some((c) => c.keyInsight != null);
+    const sceneContent = INTRO_CONTENT.filter((c) => c.sceneId === def.sceneId);
+    const lensModes = [...new Set(sceneContent.map((c) => c.lensMode))];
+
+    for (const lens of lensModes) {
+      const lensContent = sceneContent.filter((c) => c.lensMode === lens);
+      const hasKeyInsight = lensContent.some((c) => c.keyInsight != null);
       if (!hasKeyInsight) {
-        warnings.push(`Scene "${def.sceneId}" requires a key insight but none found in content`);
+        warnings.push(
+          `Scene "${def.sceneId}" requires a key insight but none found in "${lens}" lens content`,
+        );
       }
     }
   }
