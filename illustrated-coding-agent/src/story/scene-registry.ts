@@ -5,6 +5,7 @@ export const CHAPTER_ORDER: ChapterId[] = [
   'hook',
   'illusion-break',
   'harness-reveal',
+  'toy-example',
   'flight-recorder',
   'field-guide',
   'appendix',
@@ -14,6 +15,7 @@ export const CHAPTER_SCENES: Record<ChapterId, SceneId[]> = {
   'hook': ['teaser-cross-section'],
   'illusion-break': ['model-only-misconception'],
   'harness-reveal': ['harness-framing'],
+  'toy-example': ['toy-example-rename'],
   'flight-recorder': [
     'first-loop',
     'tool-invocation',
@@ -75,6 +77,17 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     emphasis: 'simulator',
     inlineDiagram: 'harness-subsystems',
     requiresKeyInsight: true,
+  },
+  {
+    sceneId: 'toy-example-rename',
+    chapterId: 'toy-example',
+    contentBlockIds: ['toy-intro', 'toy-step-read', 'toy-step-rename', 'toy-step-write', 'toy-step-verify'],
+    targetSimulatorStateId: 'toy-example',
+    annotations: [],
+    allowedToggles: [],
+    emphasis: 'simulator',
+    requiresKeyInsight: true,
+    progressivePanelComponents: ['timeline'],
   },
   {
     sceneId: 'first-loop',

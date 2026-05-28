@@ -8,6 +8,7 @@ export interface TimelineStep {
 }
 
 export interface SimulatorPanelProps {
+  panelVariant: 'toy' | 'full';
   timelineSteps: TimelineStep[];
   contextFillPercent: number;
   activeToolLabel: string | null;

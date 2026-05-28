@@ -116,9 +116,10 @@ describe('selector handles partial state gracefully', () => {
 
 describe('chapter ordering is deterministic', () => {
   it('CHAPTER_ORDER is immutable and complete', () => {
-    expect(CHAPTER_ORDER).toHaveLength(6);
+    expect(CHAPTER_ORDER).toHaveLength(7);
     expect(CHAPTER_ORDER[0]).toBe('hook');
-    expect(CHAPTER_ORDER[5]).toBe('appendix');
+    expect(CHAPTER_ORDER[5]).toBe('field-guide');
+    expect(CHAPTER_ORDER[6]).toBe('appendix');
   });
 
   it('rapid scroll through all chapters follows deterministic order', () => {

@@ -15,10 +15,19 @@ const ALL_TIMELINE_STEPS: TimelineStep[] = [
 ];
 
 function timelineForScene(sceneId: SceneId): TimelineStep[] {
+  if (sceneId === 'toy-example-rename') {
+    return [
+      { id: 't-1', label: 'Read file', status: 'past' },
+      { id: 't-2', label: 'Rename', status: 'active' },
+      { id: 't-3', label: 'Verify', status: 'future' },
+    ];
+  }
+
   const activeIndex: Record<SceneId, number | null> = {
     'teaser-cross-section': null,
     'model-only-misconception': null,
     'harness-framing': null,
+    'toy-example-rename': null,
     'first-loop': 2,
     'tool-invocation': 4,
     'permission-gate': 5,
@@ -42,6 +51,13 @@ function timelineForScene(sceneId: SceneId): TimelineStep[] {
 
 function basePanelForScene(sceneId: SceneId): SimulatorPanelProps {
   const sceneProps: Record<string, Partial<SimulatorPanelProps>> = {
+    'toy-example-rename': {
+      panelVariant: 'toy',
+      contextFillPercent: 20,
+      activeToolLabel: 'read_file',
+      toolResultSummary: 'const userCount = 5;',
+      permissionState: 'none',
+    },
     'first-loop': {
       contextFillPercent: 45,
       activeToolLabel: 'read_file',
@@ -95,6 +111,7 @@ function basePanelForScene(sceneId: SceneId): SimulatorPanelProps {
   };
 
   const defaults: SimulatorPanelProps = {
+    panelVariant: 'full',
     timelineSteps: [],
     contextFillPercent: 45,
     activeToolLabel: null,

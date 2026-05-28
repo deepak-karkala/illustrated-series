@@ -71,7 +71,7 @@ describe('scene navigation', () => {
 
   it('getNextScene crosses chapter boundaries on last scene', () => {
     const next = getNextScene('harness-framing');
-    expect(next).toBe('first-loop');
+    expect(next).toBe('toy-example-rename');
   });
 
   it('getPrevScene retreats within the same chapter', () => {
@@ -81,7 +81,7 @@ describe('scene navigation', () => {
 
   it('getPrevScene crosses chapter boundaries on first scene', () => {
     const prev = getPrevScene('first-loop');
-    expect(prev).toBe('harness-framing');
+    expect(prev).toBe('toy-example-rename');
   });
 
   it('getNextScene returns null at end of all chapters', () => {
@@ -99,6 +99,7 @@ describe('scene navigation', () => {
       'teaser-cross-section',
       'model-only-misconception',
       'harness-framing',
+      'toy-example-rename',
       'first-loop',
       'tool-invocation',
     ];
@@ -143,7 +144,7 @@ describe('scene definitions', () => {
 
   it('tracks inline teaching diagrams for hook, reveal, and flight-recorder scenes', () => {
     for (const def of SCENE_DEFINITIONS) {
-      if (def.chapterId === 'field-guide' || def.chapterId === 'appendix') {
+      if (def.chapterId === 'toy-example' || def.chapterId === 'field-guide' || def.chapterId === 'appendix') {
         expect(def.inlineDiagram).toBeUndefined();
         continue;
       }
@@ -227,11 +228,12 @@ describe('content modules', () => {
 });
 
 describe('chapter order', () => {
-  it('contains all six stages', () => {
+  it('contains all seven stages', () => {
     expect(CHAPTER_ORDER).toEqual([
       'hook',
       'illusion-break',
       'harness-reveal',
+      'toy-example',
       'flight-recorder',
       'field-guide',
       'appendix',

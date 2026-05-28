@@ -6,6 +6,7 @@ const VALID_CHAPTER_IDS = new Set<ChapterId>([
   'hook',
   'illusion-break',
   'harness-reveal',
+  'toy-example',
   'flight-recorder',
   'field-guide',
   'appendix',

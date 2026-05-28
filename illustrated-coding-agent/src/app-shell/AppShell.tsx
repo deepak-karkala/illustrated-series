@@ -79,6 +79,9 @@ function StickyDiagram({
       )}
       {chapterId === 'illusion-break' && <ModelOnlyScene />}
       {chapterId === 'harness-reveal' && <HarnessFramingScene />}
+      {chapterId === 'toy-example' && (
+        <FlightRecorderPanel panel={vm.panelProps} timelineSteps={vm.timelineSteps} recoveryCopy={vm.recoveryCopy} />
+      )}
       {chapterId === 'flight-recorder' && (
         <FlightRecorderPanel panel={vm.panelProps} timelineSteps={vm.timelineSteps} recoveryCopy={vm.recoveryCopy} />
       )}
@@ -104,18 +107,23 @@ const CHAPTER_LABELS: ChapterLabel = {
     title: 'The Harness Reveal',
     subtitle: 'Agent = Model + Harness. This is the real system.',
   },
-  'flight-recorder': {
+  'toy-example': {
     number: '4',
+    title: 'Try It: Rename a Variable',
+    subtitle: 'Trace one tiny task through the agent, end to end.',
+  },
+  'flight-recorder': {
+    number: '5',
     title: 'Flight Recorder',
     subtitle: 'Watch the agent loop step by step.',
   },
   'field-guide': {
-    number: '5',
+    number: '6',
     title: 'Field Guide',
     subtitle: 'How to read any agent.',
   },
   'appendix': {
-    number: '6',
+    number: '7',
     title: 'Appendix',
     subtitle: 'Behind the explainer.',
   },
@@ -174,6 +182,41 @@ export function AppShell({ state, dispatch }: AppShellProps) {
                 id={`chapter-${chId}`}
                 data-chapter={chId}
                 data-scene={getSceneIds(chId)[0]}
+                className={`narrative-section ${chapterId === chId ? 'section-active' : ''}`}
+              >
+                <span className="chapter-number">{label.number}</span>
+                <h2 className="chapter-title">{label.title}</h2>
+                {callouts.analogy && <AnalogyCallout analogy={callouts.analogy} />}
+                {content.map((block) => (
+                  <div key={block.id} className="chapter-block">
+                    <h3 className="chapter-heading">{block.heading}</h3>
+                    <p className="chapter-body">{block.body}</p>
+                  </div>
+                ))}
+                {callouts.misconception && (
+                  <MisconceptionCallout
+                    wrong={callouts.misconception.wrong}
+                    actual={callouts.misconception.actual}
+                    whyItMatters={callouts.misconception.whyItMatters}
+                  />
+                )}
+                {callouts.keyInsight && <KeyInsightCallout insight={callouts.keyInsight} />}
+              </section>
+            );
+          })}
+
+          {(['toy-example'] as ChapterId[]).map((chId) => {
+            const sceneId = getSceneIds(chId)[0];
+            const content = getContentForScene(sceneId, lensMode);
+            const callouts = getCallouts(sceneId, content);
+            const label = CHAPTER_LABELS[chId];
+
+            return (
+              <section
+                key={chId}
+                id={`chapter-${chId}`}
+                data-chapter={chId}
+                data-scene={sceneId}
                 className={`narrative-section ${chapterId === chId ? 'section-active' : ''}`}
               >
                 <span className="chapter-number">{label.number}</span>

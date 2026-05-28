@@ -1,9 +1,10 @@
-export type ChapterId = 'hook' | 'illusion-break' | 'harness-reveal' | 'flight-recorder' | 'field-guide' | 'appendix';
+export type ChapterId = 'hook' | 'illusion-break' | 'harness-reveal' | 'toy-example' | 'flight-recorder' | 'field-guide' | 'appendix';
 
 export type SceneId =
   | 'teaser-cross-section'
   | 'model-only-misconception'
   | 'harness-framing'
+  | 'toy-example-rename'
   | 'first-loop'
   | 'tool-invocation'
   | 'permission-gate'

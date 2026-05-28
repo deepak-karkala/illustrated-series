@@ -8,6 +8,7 @@ describe('content callout completeness', () => {
     'teaser-cross-section',
     'model-only-misconception',
     'harness-framing',
+    'toy-example-rename',
     'first-loop',
     'tool-invocation',
     'permission-gate',
