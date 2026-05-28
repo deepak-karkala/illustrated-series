@@ -1,6 +1,7 @@
 import type { ContentBlock } from './scene';
 
 export const INTRO_CONTENT: ContentBlock[] = [
+  // ── Hook ──────────────────────────────────────────────────────────
   {
     id: 'hook-heading',
     chapterId: 'hook',
@@ -8,6 +9,13 @@ export const INTRO_CONTENT: ContentBlock[] = [
     heading: 'You\'ve used a coding agent. But what\'s actually happening inside it?',
     body: 'You asked Claude Code to fix a bug in a React component. It read the file. Then another. Then paused — "Allow execution of npm run test?" You clicked yes. It ran the tests, saw the failure, edited the code, ran again. Five turns later, the bug was gone. You just watched a system reason, act, observe, and recover — but what was actually happening behind that loop? The answer is not "the model figured it out." It\'s a harness — a set of systems turning model intelligence into real, verifiable work. This piece opens the machine so you can see it.',
     lensMode: 'product',
+    analogy: 'You\'ve stepped into an engine room instead of just boarding the ferry. You\'ve used the tool — now we open the casing to show the machinery underneath.',
+    misconception: {
+      wrong: '"Coding agents are just GPT with terminal access — better text in, better text out."',
+      actual: 'A coding agent is not a single response. The model is a reasoning engine running inside an orchestration layer — a harness — that gives it tools, memory, permissions, and feedback. Without the harness, the model can only describe what you should do. With it, the model can actually do it.',
+      whyItMatters: 'When your agent loops on the same error, "forgets" mid-task, or can\'t open a file, you\'re not seeing a broken chatbot — you\'re seeing a harness decision. Understanding which part failed is the difference between blaming the wrong thing and fixing the right one.',
+    },
+    keyInsight: 'Your coding agent is not a chatbot. It is a reasoning engine wrapped in systems that let it act, observe, remember, and recover. This piece is a tour of that machine.',
   },
   {
     id: 'hook-body',
@@ -17,13 +25,22 @@ export const INTRO_CONTENT: ContentBlock[] = [
     body: 'The natural instinct — and the way most tools market themselves — is to imagine a coding agent as ChatGPT with terminal access. Smarter text-in, smarter text-out. That model is wrong in ways that matter: it can\'t explain why the agent sometimes loops on the same error, why it suddenly "forgets" what it was doing mid-task, or why it sometimes nails a refactor first try and other times can\'t open a file. A coding agent is not a single response. It is a work loop — gather context, choose action, execute through tools, observe result, decide to continue or stop — wrapped in systems that manage memory, permissions, errors, and feedback. This is what we\'re going to look at.',
     lensMode: 'product',
   },
+
+  // ── Illusion Break ────────────────────────────────────────────────
   {
     id: 'illusion-heading',
     chapterId: 'illusion-break',
     sceneId: 'model-only-misconception',
     heading: 'The model alone cannot do this job',
-    body: 'A language model on its own can produce text. It can describe a landing page. It can write HTML. But it cannot open a file, read your existing codebase, run a test, or check whether its output actually works. The model is a reasoning engine. Without a harness around it, it is blind, handless, and stateless.',
+    body: 'You\'ve probably seen a linter point out problems in your code. It can describe exactly what\'s wrong — but it can\'t push the fix to production. That\'s a harness gap: the linter has analysis (the model\'s job) but no execution pipeline (the harness\'s job). A language model on its own is the same — it can describe a landing page. It can write HTML. But it cannot open a file, read your existing codebase, run a test, or check whether its output actually works. The model is a reasoning engine. Without a harness around it, it is blind, handless, and stateless.',
     lensMode: 'product',
+    analogy: 'A linter can describe what\'s wrong with your code. It can\'t push the fix to production. A model can describe the solution. It can\'t run it. The gap — the ability to act on analysis — is exactly what a harness provides.',
+    misconception: {
+      wrong: '"The model is the smart part. The harness is just plumbing — a thin wrapper that forwards text in and out."',
+      actual: 'The harness makes most of the consequential decisions: what files to load into context, which tool to call next, whether to grant permission, when to compact the conversation, how to recover from failure. The model is one component the harness calls — not the other way around.',
+      whyItMatters: 'If you think the model is the system, you\'ll diagnose every problem as a model problem. Most agent failures are harness problems — context starvation, missing tools, permission overreach, broken feedback loops.',
+    },
+    keyInsight: 'A model without a harness is a brilliant advisor who can\'t touch your keyboard. A harness without a model is an empty scaffold. Together, they are a system that acts.',
   },
   {
     id: 'illusion-contrast',
@@ -33,13 +50,22 @@ export const INTRO_CONTENT: ContentBlock[] = [
     body: 'Without a harness, every request starts from scratch. The model cannot persist state, browse project structure, run commands, or validate outcomes. A harness changes this: it gives the model eyes (file reads), hands (tool execution), memory (session state), and boundaries (permissions). The difference is the difference between a brilliant advisor and a capable colleague.',
     lensMode: 'product',
   },
+
+  // ── Harness Reveal ────────────────────────────────────────────────
   {
     id: 'harness-heading',
     chapterId: 'harness-reveal',
     sceneId: 'harness-framing',
     heading: 'Agent = Model + Harness',
-    body: 'The cleanest definition in the field comes from the practitioners building these systems: every coding agent is a model nested inside a harness. The model decides the next move. The harness determines what is visible, actionable, permitted, persisted, and verifiable. If you are not the model, you are the harness. This is the machine.',
+    body: 'You\'ve probably used a CI/CD pipeline — the build script compiles the code, but the pipeline decides when to run, what to gate, and what to do on failure. That\'s a harness: a wrapping layer that orchestrates execution. Now replace the build script with a model\'s output. The pipeline (harness) decides what the model sees, which actions it can take, when to retry, and whether the result is good enough. Every coding agent is a model nested inside a harness. The model decides the next move. The harness determines what is visible, actionable, permitted, persisted, and verifiable.',
     lensMode: 'product',
+    analogy: 'Like a CI/CD pipeline wrapping a build step — the harness wraps the model. The build script produces the artifact; the pipeline decides when to run, what to gate, and what to do on failure.',
+    misconception: {
+      wrong: '"The harness is just a glorified message router — it passes input to the model and output back to the user."',
+      actual: 'The harness owns every consequential decision: context window assembly, tool availability, permission gating, compaction policy, memory persistence, and recovery strategy. The model\'s "intelligence" is bounded by what the harness allows it to know and do.',
+      whyItMatters: 'If the harness only exposes read_file but not run_tests, the agent cannot verify its work. If it compacts too aggressively, the agent loses critical context. These are harness design decisions, not model failures.',
+    },
+    keyInsight: 'The model is one component. The harness is the system. Everything the agent can do — and everything it cannot — is a harness decision.',
   },
   {
     id: 'harness-subsystems',
@@ -49,13 +75,22 @@ export const INTRO_CONTENT: ContentBlock[] = [
     body: 'A well-designed harness has five practical subsystems: instructions (what the agent should know), tools (what it can do), environment (where it operates), state (what it remembers), and feedback (how it knows whether it succeeded). Together, these turn a raw model into a system that can inspect, modify, verify, and recover.',
     lensMode: 'product',
   },
+
+  // ── Flight Recorder: First Loop ───────────────────────────────────
   {
     id: 'loop-intro',
     chapterId: 'flight-recorder',
     sceneId: 'first-loop',
     heading: 'The gather → act → observe → verify loop',
-    body: 'At its core, a coding agent repeats a deceptively simple loop: gather context from the environment, choose the next useful action, execute it through tools, inspect what happened, and decide whether to continue or stop. The loop itself is small. Everything else — context shaping, tool dispatch, permission checks, recovery, memory, observability — belongs to the harness around it.',
+    body: 'You\'ve probably used a REPL — read, eval, print, loop — in Python or Node. The coding agent works the same way, but with richer primitives. Instead of evaluating an expression, the model proposes an action. Instead of printing a result, the harness returns a structured observation — a file diff, a test outcome, a build log. Then the loop repeats until the goal is met or the model decides to stop. Every piece of this loop — context assembly, tool dispatch, permission checks, error handling — belongs to the harness around the model.',
     lensMode: 'product',
+    analogy: 'Like a REPL: read (tools), eval (model), print (action), observe, loop. The REPL\'s eval function is the model. Everything else — the environment, state, I/O — is the harness.',
+    misconception: {
+      wrong: '"The agent plans everything upfront and then executes — like a build script with a plan-first stage."',
+      actual: 'Coding agents don\'t plan once and execute. They observe and adjust every single step. Each turn, the model reads the latest context, re-evaluates its next move, and acts. The plan itself is revised continuously based on what each action reveals.',
+      whyItMatters: 'If you expect the agent to plan everything correctly at the start, you\'ll be baffled when it changes direction. That direction change IS the agent working — each observation informs the next decision, just like a developer reading compiler output and adjusting.',
+    },
+    keyInsight: 'Coding agents don\'t plan once and execute. They observe and adjust every step. The loop — not the plan — is the irreducible unit of work.',
   },
   {
     id: 'loop-request-intake',
@@ -66,12 +101,30 @@ export const INTRO_CONTENT: ContentBlock[] = [
     lensMode: 'product',
   },
   {
+    id: 'loop-harness',
+    chapterId: 'flight-recorder',
+    sceneId: 'first-loop',
+    heading: 'The gather → act → observe → verify loop',
+    body: 'The agent loop is the irreducible runtime: gather context, choose action, execute through tools, inspect results, repeat. The harness owns every decision around this loop — context shaping, tool dispatch, permission checks, sandboxing, compaction policy, and recovery strategy. The loop is simple; the harness around it is where engineering maturity lives.',
+    lensMode: 'harness',
+    keyInsight: 'The harness does not run the loop — it IS the loop. The model runs inside it, one turn at a time, with the harness deciding what it can see and do at every step.',
+  },
+
+  // ── Flight Recorder: Tool Invocation ──────────────────────────────
+  {
     id: 'tool-invocation-intro',
     chapterId: 'flight-recorder',
     sceneId: 'tool-invocation',
     heading: 'Tools are the agent\'s action vocabulary',
-    body: 'Without tools, a model can only produce text. With tools, it can inspect files, edit artifacts, run commands, search code, and verify outcomes against the environment. The harness does not merely give the model more power — it defines which actions are expressible, which are safe, which are observable, and which produce useful evidence for the next turn.',
+    body: 'You\'ve probably worked with dependency injection — a service declares what it needs, and the framework resolves it at runtime. Tool dispatch is the same pattern. The model emits a structured request ("I need to read file X"), and the harness resolves that request — fetching the file, checking permissions, capturing the output, and returning a formatted observation to the model. Without this mechanism, the model is a brilliant strategist who can\'t open a drawer. The harness defines which actions are expressible, which are safe, which are observable, and which produce useful evidence for the next turn.',
     lensMode: 'product',
+    analogy: 'Like dependency injection — the model "asks for" a tool by emitting a structured request; the harness resolves it, executes it, and returns the result. The model declares the need; the harness fulfills it.',
+    misconception: {
+      wrong: '"The agent reads the whole codebase before starting — it absorbs everything and then works from memory."',
+      actual: 'The agent only knows what tools return. It cannot read anything that a tool did not fetch and inject into the context window. What it knows = what it asked for, nothing more.',
+      whyItMatters: 'If the agent misses a file dependency or makes a mistake in an unfamiliar directory, it\'s not "forgetting" — it never saw that file in the first place. Diagnose the tool set and the context window, not the model\'s memory.',
+    },
+    keyInsight: 'The model doesn\'t execute tools. It asks for them. The harness resolves, executes, and returns the result. Every tool call is a three-party transaction.',
   },
   {
     id: 'tool-dispatch',
@@ -82,12 +135,30 @@ export const INTRO_CONTENT: ContentBlock[] = [
     lensMode: 'product',
   },
   {
+    id: 'tool-harness',
+    chapterId: 'flight-recorder',
+    sceneId: 'tool-invocation',
+    heading: 'Tool dispatch architecture',
+    body: 'When the model emits a tool_use block, the harness intercepts it, validates the payload against registered tool schemas, checks permissions and sandbox rules, routes to the correct executor, captures stdout/stderr and exit codes, formats a structured observation, and injects it back into the conversation transcript. Each of these steps is a harness design decision with durability consequences.',
+    lensMode: 'harness',
+    keyInsight: 'Tool dispatch is a harness pipeline, not a model capability. The model emits intent; the harness decides whether and how to execute.',
+  },
+
+  // ── Flight Recorder: Permission Gate ──────────────────────────────
+  {
     id: 'permission-intro',
     chapterId: 'flight-recorder',
     sceneId: 'permission-gate',
     heading: 'Agency with boundaries',
-    body: 'Coding agents are powerful precisely because they can touch real systems — but that power requires control. Every tool invocation passes through a permission pipeline: deny-first rules, approval modes, sandboxing, and policy checks. The goal is not to block everything, but to make the boundary visible and deliberate.',
+    body: 'You\'ve probably used sudo — you type a command, the system checks your permissions, and either executes or denies. That\'s the permission boundary: a gate between "I want to do X" and "X actually happens." Coding agents work the same way, but the gate is programmable. The harness checks every tool request against deny-first rules, approval modes, sandboxing, and policy checks before execution. The goal is not to block everything — it\'s to make the boundary visible and deliberate.',
     lensMode: 'product',
+    analogy: 'Like sudo with a config file. Most reads are auto-allowed, writes and network require confirmation, some actions (rm -rf, force push) are blocked outright. The permission boundary is a programmable gate, not a yes/no switch.',
+    misconception: {
+      wrong: '"Permission dialogs keep agents safe. If it can do something, it was approved — that\'s security enough."',
+      actual: 'In practice, 93% of approval dialogs are accepted without meaningful review. Mature harnesses layer multiple control mechanisms — deny-first defaults, sandboxes, checkpoints, and programmable hooks — so the system stays steerable even when human attention flags.',
+      whyItMatters: 'If permission is just a dialog, it\'s theater. Real control comes from deny-first defaults, sandbox boundaries, and checkpoint reversibility — structures that work when no human is watching.',
+    },
+    keyInsight: 'The agent has agency. The permission boundary is where the human stays in the loop — and where the harness enforces limits that attention alone cannot.',
   },
   {
     id: 'permission-approval',
@@ -98,12 +169,30 @@ export const INTRO_CONTENT: ContentBlock[] = [
     lensMode: 'product',
   },
   {
+    id: 'permission-harness',
+    chapterId: 'flight-recorder',
+    sceneId: 'permission-gate',
+    heading: 'The authorization pipeline',
+    body: 'The permission pipeline is a layered sequence: deny-first rules, classifier checks, approval thresholds, sandbox boundaries, and post-execution audit hooks. The design lesson from production data is that approval dialogs alone are insufficient — 93% are approved without meaningful review. Real control lives in deny-first defaults, programmable hooks, and checkpoint reversibility.',
+    lensMode: 'harness',
+    keyInsight: 'The permission system is not a gate — it is a pipeline. Every request passes through deny-first rules, classifiers, sandboxes, and audit hooks before execution.',
+  },
+
+  // ── Flight Recorder: Context Pressure ─────────────────────────────
+  {
     id: 'context-intro',
     chapterId: 'flight-recorder',
     sceneId: 'context-pressure',
     heading: 'The context window is a scarce resource',
-    body: 'Every file read, every tool output, every planning step, and every instruction takes up space in the context window. As the agent works, the window fills with system prompts, user intent, tool results, plans, and partial outputs. The model must reason from a growing, increasingly crowded working set — and that crowding has real consequences for performance.',
+    body: 'You\'ve probably dealt with RAM constraints — a fixed amount of working memory, filling up as you open more programs and files. The context window works exactly the same way. Every file read, every tool output, every planning step takes up space in a fixed-size window. As the agent works, the window fills with system prompts, user intent, tool results, plans, and partial outputs. Performance degrades as you approach the limit — attention diffuses, decisions rush, verification gets skipped. The window is the single most constrained resource in the entire system, and managing it is the harness\'s most consequential job.',
     lensMode: 'product',
+    analogy: 'Like RAM — fixed capacity, fills up as you work, performance degrades as you approach the limit. The context window is working memory with a hard ceiling.',
+    misconception: {
+      wrong: '"The context window is like RAM — give it more and the model holds more. It\'s an upgrade problem, not a design problem."',
+      actual: 'The window is fixed per model. You cannot expand it at runtime. The harness must decide what fits, when to compress, and what to drop. Context engineering — not model capacity — is the primary lever for reliability at scale.',
+      whyItMatters: 'If you treat context as an "add more RAM" problem, you miss the actual engineering: compaction, pruning, re-injection, and subagent delegation. Every byte in the window is a resource allocation decision.',
+    },
+    keyInsight: 'The window is fixed. Managing what\'s in it — not the model\'s reasoning ability — is the primary lever for agent reliability.',
   },
   {
     id: 'context-pressure-body',
@@ -114,12 +203,30 @@ export const INTRO_CONTENT: ContentBlock[] = [
     lensMode: 'product',
   },
   {
+    id: 'context-harness',
+    chapterId: 'flight-recorder',
+    sceneId: 'context-pressure',
+    heading: 'Context engineering strategy',
+    body: 'Every byte in the context window is a resource allocation decision. The harness must decide what to load at startup, when to compact, what survives compaction, when to re-inject from durable storage, and when to offload work to an isolated subagent. Context engineering — not model size — is the primary lever for agent reliability at scale.',
+    lensMode: 'harness',
+    keyInsight: 'Context engineering is the cardinal harness responsibility. The model\'s reasoning quality is bounded by what the harness chooses to put in front of it.',
+  },
+
+  // ── Flight Recorder: Compaction ───────────────────────────────────
+  {
     id: 'compaction-intro',
     chapterId: 'flight-recorder',
     sceneId: 'compaction',
     heading: 'Forgetting without failing',
-    body: 'When the context window approaches its limit, the harness performs compaction: it summarizes the conversation so far into a condensed representation, drops stale frames, and frees up space for the next phase of work. Compaction is lossy by design. The art is preserving what matters — the current task, the constraints, the key decisions — while discarding what has already been acted on.',
+    body: 'You\'ve probably seen RAM paging to disk — when physical memory fills up, the OS moves older pages to swap to make room for the working set. Compaction is the agent\'s equivalent. When the context window approaches its limit, the harness summarizes the conversation so far into a condensed representation, drops stale frames, and frees up space for the next phase of work. Compaction is lossy by design. The art is preserving what matters — the current task, the constraints, the key decisions — while discarding what has already been acted on.',
     lensMode: 'product',
+    analogy: 'Like RAM paging to disk — older context gets summarized (paged out) so the working set has room. Lossy, deliberate, and the quality of the summary determines whether the agent stays on track.',
+    misconception: {
+      wrong: '"Compaction is lossless — it\'s just a more efficient encoding of the same information."',
+      actual: 'Compaction always loses detail. Information is discarded — entire tool outputs, intermediate reasoning, false starts. The point is to preserve enough to keep working, not to preserve everything.',
+      whyItMatters: 'If you expect the agent to recall every detail of a long conversation, you\'ll be surprised when it "forgets" something. It didn\'t forget — the harness decided that detail wasn\'t worth keeping.',
+    },
+    keyInsight: 'Forgetting deliberately is how the agent keeps thinking. Compaction is lossy summarization — the harness decides what survives and what\'s discarded.',
   },
   {
     id: 'compaction-tradeoff',
@@ -130,12 +237,30 @@ export const INTRO_CONTENT: ContentBlock[] = [
     lensMode: 'product',
   },
   {
+    id: 'compaction-harness',
+    chapterId: 'flight-recorder',
+    sceneId: 'compaction',
+    heading: 'Compaction as a systems operation',
+    body: 'Compaction is a lossy summarization that condenses conversation history into a smaller representation. The harness must decide the compaction trigger (token budget threshold), the compaction strategy (summary vs. prune vs. re-inject), and what to preserve: current task intent, key decisions, constraints still in force, and the path forward. A bad compaction loses the thread; a good compaction preserves continuity.',
+    lensMode: 'harness',
+    keyInsight: 'Compaction is a harness policy, not an automatic optimization. The harness chooses when, what to keep, and what to discard — and those choices determine whether the agent drifts.',
+  },
+
+  // ── Flight Recorder: Memory & Continuity ──────────────────────────
+  {
     id: 'memory-intro',
     chapterId: 'flight-recorder',
     sceneId: 'memory-retrieval',
     heading: 'Memory is not the same as compaction',
-    body: 'Compaction manages transient conversation within a single run. Memory is durable information that outlives any one session: saved notes, project conventions, learned preferences, decision logs, and continuity artifacts. When a new session starts, the harness retrieves memory to avoid expensive cold starts.',
+    body: 'You\'ve probably used a .cursorrules or CLAUDE.md file — a document that tells the agent about your project conventions, and persists across sessions. That\'s memory: durable information that outlives any single conversation. Compaction manages transient context within one run. Memory manages durable knowledge — saved notes, project conventions, learned preferences, decision logs — that survives session boundaries. When a new session starts, the harness retrieves memory to avoid expensive cold starts, giving the agent a running start informed by every session that came before.',
     lensMode: 'product',
+    analogy: 'Like a .cursor-rules or CLAUDE.md file — facts that survive the session boundary. Project conventions, key decisions, and learned preferences are written once and retrieved every time a new session starts.',
+    misconception: {
+      wrong: '"Memory is just saved chat history — it replays the last conversation when you start a new session."',
+      actual: 'Memory is not a transcript. It\'s a curated set of durable artifacts: project structure snapshots, decision logs, convention documents, and progress markers. The harness decides what to store, how to index it, and what to re-inject into a fresh context window.',
+      whyItMatters: 'If you think memory is chat replay, you miss the architecture: storage, indexing, retrieval, and injection are all harness-level decisions. Bad memory architecture means every session is a cold start costing tokens, time, and correctness.',
+    },
+    keyInsight: 'Memory is durable knowledge that survives sessions. Compaction is transient compression within a session. Together, they form the agent\'s continuity system.',
   },
   {
     id: 'memory-retrieval-body',
@@ -146,12 +271,30 @@ export const INTRO_CONTENT: ContentBlock[] = [
     lensMode: 'product',
   },
   {
+    id: 'memory-harness',
+    chapterId: 'flight-recorder',
+    sceneId: 'memory-retrieval',
+    heading: 'Memory architecture and retrieval strategy',
+    body: 'Memory is durable state that outlives any single session: saved notes, project conventions, decision logs, continuity artifacts. The harness must decide what to store, how to index it, when to retrieve it, and how to present it in the opening context — so a fresh session starts informed rather than cold.',
+    lensMode: 'harness',
+    keyInsight: 'Memory is the harness\'s durable store. Every retrieval is a harness policy decision — what to load, in what order, at what level of detail.',
+  },
+
+  // ── Flight Recorder: Failure — Permission Blocked ─────────────────
+  {
     id: 'failure-permission-intro',
     chapterId: 'flight-recorder',
     sceneId: 'failure-permission-blocked',
     heading: 'When the gate says no',
-    body: 'The agent proposes a command — maybe something risky, like deleting a file or pushing to a remote. The permission pipeline intercepts it. A deny-first rule fires, or the approval threshold is not met, or the sandbox policy blocks execution. The tool does not run. The agent must now recover: explain what was blocked, propose an alternative, and continue. This is not failure — it is the harness working as designed.',
+    body: 'You\'ve probably seen a CI policy block — you proposed a deploy, the gate caught it, and the pipeline said "no, fix these checks first." The agent\'s permission boundary works the same way. The agent proposes a command — maybe something risky, like pushing to a remote without review. The permission pipeline intercepts it. A deny-first rule fires, or the approval threshold is not met. The tool does not run. The agent must now read the denial reason, re-plan, and propose a different path. This is not failure — it is the harness working as designed.',
     lensMode: 'product',
+    analogy: 'Like a CI policy block — you proposed a deploy, the gate caught it, and the pipeline said "no, fix this first." The system has to re-plan around the constraint.',
+    misconception: {
+      wrong: '"A permission block means the agent failed. It couldn\'t do what was needed."',
+      actual: 'Permission blocks are planned system behavior. The harness returns structured information — not just "denied," but why, and what would need to change. The agent reads this as input for its next plan. A block is feedback, not failure.',
+      whyItMatters: 'If you treat blocks as failures, you\'ll try to widen permissions. The right response is to make blocks informative enough that the agent can self-correct — treat the denial as data, not as an obstacle.',
+    },
+    keyInsight: 'A permission block is not a crash — it\'s a structured signal. The harness says no with a reason; the agent replans. The boundary is the feature.',
   },
   {
     id: 'failure-permission-recovery',
@@ -162,12 +305,30 @@ export const INTRO_CONTENT: ContentBlock[] = [
     lensMode: 'product',
   },
   {
+    id: 'failure-permission-harness',
+    chapterId: 'flight-recorder',
+    sceneId: 'failure-permission-blocked',
+    heading: 'Designing recoverable permission boundaries',
+    body: 'When a deny-first rule fires, the harness must return structured information — not just "denied" but why, and what would need to change. The agent reads this as input for its next plan. Harness design here is about making blocks informative enough that the agent can self-correct rather than loop.',
+    lensMode: 'harness',
+    keyInsight: 'Every deny-first rule must return structured reasoning. The agent\'s recovery quality depends on how well the harness explains what was blocked and why.',
+  },
+
+  // ── Flight Recorder: Failure — Tool Failure ───────────────────────
+  {
     id: 'failure-tool-intro',
     chapterId: 'flight-recorder',
     sceneId: 'failure-tool-failure',
     heading: 'When a tool call fails',
-    body: 'The agent invokes a tool — say, running a build command — and the command returns a non-zero exit code. The tool itself succeeded at executing, but the result is a failure. Now the agent must read the error output, diagnose the cause, and decide: retry with adjustments, try a different approach, or escalate. This is the point where many weak agents spiral, repeating the same failing command without learning.',
+    body: 'You\'ve probably read a stack trace — the build failed, the test assertion didn\'t match, and now you need to inspect the output, trace the cause, and decide what to change. The agent does exactly the same thing. The tool executed — the command ran — but the result is a failure (non-zero exit code, assertion error, timeout). Now the agent must read the error output, diagnose the cause, and decide: retry with adjustments, try a different approach, or escalate. The harness preserves the error context and lets the model reason about it. Recovery, not blind retry, is what separates durable agents from brittle ones.',
     lensMode: 'product',
+    analogy: 'Like reading a stack trace — the build failed, the error message tells you what went wrong, and you trace from the output back to the cause. The agent does the same, with the harness preserving the error context for inspection.',
+    misconception: {
+      wrong: '"A tool failure means the agent is broken. It should just retry — the same command will work the second time."',
+      actual: 'Blind retry is the hallmark of a brittle agent. Strong agents inspect the failure output, diagnose the cause, and correct before retrying. Retrying without change = hoping the problem goes away.',
+      whyItMatters: 'If your agent retries the same failing command 3 times, it\'s not being persistent — it\'s missing a recovery strategy. The harness should make failures inspectable so the model can reason, not just repeat.',
+    },
+    keyInsight: 'Tool failure is not the end of the loop — it\'s a new observation. The harness captures it; the model reasons about it; the system recovers. Durable agents fail informatively, not silently.',
   },
   {
     id: 'failure-tool-recovery',
@@ -178,83 +339,37 @@ export const INTRO_CONTENT: ContentBlock[] = [
     lensMode: 'product',
   },
   {
-    id: 'loop-harness',
-    chapterId: 'flight-recorder',
-    sceneId: 'first-loop',
-    heading: 'The gather → act → observe → verify loop',
-    body: 'The agent loop is the irreducible runtime: gather context, choose action, execute through tools, inspect results, repeat. The harness owns every decision around this loop — context shaping, tool dispatch, permission checks, sandboxing, compaction policy, and recovery strategy. The loop is simple; the harness around it is where engineering maturity lives.',
-    lensMode: 'harness',
-  },
-  {
-    id: 'tool-harness',
-    chapterId: 'flight-recorder',
-    sceneId: 'tool-invocation',
-    heading: 'Tool dispatch architecture',
-    body: 'When the model emits a tool_use block, the harness intercepts it, validates the payload against registered tool schemas, checks permissions and sandbox rules, routes to the correct executor, captures stdout/stderr and exit codes, formats a structured observation, and injects it back into the conversation transcript. Each of these steps is a harness design decision with durability consequences.',
-    lensMode: 'harness',
-  },
-  {
-    id: 'permission-harness',
-    chapterId: 'flight-recorder',
-    sceneId: 'permission-gate',
-    heading: 'The authorization pipeline',
-    body: 'The permission pipeline is a layered sequence: deny-first rules, classifier checks, approval thresholds, sandbox boundaries, and post-execution audit hooks. The design lesson from production data is that approval dialogs alone are insufficient — 93% are approved without meaningful review. Real control lives in deny-first defaults, programmable hooks, and checkpoint reversibility.',
-    lensMode: 'harness',
-  },
-  {
-    id: 'context-harness',
-    chapterId: 'flight-recorder',
-    sceneId: 'context-pressure',
-    heading: 'Context engineering strategy',
-    body: 'Every byte in the context window is a resource allocation decision. The harness must decide what to load at startup, when to compact, what survives compaction, when to re-inject from durable storage, and when to offload work to an isolated subagent. Context engineering — not model size — is the primary lever for agent reliability at scale.',
-    lensMode: 'harness',
-  },
-  {
-    id: 'compaction-harness',
-    chapterId: 'flight-recorder',
-    sceneId: 'compaction',
-    heading: 'Compaction as a systems operation',
-    body: 'Compaction is a lossy summarization that condenses conversation history into a smaller representation. The harness must decide the compaction trigger (token budget threshold), the compaction strategy (summary vs. prune vs. re-inject), and what to preserve: current task intent, key decisions, constraints still in force, and the path forward. A bad compaction loses the thread; a good compaction preserves continuity.',
-    lensMode: 'harness',
-  },
-  {
-    id: 'memory-harness',
-    chapterId: 'flight-recorder',
-    sceneId: 'memory-retrieval',
-    heading: 'Memory architecture and retrieval strategy',
-    body: 'Memory is durable state that outlives any single session: saved notes, project conventions, decision logs, continuity artifacts. The harness must decide what to store, how to index it, when to retrieve it, and how to present it in the opening context — so a fresh session starts informed rather than cold.',
-    lensMode: 'harness',
-  },
-  {
-    id: 'failure-permission-harness',
-    chapterId: 'flight-recorder',
-    sceneId: 'failure-permission-blocked',
-    heading: 'Designing recoverable permission boundaries',
-    body: 'When a deny-first rule fires, the harness must return structured information — not just "denied" but why, and what would need to change. The agent reads this as input for its next plan. Harness design here is about making blocks informative enough that the agent can self-correct rather than loop.',
-    lensMode: 'harness',
-  },
-  {
     id: 'failure-tool-harness',
     chapterId: 'flight-recorder',
     sceneId: 'failure-tool-failure',
     heading: 'Building recovery into the tool layer',
     body: 'Tool failure handling is a harness-level concern. The harness captures exit codes and error streams, formats them as structured observations, and preserves them in context so the model can reason. Verification tools (linters, type checkers, test runners) convert ambiguous failure into actionable signal. Recovery policy — retry, replan, escalate — is a harness decision.',
     lensMode: 'harness',
+    keyInsight: 'Failure recovery is a harness architecture, not a model behavior. The harness must capture, structure, and reinject failure data so the model can reason about it.',
   },
+
+  // ── Field Guide ───────────────────────────────────────────────────
   {
     id: 'field-guide-intro',
     chapterId: 'field-guide',
     sceneId: 'field-guide-summary',
-    heading: 'How to read any coding agent',
-    body: 'The Flight Recorder showed you one specific machine. Now zoom out. These portable heuristics will help you evaluate any coding agent you encounter — regardless of vendor, model, or packaging. Carry these questions with you.',
+    heading: 'Now you can see inside it',
+    body: 'You walked through a real machine. Now carry these questions with you. The next time you use Claude Code, Codex, or any coding agent, you\'ll know what to look for. These are not abstractions — they are levers you can observe and evaluate in any agent you use.',
     lensMode: 'product',
+    analogy: 'After a tour of the engine room, you can walk into any ship and spot the same components. The names change — the architecture doesn\'t.',
+    misconception: {
+      wrong: '"These concepts only apply to the specific agent we studied. Different tools work differently."',
+      actual: 'Every coding agent — Claude Code, Codex, Copilot, Cursor — is a reasoning model inside a harness. The harnesses differ in details (tools offered, permission models, memory persistence), but the architecture is universal.',
+      whyItMatters: 'Once you see the harness model, you can evaluate any agent by asking the same five questions: What tools? What context? What permissions? What memory? What verification?',
+    },
+    keyInsight: 'The tools change. The loop is the same. Every coding agent is a model inside a harness. Know the harness, and you know the agent.',
   },
   {
     id: 'field-guide-harness',
     chapterId: 'field-guide',
     sceneId: 'field-guide-summary',
-    heading: '1. What is the harness doing?',
-    body: 'When the agent seems smart, ask: what tools does it have? When it seems dumb, ask: what tools is it missing? The model is only one actor. The harness decides what is visible, actionable, permitted, and verifiable. Diagnose the system before blaming the model.',
+    heading: '1. What can the agent do?',
+    body: 'When the agent seems smart, ask: what tools does it have? read_file? write_file? run_tests? browser navigation? When it seems dumb, ask: what tools is it missing? The model is only one actor. The harness decides what is visible, actionable, permitted, and verifiable. Diagnose the system before blaming the model. Next time you use Claude Code, check what tools are available for your task.',
     lensMode: 'product',
   },
   {
@@ -262,7 +377,7 @@ export const INTRO_CONTENT: ContentBlock[] = [
     chapterId: 'field-guide',
     sceneId: 'field-guide-summary',
     heading: '2. What can the agent see?',
-    body: 'Context engineering is the primary reliability lever. Does the agent have access to the right files? Are instructions clear and concise? Is the repository legible to a fresh session? An agent that cannot orient itself cannot perform reliable work. The test: can a fresh session answer what the system is and how to verify it?',
+    body: 'Context engineering is the primary reliability lever. Does the agent have access to the right files? Are instructions clear and concise? Is the repository legible to a fresh session? An agent that cannot orient itself cannot perform reliable work. The test: can a fresh session answer what the system is and how to verify it? If your agent keeps "forgetting" project structure, the context loading strategy — not the model — needs attention.',
     lensMode: 'product',
   },
   {
@@ -270,7 +385,7 @@ export const INTRO_CONTENT: ContentBlock[] = [
     chapterId: 'field-guide',
     sceneId: 'field-guide-summary',
     heading: '3. Where are the boundaries?',
-    body: 'Every useful agent must be able to act. Every safe agent must be bounded. Look for the permission pipeline: deny-first rules, sandbox boundaries, approval thresholds, and checkpoint reversibility. If boundaries are only human approval dialogs, the system is under-controlled. If nothing risky is ever allowed, the system is over-constrained.',
+    body: 'Every useful agent must be able to act. Every safe agent must be bounded. Look for the permission pipeline: deny-first rules, sandbox boundaries, approval thresholds, and checkpoint reversibility. If boundaries are only human approval dialogs, the system is under-controlled. If nothing risky is ever allowed, the system is over-constrained. When your agent asks "allow this command?", ask yourself: what would happen if I wasn\'t here to click yes?',
     lensMode: 'product',
   },
   {
@@ -278,9 +393,11 @@ export const INTRO_CONTENT: ContentBlock[] = [
     chapterId: 'field-guide',
     sceneId: 'field-guide-summary',
     heading: '4. How does it know it succeeded?',
-    body: 'Output without verification is speculation. Look for evidence that the agent tests its own work: linters, type checkers, test runners, browser screenshots, diff reviews. The best agent systems convert ambiguous success into concrete, inspectable evidence. If you cannot tell whether the work is correct without rerunning it yourself, the verification loop is broken.',
+    body: 'Output without verification is speculation. Look for evidence that the agent tests its own work: linters, type checkers, test runners, browser screenshots, diff reviews. The best agent systems convert ambiguous success into concrete, inspectable evidence. Next time your agent says "done," ask: what verification ran? If you cannot tell whether the work is correct without rerunning it yourself, the verification loop is broken.',
     lensMode: 'product',
   },
+
+  // ── Appendix ──────────────────────────────────────────────────────
   {
     id: 'appendix-intro',
     chapterId: 'appendix',
@@ -288,6 +405,13 @@ export const INTRO_CONTENT: ContentBlock[] = [
     heading: 'How this artifact was constructed',
     body: 'This is not a generic article. It was built as a consulting wedge — an educational artifact designed to demonstrate technical depth, explanatory clarity, and product taste. Here is how it works, where the content came from, and why the form matters as much as the content.',
     lensMode: 'product',
+    analogy: 'The piece itself is built like an agent — declarative scenes, validated state, simulated time. The visual system, state machine, and content layer are three independent modules communicating through typed contracts.',
+    misconception: {
+      wrong: '"This was created by an AI that just generated pretty pictures. The content is synthetic fluff."',
+      actual: 'The content is derived from a 14-chapter cross-referenced corpus — first-party docs, research papers, practitioner essays, and a curated vocabulary ledger. The simulator is a deterministic state machine driven by real cognitive models of agent behavior. Form follows function.',
+      whyItMatters: 'This piece is a proof of concept for a medium — the Illustrated Series. The architecture (declarative scenes, validated state, derived visuals) is the same pattern that can explain any hidden system.',
+    },
+    keyInsight: 'This piece itself is built like an agent: declarative scenes define intent, a validated state machine drives behavior, and the visual system renders derived state — the same architecture it explains.',
   },
   {
     id: 'appendix-corpus',
