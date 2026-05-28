@@ -155,10 +155,33 @@ export function FlightRecorderPanel({ panel, timelineSteps, recoveryCopy }: Flig
               <p className="fr-recovery-text">{recoveryCopy}</p>
             </div>
           )}
+
+          {isVisible(v, 'tool-path') ? (
+            panel.activeToolLabel && (
+              <div className="fr-tool-info">
+                <span
+                  className="fr-tool-chip"
+                  style={{ backgroundColor: `var(--color-tool)`, color: '#fff' }}
+                >
+                  {panel.activeToolLabel}
+                </span>
+                {panel.toolResultSummary && (
+                  <span className="fr-tool-result">{panel.toolResultSummary}</span>
+                )}
+              </div>
+            )
+          ) : (
+            <div className="fr-placeholder">
+              <div className="fr-placeholder-inner">
+                <span className="fr-placeholder-label">Tool path</span>
+                <span className="fr-placeholder-hint">— visible at Step 2</span>
+              </div>
+            </div>
+          )}
         </>
       )}
 
-      {panel.activeToolLabel && (
+      {isToy && panel.activeToolLabel && (
         <div className="fr-tool-info">
           <span
             className="fr-tool-chip"
