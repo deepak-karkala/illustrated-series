@@ -1,5 +1,6 @@
 import type { StorySessionState, ChapterId, LensMode } from '../story/state';
 import { getChapterId, getSceneIds, SCENE_DEFINITIONS } from '../story/scene-registry';
+import { INTRO_CONTENT } from '../story/content';
 
 const VALID_CHAPTER_IDS = new Set<ChapterId>([
   'hook',
@@ -73,4 +74,21 @@ export function validateAndNormalize(state: StorySessionState): ValidationResult
   }
 
   return { state: normalized, warnings };
+}
+
+export function validateContentSchema(): string[] {
+  const warnings: string[] = [];
+
+  for (const def of SCENE_DEFINITIONS) {
+    const sceneContent = INTRO_CONTENT.filter((c) => c.sceneId === def.sceneId);
+
+    if (def.requiresKeyInsight) {
+      const hasKeyInsight = sceneContent.some((c) => c.keyInsight != null);
+      if (!hasKeyInsight) {
+        warnings.push(`Scene "${def.sceneId}" requires a key insight but none found in content`);
+      }
+    }
+  }
+
+  return warnings;
 }

@@ -1,0 +1,116 @@
+/* ── Analogy Callout ── */
+.callout-analogy {
+  margin: var(--space-md) 0 var(--space-xl);
+  padding: var(--space-md) var(--space-lg);
+  border-left: 3px solid var(--color-memory);
+  background: var(--color-paper-deep);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  max-width: var(--narrative-measure);
+}
+
+.callout-analogy-label {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: var(--type-mono);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-memory);
+  margin-bottom: var(--space-xs);
+}
+
+.callout-analogy-text {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  color: var(--color-ink-soft);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Misconception Callout ── */
+.callout-misconception {
+  margin: var(--space-xl) 0;
+  padding: var(--space-lg);
+  border: 1px solid var(--color-warning);
+  border-left-width: 3px;
+  border-radius: var(--radius-md);
+  background: var(--color-paper);
+  max-width: var(--narrative-measure);
+}
+
+.callout-misconception-row {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: baseline;
+  margin-bottom: var(--space-sm);
+}
+
+.callout-misconception-row:last-child {
+  margin-bottom: 0;
+}
+
+.callout-misconception-tag {
+  flex: 0 0 auto;
+  font-family: var(--font-ui);
+  font-size: var(--type-mono);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.callout-misconception-tag--wrong {
+  background: var(--color-warning);
+  color: var(--color-paper);
+}
+
+.callout-misconception-tag--actual {
+  background: var(--color-harness);
+  color: var(--color-paper);
+}
+
+.callout-misconception-tag--why {
+  background: var(--color-metal-deep);
+  color: var(--color-paper);
+}
+
+.callout-misconception-text {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  color: var(--color-ink-soft);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Key Insight Callout ── */
+.callout-key-insight {
+  margin: var(--space-2xl) 0;
+  padding: var(--space-xl) var(--space-lg);
+  border-top: 2px solid var(--color-harness);
+  border-bottom: 2px solid var(--color-harness);
+  max-width: var(--narrative-measure);
+}
+
+.callout-key-insight-label {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: var(--type-mono);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-harness);
+  margin-bottom: var(--space-sm);
+}
+
+.callout-key-insight-text {
+  font-family: var(--font-display);
+  font-size: var(--type-h3);
+  font-weight: 600;
+  color: var(--color-ink);
+  line-height: 1.25;
+  margin: 0;
+  padding: 0;
+  border: none;
+}

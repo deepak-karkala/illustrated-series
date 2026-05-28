@@ -3,7 +3,7 @@ import type { StorySessionState, ChapterId, SceneId, FailureToggles, LensMode } 
 import type { SessionAction } from '../simulator/reducer';
 import { INTRO_CONTENT } from '../story/content';
 import { selectViewModel } from '../simulator/selectors';
-import { validateAndNormalize } from '../simulator/validation';
+import { validateAndNormalize, validateContentSchema } from '../simulator/validation';
 import { getSceneIds } from '../story/scene-registry';
 import { useScrollChapter } from './useScrollChapter';
 import { TeaserScene } from './TeaserScene';
@@ -15,10 +15,15 @@ import { LensToggle } from './LensToggle';
 import { StateDrawer } from './StateDrawer';
 import { DrawerToggle } from './DrawerToggle';
 import { DevOverlay } from './DevOverlay';
+import { AnalogyCallout } from './AnalogyCallout';
+import { MisconceptionCallout } from './MisconceptionCallout';
+import { KeyInsightCallout } from './KeyInsightCallout';
+import type { ContentBlock } from '../story/scene';
 import './TeaserScene.css';
 import './FlightRecorderPanel.css';
 import './StateDrawer.css';
 import './DevOverlay.css';
+import './Callouts.css';
 
 interface AppShellProps {
   state: StorySessionState;
@@ -29,6 +34,13 @@ function getContentForScene(sceneId: SceneId, lensMode: LensMode) {
   const sceneContent = INTRO_CONTENT.filter((c) => c.sceneId === sceneId);
   const lensContent = sceneContent.filter((c) => c.lensMode === lensMode);
   return lensContent.length > 0 ? lensContent : sceneContent.filter((c) => c.lensMode === 'product');
+}
+
+function getCallouts(content: ContentBlock[]) {
+  const analogy = content.find((c) => c.analogy)?.analogy;
+  const misconception = content.find((c) => c.misconception)?.misconception;
+  const keyInsight = content.find((c) => c.keyInsight)?.keyInsight;
+  return { analogy, misconception, keyInsight };
 }
 
 function StickyDiagram({
@@ -151,6 +163,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
         <div className="narrative-column">
           {(['hook', 'illusion-break', 'harness-reveal'] as ChapterId[]).map((chId) => {
             const content = getContentForScene(getSceneIds(chId)[0], lensMode);
+            const callouts = getCallouts(content);
             const label = CHAPTER_LABELS[chId];
 
             return (
@@ -163,18 +176,28 @@ export function AppShell({ state, dispatch }: AppShellProps) {
               >
                 <span className="chapter-number">{label.number}</span>
                 <h2 className="chapter-title">{label.title}</h2>
+                {callouts.analogy && <AnalogyCallout analogy={callouts.analogy} />}
                 {content.map((block) => (
                   <div key={block.id} className="chapter-block">
                     <h3 className="chapter-heading">{block.heading}</h3>
                     <p className="chapter-body">{block.body}</p>
                   </div>
                 ))}
+                {callouts.misconception && (
+                  <MisconceptionCallout
+                    wrong={callouts.misconception.wrong}
+                    actual={callouts.misconception.actual}
+                    whyItMatters={callouts.misconception.whyItMatters}
+                  />
+                )}
+                {callouts.keyInsight && <KeyInsightCallout insight={callouts.keyInsight} />}
               </section>
             );
           })}
 
           {frScenes.map((scId, i) => {
             const content = getContentForScene(scId, lensMode);
+            const callouts = getCallouts(content);
             const frNumber = `4.${i + 1}`;
 
             return (
@@ -187,18 +210,28 @@ export function AppShell({ state, dispatch }: AppShellProps) {
               >
                 <span className="chapter-number">{frNumber}</span>
                 <h2 className="chapter-title">{FR_SCENE_LABELS[scId] ?? scId}</h2>
+                {callouts.analogy && <AnalogyCallout analogy={callouts.analogy} />}
                 {content.map((block) => (
                   <div key={block.id} className="chapter-block">
                     <h3 className="chapter-heading">{block.heading}</h3>
                     <p className="chapter-body">{block.body}</p>
                   </div>
                 ))}
+                {callouts.misconception && (
+                  <MisconceptionCallout
+                    wrong={callouts.misconception.wrong}
+                    actual={callouts.misconception.actual}
+                    whyItMatters={callouts.misconception.whyItMatters}
+                  />
+                )}
+                {callouts.keyInsight && <KeyInsightCallout insight={callouts.keyInsight} />}
               </section>
             );
           })}
 
           {(['field-guide'] as ChapterId[]).map((chId) => {
             const content = getContentForScene(getSceneIds(chId)[0], lensMode);
+            const callouts = getCallouts(content);
             const label = CHAPTER_LABELS[chId];
 
             return (
@@ -211,6 +244,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
               >
                 <span className="chapter-number">{label.number}</span>
                 <h2 className="chapter-title">{label.title}</h2>
+                {callouts.analogy && <AnalogyCallout analogy={callouts.analogy} />}
                 {content[0] && (
                   <p className="chapter-body field-guide-intro">{content[0].body}</p>
                 )}
@@ -225,12 +259,14 @@ export function AppShell({ state, dispatch }: AppShellProps) {
                     </div>
                   ))}
                 </div>
+                {callouts.keyInsight && <KeyInsightCallout insight={callouts.keyInsight} />}
               </section>
             );
           })}
 
           {(['appendix'] as ChapterId[]).map((chId) => {
             const content = getContentForScene(getSceneIds(chId)[0], lensMode);
+            const callouts = getCallouts(content);
             const label = CHAPTER_LABELS[chId];
 
             return (
@@ -243,12 +279,14 @@ export function AppShell({ state, dispatch }: AppShellProps) {
               >
                 <span className="chapter-number appendix-number">{label.number}</span>
                 <h2 className="chapter-title appendix-title">{label.title}</h2>
+                {callouts.analogy && <AnalogyCallout analogy={callouts.analogy} />}
                 {content.map((block) => (
                   <div key={block.id} className="chapter-block appendix-block">
                     <h3 className="chapter-heading">{block.heading}</h3>
                     <p className="chapter-body">{block.body}</p>
                   </div>
                 ))}
+                {callouts.keyInsight && <KeyInsightCallout insight={callouts.keyInsight} />}
               </section>
             );
           })}
@@ -265,7 +303,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
         open={validated.state.drawerOpen}
         onClose={() => dispatch({ type: 'TOGGLE_DRAWER' })}
       />
-      <DevOverlay state={validated.state} warnings={validated.warnings} />
+      <DevOverlay state={validated.state} warnings={[...validated.warnings, ...validateContentSchema()]} />
     </main>
   );
 }
