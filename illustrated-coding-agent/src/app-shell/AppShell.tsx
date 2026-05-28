@@ -42,7 +42,8 @@ function getCallouts(sceneId: SceneId, _lensContent: ContentBlock[]) {
   const allChapterBlocks = INTRO_CONTENT.filter((c) => chapterSceneIds.includes(c.sceneId));
   const analogy = allChapterBlocks.find((c) => c.analogy)?.analogy;
   const misconception = allChapterBlocks.find((c) => c.misconception)?.misconception;
-  const keyInsight = allChapterBlocks.find((c) => c.keyInsight)?.keyInsight;
+  const sceneBlocks = INTRO_CONTENT.filter((c) => c.sceneId === sceneId);
+  const keyInsight = sceneBlocks.find((c) => c.keyInsight)?.keyInsight;
   return { analogy, misconception, keyInsight };
 }
 

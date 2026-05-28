@@ -90,7 +90,6 @@ export const INTRO_CONTENT: ContentBlock[] = [
       actual: 'Even this tiny task exercises every layer of the agent: tool dispatch (read_file, write_file), harness orchestration (the model proposes, the harness executes), and verification (test runner confirms correctness). The loop is the same at any scale.',
       whyItMatters: 'If you can trace a 4-step variable rename, you can trace a 50-step feature build. The mechanism doesn\'t change — only the number of iterations.',
     },
-    keyInsight: 'The agent loop doesn\'t care about task size. Rename a variable or rebuild a platform — the same gather → act → observe → verify cycle runs until the job is done.',
   },
   {
     id: 'toy-step-read',
@@ -123,6 +122,7 @@ export const INTRO_CONTENT: ContentBlock[] = [
     heading: 'Step 4: Done',
     body: 'All steps complete. read_file → write_file → run_tests → done. That\'s the agent loop in miniature. The same mechanism — gather context through tools, propose actions, execute with validation, verify against the environment — is what builds entire applications. Now let\'s watch it at scale.',
     lensMode: 'product',
+    keyInsight: 'The agent loop is the mechanism: read, write, verify, done. The Flight Recorder will show you the exact same pattern at scale — more tools, more steps, same loop.',
   },
 
   // ── Flight Recorder: First Loop ───────────────────────────────────
