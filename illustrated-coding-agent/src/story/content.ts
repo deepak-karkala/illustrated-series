@@ -9,7 +9,7 @@ export const INTRO_CONTENT: ContentBlock[] = [
     heading: 'You\'ve used a coding agent. But what\'s actually happening inside it?',
     body: 'You asked Claude Code to fix a bug in a React component. It read the file. Then another. Then paused — "Allow execution of npm run test?" You clicked yes. It ran the tests, saw the failure, edited the code, ran again. Five turns later, the bug was gone. You just watched a system reason, act, observe, and recover — but what was actually happening behind that loop? The answer is not "the model figured it out." It\'s a harness — a set of systems turning model intelligence into real, verifiable work. This piece opens the machine so you can see it.',
     lensMode: 'product',
-    analogy: 'You\'ve stepped into an engine room instead of just boarding the ferry. You\'ve used the tool — now we open the casing to show the machinery underneath.',
+    analogy: 'You\'ve stepped through code in a debugger — not just watched it run. You went frame by frame, saw the call stack, inspected variables, found the bug. Understanding the harness is the same shift: from surface behavior to internal mechanism.',
     misconception: {
       wrong: '"Coding agents are just GPT with terminal access — better text in, better text out."',
       actual: 'A coding agent is not a single response. The model is a reasoning engine running inside an orchestration layer — a harness — that gives it tools, memory, permissions, and feedback. Without the harness, the model can only describe what you should do. With it, the model can actually do it.',
@@ -356,7 +356,7 @@ export const INTRO_CONTENT: ContentBlock[] = [
     heading: 'Now you can see inside it',
     body: 'You walked through a real machine. Now carry these questions with you. The next time you use Claude Code, Codex, or any coding agent, you\'ll know what to look for. These are not abstractions — they are levers you can observe and evaluate in any agent you use.',
     lensMode: 'product',
-    analogy: 'After a tour of the engine room, you can walk into any ship and spot the same components. The names change — the architecture doesn\'t.',
+    analogy: 'After you\'ve learned to read one framework\'s stack traces, you can read any framework\'s. The function names change; the unwind-inspect-isolate pattern doesn\'t. Same here: learn the harness model once, and every agent becomes legible.',
     misconception: {
       wrong: '"These concepts only apply to the specific agent we studied. Different tools work differently."',
       actual: 'Every coding agent — Claude Code, Codex, Copilot, Cursor — is a reasoning model inside a harness. The harnesses differ in details (tools offered, permission models, memory persistence), but the architecture is universal.',
