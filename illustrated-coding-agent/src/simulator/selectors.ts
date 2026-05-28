@@ -15,12 +15,24 @@ const ALL_TIMELINE_STEPS: TimelineStep[] = [
 ];
 
 function timelineForScene(sceneId: SceneId): TimelineStep[] {
-  if (sceneId === 'toy-example-rename') {
-    return [
-      { id: 't-1', label: 'Read file', status: 'past' },
-      { id: 't-2', label: 'Rename', status: 'active' },
-      { id: 't-3', label: 'Verify', status: 'future' },
+  if (sceneId.startsWith('toy-')) {
+    const toySteps: { id: string; label: string }[] = [
+      { id: 't-1', label: 'Read file' },
+      { id: 't-2', label: 'Write change' },
+      { id: 't-3', label: 'Run tests' },
+      { id: 't-4', label: 'Done' },
     ];
+    const activeMap: Record<string, number> = {
+      'toy-read': 0,
+      'toy-write': 1,
+      'toy-test': 2,
+      'toy-done': 3,
+    };
+    const activeIdx = activeMap[sceneId] ?? 0;
+    return toySteps.map((s, i) => ({
+      ...s,
+      status: i < activeIdx ? 'past' : i === activeIdx ? 'active' : 'future',
+    } as TimelineStep));
   }
 
   const activeIndex: Record<SceneId, number | null> = {
@@ -28,6 +40,10 @@ function timelineForScene(sceneId: SceneId): TimelineStep[] {
     'model-only-misconception': null,
     'harness-framing': null,
     'toy-example-rename': null,
+    'toy-read': null,
+    'toy-write': null,
+    'toy-test': null,
+    'toy-done': null,
     'first-loop': 2,
     'tool-invocation': 4,
     'permission-gate': 5,
@@ -51,12 +67,25 @@ function timelineForScene(sceneId: SceneId): TimelineStep[] {
 
 function basePanelForScene(sceneId: SceneId): SimulatorPanelProps {
   const sceneProps: Record<string, Partial<SimulatorPanelProps>> = {
-    'toy-example-rename': {
+    'toy-read': {
       panelVariant: 'toy',
-      contextFillPercent: 20,
       activeToolLabel: 'read_file',
       toolResultSummary: 'const userCount = 5;',
-      permissionState: 'none',
+    },
+    'toy-write': {
+      panelVariant: 'toy',
+      activeToolLabel: 'write_file',
+      toolResultSummary: 'userCount → activeUserCount',
+    },
+    'toy-test': {
+      panelVariant: 'toy',
+      activeToolLabel: 'run_tests',
+      toolResultSummary: 'All tests pass',
+    },
+    'toy-done': {
+      panelVariant: 'toy',
+      activeToolLabel: null,
+      toolResultSummary: null,
     },
     'first-loop': {
       contextFillPercent: 45,
@@ -162,10 +191,9 @@ function applyFailureToggles(
 export function selectViewModel(state: StorySessionState): DerivedViewModel {
   const timelineSteps = timelineForScene(state.sceneId);
   const basePanel = basePanelForScene(state.sceneId);
-  const { panel: degradedPanel, recoveryCopy } = applyFailureToggles(
-    basePanel,
-    state.failureToggles,
-  );
+  const { panel: degradedPanel, recoveryCopy } = basePanel.panelVariant === 'toy'
+    ? { panel: basePanel, recoveryCopy: null }
+    : applyFailureToggles(basePanel, state.failureToggles);
 
   const lensLabels = getLensLabels(state.sceneId, state.lensMode);
   const lensTimeline = applyLensLabels(timelineSteps, lensLabels);

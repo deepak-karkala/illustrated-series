@@ -4,7 +4,7 @@ import type { SessionAction } from '../simulator/reducer';
 import { INTRO_CONTENT } from '../story/content';
 import { selectViewModel } from '../simulator/selectors';
 import { validateAndNormalize, validateContentSchema } from '../simulator/validation';
-import { getSceneIds } from '../story/scene-registry';
+import { getSceneIds, CHAPTER_SCENES } from '../story/scene-registry';
 import { useScrollChapter } from './useScrollChapter';
 import { TeaserScene } from './TeaserScene';
 import { ModelOnlyScene } from '../notation/ModelOnlyScene';
@@ -36,12 +36,21 @@ function getContentForScene(sceneId: SceneId, lensMode: LensMode) {
   return lensContent.length > 0 ? lensContent : sceneContent.filter((c) => c.lensMode === 'product');
 }
 
-function getCallouts(sceneId: SceneId, lensContent: ContentBlock[]) {
-  const allSceneBlocks = INTRO_CONTENT.filter((c) => c.sceneId === sceneId);
-  const analogy = allSceneBlocks.find((c) => c.analogy)?.analogy;
-  const misconception = allSceneBlocks.find((c) => c.misconception)?.misconception;
-  const keyInsight = lensContent.find((c) => c.keyInsight)?.keyInsight;
+function getCallouts(sceneId: SceneId, _lensContent: ContentBlock[]) {
+  const chapterId = getChapterIdForScene(sceneId);
+  const chapterSceneIds = chapterId ? getSceneIds(chapterId) : [sceneId];
+  const allChapterBlocks = INTRO_CONTENT.filter((c) => chapterSceneIds.includes(c.sceneId));
+  const analogy = allChapterBlocks.find((c) => c.analogy)?.analogy;
+  const misconception = allChapterBlocks.find((c) => c.misconception)?.misconception;
+  const keyInsight = allChapterBlocks.find((c) => c.keyInsight)?.keyInsight;
   return { analogy, misconception, keyInsight };
+}
+
+function getChapterIdForScene(sceneId: SceneId): ChapterId | null {
+  for (const [chId, scenes] of Object.entries(CHAPTER_SCENES)) {
+    if ((scenes as SceneId[]).includes(sceneId)) return chId as ChapterId;
+  }
+  return null;
 }
 
 function StickyDiagram({
@@ -206,38 +215,51 @@ export function AppShell({ state, dispatch }: AppShellProps) {
           })}
 
           {(['toy-example'] as ChapterId[]).map((chId) => {
-            const sceneId = getSceneIds(chId)[0];
-            const content = getContentForScene(sceneId, lensMode);
-            const callouts = getCallouts(sceneId, content);
+            const toyScenes = getSceneIds(chId);
             const label = CHAPTER_LABELS[chId];
 
-            return (
-              <section
-                key={chId}
-                id={`chapter-${chId}`}
-                data-chapter={chId}
-                data-scene={sceneId}
-                className={`narrative-section ${chapterId === chId ? 'section-active' : ''}`}
-              >
-                <span className="chapter-number">{label.number}</span>
-                <h2 className="chapter-title">{label.title}</h2>
-                {callouts.analogy && <AnalogyCallout analogy={callouts.analogy} />}
-                {content.map((block) => (
-                  <div key={block.id} className="chapter-block">
-                    <h3 className="chapter-heading">{block.heading}</h3>
-                    <p className="chapter-body">{block.body}</p>
-                  </div>
-                ))}
-                {callouts.misconception && (
-                  <MisconceptionCallout
-                    wrong={callouts.misconception.wrong}
-                    actual={callouts.misconception.actual}
-                    whyItMatters={callouts.misconception.whyItMatters}
-                  />
-                )}
-                {callouts.keyInsight && <KeyInsightCallout insight={callouts.keyInsight} />}
-              </section>
-            );
+            return toyScenes.map((scId, i) => {
+              const content = getContentForScene(scId, lensMode);
+              const callouts = getCallouts(scId, content);
+              const isFirst = i === 0;
+              const isLast = i === toyScenes.length - 1;
+
+              return (
+                <section
+                  key={scId}
+                  id={`scene-${scId}`}
+                  data-chapter={chId}
+                  data-scene={scId}
+                  className={`narrative-section ${sceneId === scId ? 'section-active' : ''}`}
+                >
+                  {isFirst && (
+                    <>
+                      <span className="chapter-number">{label.number}</span>
+                      <h2 className="chapter-title">{label.title}</h2>
+                      {callouts.analogy && <AnalogyCallout analogy={callouts.analogy} />}
+                    </>
+                  )}
+                  {content.map((block) => (
+                    <div key={block.id} className="chapter-block">
+                      <h3 className="chapter-heading">{block.heading}</h3>
+                      <p className="chapter-body">{block.body}</p>
+                    </div>
+                  ))}
+                  {isLast && (
+                    <>
+                      {callouts.misconception && (
+                        <MisconceptionCallout
+                          wrong={callouts.misconception.wrong}
+                          actual={callouts.misconception.actual}
+                          whyItMatters={callouts.misconception.whyItMatters}
+                        />
+                      )}
+                      {callouts.keyInsight && <KeyInsightCallout insight={callouts.keyInsight} />}
+                    </>
+                  )}
+                </section>
+              );
+            });
           })}
 
           {frScenes.map((scId, i) => {

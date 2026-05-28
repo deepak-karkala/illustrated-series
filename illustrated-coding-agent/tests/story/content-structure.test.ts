@@ -4,33 +4,28 @@ import { SCENE_DEFINITIONS } from '../../src/story/scene-registry';
 import type { SceneId } from '../../src/story/state';
 
 describe('content callout completeness', () => {
-  const narrativeSceneIds: SceneId[] = [
-    'teaser-cross-section',
-    'model-only-misconception',
-    'harness-framing',
-    'toy-example-rename',
-    'first-loop',
-    'tool-invocation',
-    'permission-gate',
-    'context-pressure',
-    'compaction',
-    'memory-retrieval',
-    'failure-permission-blocked',
-    'failure-tool-failure',
-    'field-guide-summary',
-    'appendix-method',
-  ];
+  function firstScenePerChapter(): SceneId[] {
+    const seen = new Set<string>();
+    const result: SceneId[] = [];
+    for (const def of SCENE_DEFINITIONS) {
+      if (!seen.has(def.chapterId)) {
+        seen.add(def.chapterId);
+        result.push(def.sceneId);
+      }
+    }
+    return result;
+  }
 
-  it('every narrative scene has at least one analogy across all lens modes', () => {
-    for (const sceneId of narrativeSceneIds) {
+  it('every chapter has at least one analogy in its first scene', () => {
+    for (const sceneId of firstScenePerChapter()) {
       const blocks = INTRO_CONTENT.filter((c) => c.sceneId === sceneId);
       const hasAnalogy = blocks.some((c) => c.analogy != null && c.analogy.length > 0);
       expect(hasAnalogy).toBe(true);
     }
   });
 
-  it('every narrative scene has at least one misconception across all lens modes', () => {
-    for (const sceneId of narrativeSceneIds) {
+  it('every chapter has at least one misconception in its first scene', () => {
+    for (const sceneId of firstScenePerChapter()) {
       const blocks = INTRO_CONTENT.filter((c) => c.sceneId === sceneId);
       const hasMisconception = blocks.some(
         (c) => c.misconception != null
@@ -42,27 +37,18 @@ describe('content callout completeness', () => {
     }
   });
 
-  it('every scene with requiresKeyInsight has a product-lens key insight', () => {
-    for (const def of SCENE_DEFINITIONS) {
-      if (!def.requiresKeyInsight) continue;
+  it('every chapter with requiresKeyInsight has key insight per lens mode', () => {
+    const chaptersWithKeyInsight = new Set(
+      SCENE_DEFINITIONS.filter((d) => d.requiresKeyInsight).map((d) => d.chapterId),
+    );
 
-      const blocks = INTRO_CONTENT.filter(
-        (c) => c.sceneId === def.sceneId && c.lensMode === 'product',
-      );
-      const hasKeyInsight = blocks.some((c) => c.keyInsight != null && c.keyInsight.length > 0);
-      expect(hasKeyInsight).toBe(true);
-    }
-  });
-
-  it('scenes with both lens modes have key insight for harness lens too', () => {
-    for (const def of SCENE_DEFINITIONS) {
-      if (!def.requiresKeyInsight) continue;
-
-      const allSceneBlocks = INTRO_CONTENT.filter((c) => c.sceneId === def.sceneId);
-      const lensModes = [...new Set(allSceneBlocks.map((c) => c.lensMode))];
+    for (const chId of chaptersWithKeyInsight) {
+      const sceneIds = SCENE_DEFINITIONS.filter((d) => d.chapterId === chId).map((d) => d.sceneId);
+      const allChapterBlocks = INTRO_CONTENT.filter((c) => sceneIds.includes(c.sceneId));
+      const lensModes = [...new Set(allChapterBlocks.map((c) => c.lensMode))];
 
       for (const lens of lensModes) {
-        const lensBlocks = allSceneBlocks.filter((c) => c.lensMode === lens);
+        const lensBlocks = allChapterBlocks.filter((c) => c.lensMode === lens);
         const hasKeyInsight = lensBlocks.some((c) => c.keyInsight != null && c.keyInsight.length > 0);
         expect(hasKeyInsight).toBe(true);
       }

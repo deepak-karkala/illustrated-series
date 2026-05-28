@@ -71,7 +71,7 @@ describe('scene navigation', () => {
 
   it('getNextScene crosses chapter boundaries on last scene', () => {
     const next = getNextScene('harness-framing');
-    expect(next).toBe('toy-example-rename');
+    expect(next).toBe('toy-read');
   });
 
   it('getPrevScene retreats within the same chapter', () => {
@@ -81,7 +81,7 @@ describe('scene navigation', () => {
 
   it('getPrevScene crosses chapter boundaries on first scene', () => {
     const prev = getPrevScene('first-loop');
-    expect(prev).toBe('toy-example-rename');
+    expect(prev).toBe('toy-done');
   });
 
   it('getNextScene returns null at end of all chapters', () => {
@@ -99,7 +99,10 @@ describe('scene navigation', () => {
       'teaser-cross-section',
       'model-only-misconception',
       'harness-framing',
-      'toy-example-rename',
+      'toy-read',
+      'toy-write',
+      'toy-test',
+      'toy-done',
       'first-loop',
       'tool-invocation',
     ];
