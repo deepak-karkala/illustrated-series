@@ -8,7 +8,7 @@ export function BareVsHarnessedDiagram() {
       <div className="bare-vs-harnessed-col">
         <span className="bare-vs-harnessed-label">ChatGPT / Bare Model</span>
         <svg
-          viewBox="0 0 360 340"
+          viewBox="0 0 400 340"
           xmlns="http://www.w3.org/2000/svg"
           style={{ width: '100%' }}
           role="img"
@@ -50,7 +50,7 @@ export function BareVsHarnessedDiagram() {
       {/* ── Right: Coding Agent ─────────────────── */}
       <div className="bare-vs-harnessed-col">
         <span className="bare-vs-harnessed-label">Coding Agent</span>
-        <HarnessFrame viewBox="0 0 360 340" cropped={false}>
+        <HarnessFrame viewBox="0 0 400 340" cropped={false}>
           {/* User prompt */}
           <rect x={100} y={50} width={160} height={36} rx={8} fill="var(--color-human)" fillOpacity={0.1} stroke="var(--color-human)" strokeWidth={1} />
           <text x={180} y={73} fontFamily="var(--font-mono)" fontSize={9} fill="var(--color-human)" textAnchor="middle">User: "build a landing page"</text>
