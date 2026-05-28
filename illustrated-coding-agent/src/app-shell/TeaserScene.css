@@ -47,6 +47,37 @@
   align-items: center;
 }
 
+.bare-vs-harnessed {
+  display: flex;
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.bare-vs-harnessed-col {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.bare-vs-harnessed-label {
+  font-family: var(--font-ui);
+  font-size: var(--type-ui);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.bare-vs-harnessed-col:first-child .bare-vs-harnessed-label {
+  color: var(--color-metal-deep);
+}
+
+.bare-vs-harnessed-col:last-child .bare-vs-harnessed-label {
+  color: var(--color-harness);
+}
+
 .teaser-diagram > *:last-child {
   opacity: 0.55;
 }
@@ -63,5 +94,9 @@
 
   .teaser-diagram {
     flex: 1 1 100%;
+  }
+
+  .bare-vs-harnessed {
+    flex-direction: column;
   }
 }
