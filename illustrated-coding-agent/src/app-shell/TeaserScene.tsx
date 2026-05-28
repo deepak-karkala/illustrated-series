@@ -2,6 +2,7 @@ import { HarnessFrame } from '../notation/HarnessFrame';
 import { ContextSlice } from '../notation/ContextSlice';
 import { ToolPath } from '../notation/ToolPath';
 import { AnnotationLabel } from '../notation/AnnotationLabel';
+import { BareVsHarnessedDiagram } from '../notation/BareVsHarnessedDiagram';
 import type { TeaserAnnotation } from '../story/scene';
 
 interface TeaserSceneProps {
@@ -26,6 +27,7 @@ export function TeaserScene({ heading, subheading, annotations }: TeaserScenePro
           <p className="teaser-subheading">{subheading}</p>
         </div>
         <div className="teaser-diagram">
+          <BareVsHarnessedDiagram />
           <HarnessFrame cropped>
             <ContextSlice items={contextItems} cropped />
             <ToolPath />
