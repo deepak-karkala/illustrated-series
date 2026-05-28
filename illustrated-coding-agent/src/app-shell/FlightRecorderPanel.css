@@ -345,3 +345,30 @@
   border: 1px solid var(--color-memory);
   color: var(--color-memory);
 }
+
+/* ── Progressive FR placeholders ── */
+.fr-placeholder {
+  padding: var(--space-lg);
+  border: 1px dashed var(--color-metal);
+  border-radius: var(--radius-md);
+  opacity: 0.4;
+}
+
+.fr-placeholder-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.fr-placeholder-label {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--color-metal-deep);
+}
+
+.fr-placeholder-hint {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  color: var(--color-metal);
+}

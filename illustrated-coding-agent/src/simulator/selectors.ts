@@ -141,6 +141,7 @@ function basePanelForScene(sceneId: SceneId): SimulatorPanelProps {
 
   const defaults: SimulatorPanelProps = {
     panelVariant: 'full',
+    visibleComponents: [],
     timelineSteps: [],
     contextFillPercent: 45,
     activeToolLabel: null,
@@ -197,16 +198,16 @@ export function selectViewModel(state: StorySessionState): DerivedViewModel {
 
   const lensLabels = getLensLabels(state.sceneId, state.lensMode);
   const lensTimeline = applyLensLabels(timelineSteps, lensLabels);
+  const sceneDef = SCENE_DEFINITIONS.find((s) => s.sceneId === state.sceneId);
   const lensPanel: SimulatorPanelProps = {
     ...degradedPanel,
+    visibleComponents: sceneDef?.progressivePanelComponents ?? [],
     timelineSteps: lensTimeline,
     activeToolLabel: lensLabels?.toolLabel ?? degradedPanel.activeToolLabel,
     toolResultSummary: lensLabels?.toolResult ?? degradedPanel.toolResultSummary,
     permissionLabel: lensLabels?.permissionLabel(degradedPanel.permissionState) ?? degradedPanel.permissionLabel,
     memoryLabel: lensLabels?.memoryLabel(degradedPanel.memoryArtifactType) ?? degradedPanel.memoryLabel,
   };
-
-  const sceneDef = SCENE_DEFINITIONS.find((s) => s.sceneId === state.sceneId);
 
   return {
     timelineSteps: lensTimeline,
