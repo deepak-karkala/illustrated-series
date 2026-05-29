@@ -246,3 +246,4 @@ input[type="checkbox"],
     scroll-behavior: auto !important;
   }
 }
+.inline-diagram { margin: var(--space-lg) 0; max-width: 100%; }

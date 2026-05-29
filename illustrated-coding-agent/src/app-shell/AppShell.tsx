@@ -18,7 +18,9 @@ import { DevOverlay } from './DevOverlay';
 import { AnalogyCallout } from './AnalogyCallout';
 import { MisconceptionCallout } from './MisconceptionCallout';
 import { KeyInsightCallout } from './KeyInsightCallout';
+import { INLINE_DIAGRAM_MAP } from '../notation/inline';
 import type { ContentBlock } from '../story/scene';
+import { getSceneDefinition } from '../story/scene-registry';
 import './TeaserScene.css';
 import './FlightRecorderPanel.css';
 import './StateDrawer.css';
@@ -52,6 +54,18 @@ function getChapterIdForScene(sceneId: SceneId): ChapterId | null {
     if ((scenes as SceneId[]).includes(sceneId)) return chId as ChapterId;
   }
   return null;
+}
+
+function InlineDiagram({ sceneId }: { sceneId: SceneId }) {
+  const def = getSceneDefinition(sceneId);
+  if (!def?.inlineDiagram) return null;
+  const Component = INLINE_DIAGRAM_MAP[def.inlineDiagram];
+  if (!Component) return null;
+  return (
+    <div className="inline-diagram">
+      <Component />
+    </div>
+  );
 }
 
 function StickyDiagram({
@@ -196,6 +210,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
               >
                 <span className="chapter-number">{label.number}</span>
                 <h2 className="chapter-title">{label.title}</h2>
+                <InlineDiagram sceneId={sceneId} />
                 {callouts.analogy && <AnalogyCallout analogy={callouts.analogy} />}
                 {content.map((block) => (
                   <div key={block.id} className="chapter-block">
@@ -235,8 +250,9 @@ export function AppShell({ state, dispatch }: AppShellProps) {
                 >
                   {isFirst && (
                     <>
-                      <span className="chapter-number">{label.number}</span>
-                      <h2 className="chapter-title">{label.title}</h2>
+                <span className="chapter-number">{label.number}</span>
+                <h2 className="chapter-title">{label.title}</h2>
+                <InlineDiagram sceneId={sceneId} />
                       {callouts.analogy && <AnalogyCallout analogy={callouts.analogy} />}
                     </>
                   )}
@@ -278,6 +294,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
               >
                 <span className="chapter-number">{frNumber}</span>
                 <h2 className="chapter-title">{FR_SCENE_LABELS[scId] ?? scId}</h2>
+                <InlineDiagram sceneId={scId} />
                 {callouts.analogy && <AnalogyCallout analogy={callouts.analogy} />}
                 {content.map((block) => (
                   <div key={block.id} className="chapter-block">
@@ -313,6 +330,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
               >
                 <span className="chapter-number">{label.number}</span>
                 <h2 className="chapter-title">{label.title}</h2>
+                <InlineDiagram sceneId={sceneId} />
                 {callouts.analogy && <AnalogyCallout analogy={callouts.analogy} />}
                 {content[0] && (
                   <p className="chapter-body field-guide-intro">{content[0].body}</p>
@@ -356,6 +374,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
               >
                 <span className="chapter-number appendix-number">{label.number}</span>
                 <h2 className="chapter-title appendix-title">{label.title}</h2>
+                <InlineDiagram sceneId={sceneId} />
                 {callouts.analogy && <AnalogyCallout analogy={callouts.analogy} />}
                 {content.map((block) => (
                   <div key={block.id} className="chapter-block appendix-block">
