@@ -234,7 +234,7 @@ export function selectViewModel(state: StorySessionState): DerivedViewModel {
         label: 'Model',
         colorVar: '--color-model',
         x: 50,
-        y: 55,
+        y: 120,
         width: 110,
       },
       {
@@ -242,7 +242,7 @@ export function selectViewModel(state: StorySessionState): DerivedViewModel {
         label: 'Tool dispatch',
         colorVar: '--color-tool',
         x: 25,
-        y: 72,
+        y: 170,
         width: 160,
       },
     ],
