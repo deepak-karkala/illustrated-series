@@ -123,7 +123,7 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
   {
     sceneId: 'first-loop',
     chapterId: 'flight-recorder',
-    contentBlockIds: ['loop-intro', 'loop-request-intake'],
+    contentBlockIds: ['loop-lens-onboarding', 'loop-intro', 'loop-request-intake'],
     targetSimulatorStateId: 'first-loop',
     annotations: [
       { id: 'a-timeline', label: 'Agent timeline', position: 'top', colorVar: '--color-harness' },

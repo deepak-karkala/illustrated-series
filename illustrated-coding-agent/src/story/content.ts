@@ -127,6 +127,14 @@ export const INTRO_CONTENT: ContentBlock[] = [
 
   // ── Flight Recorder: First Loop ───────────────────────────────────
   {
+    id: 'loop-lens-onboarding',
+    chapterId: 'flight-recorder',
+    sceneId: 'first-loop',
+    heading: 'Two ways to read the machine',
+    body: 'Up until now, you\'ve been watching what the agent does — read a file, write a change, check permissions. That\'s the Product lens. Now you\'ll also see why it does it that way with the Harness lens. Same system, different vocabulary. Use the Lens toggle in the right panel to switch between them. Product tells you what happened. Harness tells you how the harness made it happen.',
+    lensMode: 'product',
+  },
+  {
     id: 'loop-intro',
     chapterId: 'flight-recorder',
     sceneId: 'first-loop',

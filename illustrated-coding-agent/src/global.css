@@ -135,11 +135,12 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: var(--space-3xl) 0;
+  padding: var(--space-3xl) var(--space-2xl);
   scroll-snap-align: start;
-  max-width: var(--narrative-measure);
+  max-width: 100%;
   border-top: 1px solid var(--color-metal);
   margin-top: var(--space-4xl);
+  background: linear-gradient(to bottom, var(--color-paper) 0%, var(--color-paper-deep) 100%);
 }
 
 .field-guide-intro {
