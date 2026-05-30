@@ -84,6 +84,7 @@ export const INTRO_CONTENT: ContentBlock[] = [
     heading: 'Before the Flight Recorder: rename a variable',
     body: 'The concepts you just learned — model, harness, tools, permissions — are big. Before we watch a full agent build a landing page, let\'s trace one tiny task from start to finish: rename a variable. Four steps. One file. The same machine you\'ll watch in the Flight Recorder, stripped to its essentials.',
     lensMode: 'product',
+    keyInsight: 'The model doesn\'t execute tools. It asks for them. The harness resolves, executes, and returns the result. Every tool call is a three-party transaction.',
     analogy: 'Like tracing a single SQL query through an ORM — one operation, end to end. The full Flight Recorder is the whole app; this is one traced query.',
     misconception: {
       wrong: '"Renaming a variable is too simple to teach anything about agent internals."',
@@ -106,6 +107,7 @@ export const INTRO_CONTENT: ContentBlock[] = [
     heading: 'Step 2: Write the change',
     body: 'The model reads the observation, reasons about it, and decides: rename userCount to activeUserCount. It emits a write_file request with the diff. The harness validates the request, checks sandbox rules, and dispatches the write. The file is now updated. This is the act phase — the model\'s intent turned into a real filesystem change.',
     lensMode: 'product',
+    keyInsight: 'The model decides; the harness executes. The model\'s intent becomes a real filesystem change only after the harness validates, sandboxes, and dispatches it.',
   },
   {
     id: 'toy-step-test',
@@ -114,6 +116,7 @@ export const INTRO_CONTENT: ContentBlock[] = [
     heading: 'Step 3: Run the tests',
     body: 'The model emits run_tests. The harness executes the test suite. The result comes back: all tests pass. The rename is correct. This is the verify phase — without it, the agent has no way to know whether its change actually worked.',
     lensMode: 'product',
+    keyInsight: 'Output without verification is speculation. The agent cannot know whether its change worked unless it runs the tests. Verification closes the loop.',
   },
   {
     id: 'toy-step-done',
