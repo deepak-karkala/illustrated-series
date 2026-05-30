@@ -27,7 +27,7 @@ export default defineConfig({
         ...devices['Desktop Chrome'],
         reducedMotion: 'reduce',
       },
-      testMatch: /a11y-mobile\.spec\.ts/,
+      testMatch: /(a11y-mobile|progressive-disclosure)\.spec\.ts/,
     },
   ],
   webServer: {

@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test';
 
 test.describe('progressive Flight Recorder disclosure', () => {
   test.beforeEach(async ({ page }, testInfo) => {
-    if (testInfo.project.name !== 'chromium') test.skip();
+    if (testInfo.project.name === 'chromium') return;
+    test.skip();
   });
 
   test('first-loop scene shows timeline and placeholders for hidden components', async ({ page }) => {
@@ -33,6 +34,35 @@ test.describe('progressive Flight Recorder disclosure', () => {
     });
     await page.waitForTimeout(800);
 
+    await expect(page.locator('.fr-memory-visual')).toBeVisible();
+  });
+});
+
+test.describe('progressive disclosure under reduced motion', () => {
+  test.beforeEach(async ({ page }, testInfo) => {
+    if (testInfo.project.name === 'reduced-motion') return;
+    test.skip();
+  });
+
+  test('first-loop shows discrete placeholder states under reduced motion', async ({ page }) => {
+    await page.goto('/');
+    await page.evaluate(() => {
+      document.querySelector('[data-scene="first-loop"]')?.scrollIntoView({ behavior: 'instant' });
+    });
+    await page.waitForTimeout(500);
+
+    await expect(page.locator('.flight-recorder-panel')).toBeVisible();
+    await expect(page.locator('.fr-placeholder')).toHaveCount(3);
+  });
+
+  test('full panel renders at memory-retrieval under reduced motion', async ({ page }) => {
+    await page.goto('/');
+    await page.evaluate(() => {
+      document.querySelector('[data-scene="memory-retrieval"]')?.scrollIntoView({ behavior: 'instant' });
+    });
+    await page.waitForTimeout(500);
+
+    await expect(page.locator('.fr-context')).toBeVisible();
     await expect(page.locator('.fr-memory-visual')).toBeVisible();
   });
 });

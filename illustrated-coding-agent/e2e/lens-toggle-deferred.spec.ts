@@ -11,7 +11,24 @@ test.describe('lens toggle deferral', () => {
       window.scrollTo({ top: 100, behavior: 'instant' });
     });
     await page.waitForTimeout(500);
+    await expect(page.locator('.lens-toggle')).toHaveCount(0);
+  });
 
+  test('lens toggle is not visible in Illusion Break chapter', async ({ page }) => {
+    await page.goto('/');
+    await page.evaluate(() => {
+      document.querySelector('[data-scene="model-only-misconception"]')?.scrollIntoView({ behavior: 'instant' });
+    });
+    await page.waitForTimeout(800);
+    await expect(page.locator('.lens-toggle')).toHaveCount(0);
+  });
+
+  test('lens toggle is not visible in Harness Reveal chapter', async ({ page }) => {
+    await page.goto('/');
+    await page.evaluate(() => {
+      document.querySelector('[data-scene="harness-framing"]')?.scrollIntoView({ behavior: 'instant' });
+    });
+    await page.waitForTimeout(800);
     await expect(page.locator('.lens-toggle')).toHaveCount(0);
   });
 
