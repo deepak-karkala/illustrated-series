@@ -135,6 +135,14 @@ export const INTRO_CONTENT: ContentBlock[] = [
     lensMode: 'product',
   },
   {
+    id: 'loop-lens-onboarding-harness',
+    chapterId: 'flight-recorder',
+    sceneId: 'first-loop',
+    heading: 'Two ways to read the machine',
+    body: 'This is the Harness lens. While the Product lens shows what happened (read_file returned X, write_file wrote Y), this lens shows how the harness orchestrated it — context assembly, tool dispatch, permission checks, compaction policy, recovery strategy. The same system, described in infrastructure terms. Toggle back to Product at any time to compare.',
+    lensMode: 'harness',
+  },
+  {
     id: 'loop-intro',
     chapterId: 'flight-recorder',
     sceneId: 'first-loop',
