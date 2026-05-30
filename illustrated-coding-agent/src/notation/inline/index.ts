@@ -1,4 +1,5 @@
 import type { InlineDiagramId } from '../../story/scene';
+import { BareVsHarnessedDiagram } from '../BareVsHarnessedDiagram';
 import {
   ChefAndKitchenDiagram,
   HarnessSubsystemsDiagram,
@@ -12,6 +13,7 @@ import {
   ErrorRecoveryLoopDiagram,
 } from './diagrams';
 
+export { BareVsHarnessedDiagram } from '../BareVsHarnessedDiagram';
 export { ChefAndKitchenDiagram } from './diagrams';
 export { HarnessSubsystemsDiagram } from './diagrams';
 export { LoopCycleDiagram } from './diagrams';
@@ -24,7 +26,7 @@ export { BlockedActionPathDiagram } from './diagrams';
 export { ErrorRecoveryLoopDiagram } from './diagrams';
 
 export const INLINE_DIAGRAM_MAP: Record<InlineDiagramId, React.FC> = {
-  'bare-vs-harnessed': () => null,
+  'bare-vs-harnessed': BareVsHarnessedDiagram,
   'chef-and-kitchen': ChefAndKitchenDiagram,
   'harness-subsystems': HarnessSubsystemsDiagram,
   'loop-cycle': LoopCycleDiagram,

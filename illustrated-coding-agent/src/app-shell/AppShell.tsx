@@ -250,9 +250,9 @@ export function AppShell({ state, dispatch }: AppShellProps) {
                 >
                   {isFirst && (
                     <>
-                <span className="chapter-number">{label.number}</span>
-                <h2 className="chapter-title">{label.title}</h2>
-                <InlineDiagram sceneId={sceneId} />
+                      <span className="chapter-number">{label.number}</span>
+                      <h2 className="chapter-title">{label.title}</h2>
+                      <InlineDiagram sceneId={scId} />
                       {callouts.analogy && <AnalogyCallout analogy={callouts.analogy} />}
                     </>
                   )}
