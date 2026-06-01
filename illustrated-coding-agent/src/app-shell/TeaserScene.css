@@ -63,6 +63,10 @@
   opacity: 0.8;
 }
 
+.teaser-diagram svg {
+  overflow: hidden;
+}
+
 .teaser-scroll-cue {
   font-family: var(--font-ui);
   font-size: var(--type-ui);
