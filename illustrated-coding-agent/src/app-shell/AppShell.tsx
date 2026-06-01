@@ -9,6 +9,7 @@ import { useScrollChapter } from './useScrollChapter';
 import { TeaserScene } from './TeaserScene';
 import { ModelOnlyScene } from '../notation/ModelOnlyScene';
 import { HarnessFramingScene } from '../notation/HarnessFramingScene';
+import { BareVsHarnessedDiagram } from '../notation/BareVsHarnessedDiagram';
 import { FlightRecorderPanel } from './FlightRecorderPanel';
 import { FailureModeToggles } from './FailureModeToggles';
 import { LensToggle } from './LensToggle';
@@ -101,6 +102,7 @@ function StickyDiagram({
           </div>
         </div>
       )}
+      {chapterId === 'hook' && <BareVsHarnessedDiagram />}
       {chapterId === 'illusion-break' && <ModelOnlyScene />}
       {chapterId === 'harness-reveal' && <HarnessFramingScene />}
       {chapterId === 'toy-example' && (

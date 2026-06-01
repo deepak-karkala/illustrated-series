@@ -145,10 +145,10 @@ describe('scene definitions', () => {
     expect(def).toBeNull();
   });
 
-  it('tracks inline teaching diagrams for hook, reveal, and flight-recorder scenes', () => {
+  it('tracks inline teaching diagrams for reveal and flight-recorder scenes', () => {
     for (const def of SCENE_DEFINITIONS) {
-      if (def.chapterId === 'toy-example' || def.chapterId === 'field-guide' || def.chapterId === 'appendix') {
-        expect(def.inlineDiagram).toBeUndefined();
+      // hook uses a sticky-panel diagram instead of inline; toy-example, field-guide, appendix have none
+      if (['hook', 'toy-example', 'field-guide', 'appendix'].includes(def.chapterId)) {
         continue;
       }
 

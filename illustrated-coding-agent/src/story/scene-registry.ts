@@ -43,7 +43,6 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     ],
     allowedToggles: [],
     emphasis: 'simulator',
-    inlineDiagram: 'bare-vs-harnessed',
     requiresKeyInsight: true,
   },
   {
