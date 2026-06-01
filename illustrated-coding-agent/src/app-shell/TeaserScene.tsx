@@ -1,7 +1,6 @@
 import { HarnessFrame } from '../notation/HarnessFrame';
 import { ContextSlice } from '../notation/ContextSlice';
 import { ToolPath } from '../notation/ToolPath';
-import { AnnotationLabel } from '../notation/AnnotationLabel';
 import type { TeaserAnnotation } from '../story/scene';
 
 interface TeaserSceneProps {
@@ -10,7 +9,7 @@ interface TeaserSceneProps {
   annotations: TeaserAnnotation[];
 }
 
-export function TeaserScene({ heading, subheading, annotations }: TeaserSceneProps) {
+export function TeaserScene({ heading, subheading }: TeaserSceneProps) {
   const contextItems = [
     { label: 'System instructions', colorVar: '--color-harness' },
     { label: 'User: build a landing page', colorVar: '--color-human' },
@@ -30,18 +29,6 @@ export function TeaserScene({ heading, subheading, annotations }: TeaserScenePro
           <HarnessFrame cropped>
             <ContextSlice items={contextItems} cropped />
             <ToolPath />
-            {annotations.map((a) => (
-              <AnnotationLabel
-                key={a.id}
-                label={a.label}
-                colorVar={a.colorVar}
-                x={a.x}
-                y={a.y}
-                targetX={a.x + 25}
-                targetY={a.y + 10}
-                side="right"
-              />
-            ))}
           </HarnessFrame>
           <p className="teaser-scroll-cue">Scroll to open the machine ↓</p>
         </div>

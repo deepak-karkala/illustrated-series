@@ -45,6 +45,12 @@
   flex-direction: column;
   gap: var(--space-md);
   align-items: center;
+
+  /* Vibrant color overrides scoped to the hero illustration only */
+  --color-harness: #0A9E72;
+  --color-model: #A030C8;
+  --color-tool: #1A62E8;
+  --color-human: #D94A14;
 }
 
 .teaser-diagram-caption {
