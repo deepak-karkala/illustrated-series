@@ -11,23 +11,23 @@ const STATUS_STYLES = {
 } as const;
 
 export function AgentTimeline({ steps }: AgentTimelineProps) {
-  const startX = 50;
-  const startY = 30;
-  const stepSpacing = 52;
+  const startX = 40;
+  const lineY = 50;
+  const stepSpacing = 62;
 
   return (
     <svg
-      viewBox="0 0 520 80"
+      viewBox="0 0 540 120"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ width: '100%', maxWidth: 560 }}
+      style={{ width: '100%', maxWidth: 540 }}
       role="img"
       aria-label="Agent loop timeline showing past, active, and future steps"
     >
       <line
         x1={startX}
-        y1={startY}
+        y1={lineY}
         x2={startX + (steps.length - 1) * stepSpacing}
-        y2={startY}
+        y2={lineY}
         stroke="var(--color-metal)"
         strokeWidth={2}
         opacity={0.3}
@@ -37,13 +37,15 @@ export function AgentTimeline({ steps }: AgentTimelineProps) {
         const cx = startX + i * stepSpacing;
         const style = STATUS_STYLES[step.status];
         const isActive = step.status === 'active';
+        const above = i % 2 === 0;
+        const labelY = above ? lineY - 16 : lineY + 28;
 
         return (
           <g key={step.id}>
             <circle
               cx={cx}
-              cy={startY}
-              r={isActive ? 6 : 4}
+              cy={lineY}
+              r={isActive ? 7 : 5}
               fill={style.fill}
               fillOpacity={style.opacity}
               stroke={style.fill}
@@ -53,8 +55,8 @@ export function AgentTimeline({ steps }: AgentTimelineProps) {
             {isActive && (
               <circle
                 cx={cx}
-                cy={startY}
-                r={10}
+                cy={lineY}
+                r={12}
                 fill="none"
                 stroke="var(--color-harness)"
                 strokeWidth={1}
@@ -63,9 +65,9 @@ export function AgentTimeline({ steps }: AgentTimelineProps) {
             )}
             <text
               x={cx}
-              y={startY + 22}
+              y={labelY}
               fontFamily="var(--font-mono)"
-              fontSize={isActive ? 9 : 8}
+              fontSize={isActive ? 10 : 9}
               fontWeight={isActive ? 600 : 400}
               fill={style.fill}
               textAnchor="middle"

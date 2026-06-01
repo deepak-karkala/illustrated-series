@@ -8,7 +8,7 @@ const ALL_TIMELINE_STEPS: TimelineStep[] = [
   { id: 'l-2', label: 'Harness frames task', status: 'future' },
   { id: 'l-3', label: 'Model reads context', status: 'future' },
   { id: 'l-4', label: 'Model proposes action', status: 'future' },
-  { id: 'l-5', label: 'Harness checks permissions', status: 'future' },
+  { id: 'l-5', label: 'Checks permissions', status: 'future' },
   { id: 'l-6', label: 'Tool executes', status: 'future' },
   { id: 'l-7', label: 'Observation returns', status: 'future' },
   { id: 'l-8', label: 'Context updates', status: 'future' },

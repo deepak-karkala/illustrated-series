@@ -22,7 +22,7 @@ export function HarnessFramingScene() {
         x={35}
         y={46}
         fontFamily="var(--font-ui)"
-        fontSize={12}
+        fontSize={14}
         fontWeight={700}
         fill="var(--color-harness)"
         textAnchor="start"
@@ -33,10 +33,10 @@ export function HarnessFramingScene() {
         x={35}
         y={62}
         fontFamily="var(--font-mono)"
-        fontSize={8}
+        fontSize={10}
         fill="var(--color-harness)"
         textAnchor="start"
-        fillOpacity={0.6}
+        fillOpacity={0.8}
       >
         every non-model system component
       </text>
@@ -45,7 +45,7 @@ export function HarnessFramingScene() {
         x={40}
         y={80}
         width={165}
-        height={90}
+        height={108}
         rx={8}
         fill="var(--color-paper)"
         stroke="var(--color-metal)"
@@ -65,7 +65,7 @@ export function HarnessFramingScene() {
         x={50}
         y={105}
         width={145}
-        height={16}
+        height={18}
         rx={3}
         fill="var(--color-harness)"
         fillOpacity={0.12}
@@ -74,18 +74,18 @@ export function HarnessFramingScene() {
       />
       <text
         x={56}
-        y={116}
+        y={117}
         fontFamily="var(--font-mono)"
-        fontSize={7}
+        fontSize={9}
         fill="var(--color-harness)"
       >
         System instructions
       </text>
       <rect
         x={50}
-        y={125}
+        y={127}
         width={135}
-        height={16}
+        height={18}
         rx={3}
         fill="var(--color-human)"
         fillOpacity={0.12}
@@ -94,18 +94,18 @@ export function HarnessFramingScene() {
       />
       <text
         x={56}
-        y={136}
+        y={139}
         fontFamily="var(--font-mono)"
-        fontSize={7}
+        fontSize={9}
         fill="var(--color-human)"
       >
         User: build landing page
       </text>
       <rect
         x={50}
-        y={145}
+        y={149}
         width={125}
-        height={16}
+        height={18}
         rx={3}
         fill="var(--color-model)"
         fillOpacity={0.12}
@@ -114,9 +114,9 @@ export function HarnessFramingScene() {
       />
       <text
         x={56}
-        y={156}
+        y={161}
         fontFamily="var(--font-mono)"
-        fontSize={7}
+        fontSize={9}
         fill="var(--color-model)"
       >
         Plan: scaffold → verify
@@ -124,7 +124,7 @@ export function HarnessFramingScene() {
 
       <rect
         x={145}
-        y={195}
+        y={215}
         width={110}
         height={56}
         rx={10}
@@ -135,9 +135,9 @@ export function HarnessFramingScene() {
       />
       <text
         x={200}
-        y={220}
+        y={240}
         fontFamily="var(--font-mono)"
-        fontSize={10}
+        fontSize={12}
         fontWeight={600}
         fill="var(--color-model)"
         textAnchor="middle"
@@ -146,9 +146,9 @@ export function HarnessFramingScene() {
       </text>
       <text
         x={200}
-        y={238}
+        y={258}
         fontFamily="var(--font-mono)"
-        fontSize={8}
+        fontSize={10}
         fill="var(--color-model)"
         textAnchor="middle"
         fillOpacity={0.7}
@@ -171,7 +171,7 @@ export function HarnessFramingScene() {
         x={357}
         y={103}
         fontFamily="var(--font-mono)"
-        fontSize={9}
+        fontSize={11}
         fontWeight={600}
         fill="var(--color-tool)"
         textAnchor="middle"
@@ -180,9 +180,9 @@ export function HarnessFramingScene() {
       </text>
       <text
         x={357}
-        y={117}
+        y={119}
         fontFamily="var(--font-mono)"
-        fontSize={7}
+        fontSize={9}
         fill="var(--color-tool)"
         textAnchor="middle"
         fillOpacity={0.7}
@@ -192,7 +192,7 @@ export function HarnessFramingScene() {
 
       <line
         x1={255}
-        y1={210}
+        y1={230}
         x2={310}
         y2={106}
         stroke="var(--color-tool)"
@@ -229,7 +229,7 @@ export function HarnessFramingScene() {
         x={357}
         y={168}
         fontFamily="var(--font-mono)"
-        fontSize={9}
+        fontSize={11}
         fontWeight={600}
         fill="var(--color-warning)"
         textAnchor="middle"
@@ -238,9 +238,9 @@ export function HarnessFramingScene() {
       </text>
       <text
         x={357}
-        y={182}
+        y={184}
         fontFamily="var(--font-mono)"
-        fontSize={7}
+        fontSize={9}
         fill="var(--color-warning)"
         textAnchor="middle"
         fillOpacity={0.7}
@@ -250,7 +250,7 @@ export function HarnessFramingScene() {
 
       <line
         x1={200}
-        y1={251}
+        y1={271}
         x2={200}
         y2={285}
         stroke="var(--color-memory)"
@@ -271,7 +271,7 @@ export function HarnessFramingScene() {
         x={200}
         y={303}
         fontFamily="var(--font-mono)"
-        fontSize={9}
+        fontSize={11}
         fontWeight={600}
         fill="var(--color-memory)"
         textAnchor="middle"
@@ -280,9 +280,9 @@ export function HarnessFramingScene() {
       </text>
       <text
         x={200}
-        y={316}
+        y={318}
         fontFamily="var(--font-mono)"
-        fontSize={7}
+        fontSize={9}
         fill="var(--color-memory)"
         textAnchor="middle"
         fillOpacity={0.7}

@@ -39,13 +39,13 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
   const x = 20;
   const y = 20;
   const w = 180;
-  const h = 56;
+  const h = 72;
 
   return (
     <svg
-      viewBox="0 0 220 100"
+      viewBox="0 0 240 120"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ width: '100%', maxWidth: 220 }}
+      style={{ width: '100%', maxWidth: 240 }}
       role="img"
       aria-label={`Memory artifact: ${displayLabel}`}
     >
@@ -53,7 +53,7 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
         x={x + 10}
         y={y - 4}
         fontFamily="var(--font-mono)"
-        fontSize={9}
+        fontSize={11}
         fontWeight={600}
         fill="var(--color-memory)"
       >
@@ -80,7 +80,7 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
             x={x + 12}
             y={y + 10}
             width={50}
-            height={14}
+            height={18}
             rx={3}
             fill="var(--color-warning)"
             fillOpacity={0.1}
@@ -92,7 +92,7 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
             x={x + 68}
             y={y + 10}
             width={50}
-            height={14}
+            height={18}
             rx={3}
             fill="var(--color-warning)"
             fillOpacity={0.1}
@@ -104,7 +104,7 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
             x={x + 124}
             y={y + 10}
             width={44}
-            height={14}
+            height={18}
             rx={3}
             fill="var(--color-warning)"
             fillOpacity={0.1}
@@ -115,9 +115,9 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
 
           <text
             x={x + w / 2}
-            y={y + 37}
+            y={y + 41}
             fontFamily="var(--font-mono)"
-            fontSize={8}
+            fontSize={10}
             fill="var(--color-warning)"
             textAnchor="middle"
           >
@@ -126,9 +126,9 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
 
           <rect
             x={x + 55}
-            y={y + 28}
+            y={y + 32}
             width={68}
-            height={18}
+            height={22}
             rx={4}
             fill="var(--color-memory)"
             fillOpacity={0.15}
@@ -137,9 +137,9 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
           />
           <text
             x={x + 89}
-            y={y + 41}
+            y={y + 47}
             fontFamily="var(--font-mono)"
-            fontSize={8}
+            fontSize={10}
             fontWeight={600}
             fill="var(--color-memory)"
             textAnchor="middle"
@@ -153,9 +153,9 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
         <>
           <rect
             x={x + 12}
-            y={y + 10}
+            y={y + 12}
             width={58}
-            height={14}
+            height={18}
             rx={3}
             fill="var(--color-model)"
             fillOpacity={0.1}
@@ -164,9 +164,9 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
           />
           <text
             x={x + 41}
-            y={y + 20}
+            y={y + 24}
             fontFamily="var(--font-mono)"
-            fontSize={7}
+            fontSize={9}
             fill="var(--color-model)"
             textAnchor="middle"
           >
@@ -175,9 +175,9 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
 
           <rect
             x={x + 12}
-            y={y + 30}
+            y={y + 35}
             width={64}
-            height={14}
+            height={18}
             rx={3}
             fill="var(--color-tool)"
             fillOpacity={0.1}
@@ -186,9 +186,9 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
           />
           <text
             x={x + 44}
-            y={y + 40}
+            y={y + 47}
             fontFamily="var(--font-mono)"
-            fontSize={7}
+            fontSize={9}
             fill="var(--color-tool)"
             textAnchor="middle"
           >
@@ -197,9 +197,9 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
 
           <rect
             x={x + 82}
-            y={y + 10}
+            y={y + 12}
             width={50}
-            height={14}
+            height={18}
             rx={3}
             fill="var(--color-human)"
             fillOpacity={0.1}
@@ -208,9 +208,9 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
           />
           <text
             x={x + 107}
-            y={y + 20}
+            y={y + 24}
             fontFamily="var(--font-mono)"
-            fontSize={7}
+            fontSize={9}
             fill="var(--color-human)"
             textAnchor="middle"
           >
@@ -248,7 +248,7 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
             x={x + w / 2}
             y={y - 14}
             fontFamily="var(--font-mono)"
-            fontSize={7}
+            fontSize={9}
             fill="var(--color-memory)"
             textAnchor="middle"
           >
@@ -259,7 +259,7 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
             x={x + 14}
             y={y + 12}
             width={60}
-            height={14}
+            height={18}
             rx={3}
             fill="var(--color-memory)"
             fillOpacity={0.12}
@@ -268,9 +268,9 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
           />
           <text
             x={x + 44}
-            y={y + 22}
+            y={y + 24}
             fontFamily="var(--font-mono)"
-            fontSize={7}
+            fontSize={9}
             fill="var(--color-memory)"
             textAnchor="middle"
           >
@@ -279,9 +279,9 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
 
           <rect
             x={x + 14}
-            y={y + 31}
+            y={y + 35}
             width={50}
-            height={14}
+            height={18}
             rx={3}
             fill="var(--color-memory)"
             fillOpacity={0.12}
@@ -290,9 +290,9 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
           />
           <text
             x={x + 39}
-            y={y + 41}
+            y={y + 47}
             fontFamily="var(--font-mono)"
-            fontSize={7}
+            fontSize={9}
             fill="var(--color-memory)"
             textAnchor="middle"
           >
@@ -303,7 +303,7 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
             x={x + 74}
             y={y + 12}
             width={48}
-            height={14}
+            height={18}
             rx={3}
             fill="var(--color-memory)"
             fillOpacity={0.12}
@@ -312,9 +312,9 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
           />
           <text
             x={x + 98}
-            y={y + 22}
+            y={y + 24}
             fontFamily="var(--font-mono)"
-            fontSize={7}
+            fontSize={9}
             fill="var(--color-memory)"
             textAnchor="middle"
           >
@@ -328,7 +328,7 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
           x={x + w / 2}
           y={y + h / 2 + 4}
           fontFamily="var(--font-mono)"
-          fontSize={10}
+          fontSize={12}
           fill="var(--color-metal-deep)"
           textAnchor="middle"
           opacity={0.4}
@@ -341,7 +341,7 @@ export function MemoryArtifact({ variant, label }: MemoryArtifactProps) {
         x={x + w / 2}
         y={y + h + 16}
         fontFamily="var(--font-mono)"
-        fontSize={9}
+        fontSize={11}
         fontWeight={600}
         fill={style.stroke}
         textAnchor="middle"

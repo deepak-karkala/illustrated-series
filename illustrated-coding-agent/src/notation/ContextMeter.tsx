@@ -15,7 +15,7 @@ export function ContextMeter({ fillPercent, items = [], compacted = false }: Con
 
   return (
     <svg
-      viewBox="0 0 400 120"
+      viewBox="0 0 400 130"
       xmlns="http://www.w3.org/2000/svg"
       style={{ width: '100%', maxWidth: 400 }}
       role="img"
@@ -25,7 +25,7 @@ export function ContextMeter({ fillPercent, items = [], compacted = false }: Con
         x={barX}
         y={barY - 8}
         fontFamily="var(--font-mono)"
-        fontSize={10}
+        fontSize={12}
         fontWeight={600}
         fill="var(--color-memory)"
       >
@@ -35,7 +35,7 @@ export function ContextMeter({ fillPercent, items = [], compacted = false }: Con
         x={barX + barW}
         y={barY - 8}
         fontFamily="var(--font-mono)"
-        fontSize={10}
+        fontSize={12}
         fill={warningActive ? 'var(--color-warning)' : 'var(--color-metal-deep)'}
         textAnchor="end"
         fontWeight={warningActive ? 600 : 400}
@@ -119,7 +119,7 @@ export function ContextMeter({ fillPercent, items = [], compacted = false }: Con
             x={barX + 8 + i * 65}
             y={barY + barH + 14}
             width={56}
-            height={14}
+            height={16}
             rx={3}
             fill={`var(${item.colorVar})`}
             fillOpacity={0.1}
@@ -129,9 +129,9 @@ export function ContextMeter({ fillPercent, items = [], compacted = false }: Con
           />
           <text
             x={barX + 8 + i * 65 + 28}
-            y={barY + barH + 24}
+            y={barY + barH + 25}
             fontFamily="var(--font-mono)"
-            fontSize={7}
+            fontSize={9}
             fill={`var(${item.colorVar})`}
             textAnchor="middle"
           >

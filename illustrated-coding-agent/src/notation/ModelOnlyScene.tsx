@@ -45,7 +45,7 @@ export function ModelOnlyScene() {
         x={250}
         y={40}
         width={120}
-        height={46}
+        height={54}
         rx={6}
         fill="none"
         stroke="var(--color-warning)"
@@ -54,9 +54,9 @@ export function ModelOnlyScene() {
       />
       <text
         x={310}
-        y={58}
+        y={60}
         fontFamily="var(--font-mono)"
-        fontSize={9}
+        fontSize={11}
         fill="var(--color-warning)"
         textAnchor="middle"
       >
@@ -64,9 +64,9 @@ export function ModelOnlyScene() {
       </text>
       <text
         x={310}
-        y={73}
+        y={77}
         fontFamily="var(--font-mono)"
-        fontSize={7}
+        fontSize={9}
         fill="var(--color-warning)"
         textAnchor="middle"
         fillOpacity={0.7}
@@ -77,7 +77,7 @@ export function ModelOnlyScene() {
         x1={200}
         y1={130}
         x2={250}
-        y2={63}
+        y2={67}
         stroke="var(--color-warning)"
         strokeWidth={1}
         strokeDasharray="4 3"
@@ -86,7 +86,7 @@ export function ModelOnlyScene() {
         x={220}
         y={95}
         fontFamily="var(--font-mono)"
-        fontSize={8}
+        fontSize={10}
         fill="var(--color-warning)"
         textAnchor="middle"
       >
@@ -97,7 +97,7 @@ export function ModelOnlyScene() {
         x={120}
         y={230}
         width={110}
-        height={40}
+        height={48}
         rx={6}
         fill="none"
         stroke="var(--color-warning)"
@@ -106,9 +106,9 @@ export function ModelOnlyScene() {
       />
       <text
         x={175}
-        y={248}
+        y={250}
         fontFamily="var(--font-mono)"
-        fontSize={9}
+        fontSize={11}
         fill="var(--color-warning)"
         textAnchor="middle"
       >
@@ -116,9 +116,9 @@ export function ModelOnlyScene() {
       </text>
       <text
         x={175}
-        y={261}
+        y={267}
         fontFamily="var(--font-mono)"
-        fontSize={7}
+        fontSize={9}
         fill="var(--color-warning)"
         textAnchor="middle"
         fillOpacity={0.7}
@@ -138,7 +138,7 @@ export function ModelOnlyScene() {
         x={195}
         y={198}
         fontFamily="var(--font-mono)"
-        fontSize={8}
+        fontSize={10}
         fill="var(--color-warning)"
         textAnchor="middle"
       >
@@ -149,7 +149,7 @@ export function ModelOnlyScene() {
         x={50}
         y={40}
         width={110}
-        height={40}
+        height={48}
         rx={6}
         fill="none"
         stroke="var(--color-warning)"
@@ -158,9 +158,9 @@ export function ModelOnlyScene() {
       />
       <text
         x={105}
-        y={58}
+        y={62}
         fontFamily="var(--font-mono)"
-        fontSize={9}
+        fontSize={11}
         fill="var(--color-warning)"
         textAnchor="middle"
       >
@@ -168,9 +168,9 @@ export function ModelOnlyScene() {
       </text>
       <text
         x={105}
-        y={71}
+        y={77}
         fontFamily="var(--font-mono)"
-        fontSize={7}
+        fontSize={9}
         fill="var(--color-warning)"
         textAnchor="middle"
         fillOpacity={0.7}
@@ -181,16 +181,16 @@ export function ModelOnlyScene() {
         x1={155}
         y1={120}
         x2={105}
-        y2={80}
+        y2={88}
         stroke="var(--color-warning)"
         strokeWidth={1}
         strokeDasharray="4 3"
       />
       <text
         x={130}
-        y={98}
+        y={102}
         fontFamily="var(--font-mono)"
-        fontSize={8}
+        fontSize={10}
         fill="var(--color-warning)"
         textAnchor="middle"
       >
@@ -201,7 +201,7 @@ export function ModelOnlyScene() {
         x={200}
         y={20}
         fontFamily="var(--font-ui)"
-        fontSize={12}
+        fontSize={14}
         fontWeight={600}
         fill="var(--color-warning)"
         textAnchor="middle"
