@@ -11,7 +11,7 @@ export function HarnessFrame({
 }) {
   return (
     <svg
-      viewBox={viewBox}
+      viewBox={cropped ? '0 0 400 350' : viewBox}
       xmlns="http://www.w3.org/2000/svg"
       style={{ width: '100%', maxWidth: 'var(--max-content-width)', overflow: 'visible' }}
       role="img"

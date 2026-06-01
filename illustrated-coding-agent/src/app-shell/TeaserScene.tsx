@@ -23,16 +23,14 @@ export function TeaserScene({ heading, subheading }: TeaserSceneProps) {
         <div className="teaser-copy">
           <h1 className="teaser-heading">{heading}</h1>
           <p className="teaser-subheading">{subheading}</p>
-          <p className="teaser-scroll-cue">Scroll to explore ↓</p>
         </div>
         <div className="teaser-diagram">
           <span className="teaser-diagram-caption">Inside every coding agent</span>
-          <div className="teaser-diagram-frame">
-            <HarnessFrame cropped>
-              <ContextSlice items={contextItems} cropped />
-              <ToolPath />
-            </HarnessFrame>
-          </div>
+          <HarnessFrame cropped>
+            <ContextSlice items={contextItems} cropped />
+            <ToolPath />
+          </HarnessFrame>
+          <p className="teaser-scroll-cue">Scroll to explore ↓</p>
         </div>
       </div>
     </section>

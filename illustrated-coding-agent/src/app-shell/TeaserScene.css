@@ -64,18 +64,15 @@
   opacity: 0.8;
 }
 
-.teaser-diagram-frame {
-  overflow: hidden;
-  width: 100%;
-}
 
 .teaser-scroll-cue {
   font-family: var(--font-display);
   font-size: var(--type-body-lg);
   font-weight: 600;
   color: var(--color-ink);
-  margin: var(--space-2xl) 0 0;
+  margin: var(--space-lg) 0 0;
   letter-spacing: -0.01em;
+  text-align: center;
 }
 
 .bare-vs-harnessed {
