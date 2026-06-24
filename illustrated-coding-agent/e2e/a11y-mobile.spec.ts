@@ -8,7 +8,7 @@ test.describe('mobile progressive disclosure', () => {
   test('lens toggle visible on narrow viewport', async ({ page }) => {
     await page.goto('/');
     await page.evaluate(() => {
-      document.querySelector('[data-scene="first-loop"]')?.scrollIntoView({ behavior: 'instant' });
+      document.querySelector('[data-scene="tool-invocation"]')?.scrollIntoView({ behavior: 'instant' });
     });
     await page.waitForTimeout(1000);
 
@@ -19,7 +19,7 @@ test.describe('mobile progressive disclosure', () => {
     await page.goto('/');
     await page.waitForTimeout(500);
     await page.evaluate(() => {
-      document.querySelector('[data-scene="first-loop"]')?.scrollIntoView({ behavior: 'instant' });
+      document.querySelector('[data-scene="tool-invocation"]')?.scrollIntoView({ behavior: 'instant' });
     });
     await page.waitForTimeout(1000);
 
@@ -45,7 +45,7 @@ test.describe('reduced-motion', () => {
   test('lens-toggle button is clickable under reduced motion', async ({ page }) => {
     await page.goto('/');
     await page.evaluate(() => {
-      document.querySelector('[data-scene="first-loop"]')?.scrollIntoView({ behavior: 'instant' });
+      document.querySelector('[data-scene="tool-invocation"]')?.scrollIntoView({ behavior: 'instant' });
     });
     await page.waitForTimeout(500);
 

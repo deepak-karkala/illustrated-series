@@ -86,7 +86,7 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     allowedToggles: [],
     emphasis: 'simulator',
     requiresKeyInsight: true,
-    progressivePanelComponents: ['timeline'],
+    progressivePanelComponents: ['timeline', 'tool-path'],
   },
   {
     sceneId: 'toy-write',
@@ -97,7 +97,7 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     allowedToggles: [],
     emphasis: 'simulator',
     requiresKeyInsight: true,
-    progressivePanelComponents: ['timeline'],
+    progressivePanelComponents: ['timeline', 'tool-path'],
   },
   {
     sceneId: 'toy-test',
@@ -131,7 +131,7 @@ export const SCENE_DEFINITIONS: SceneDefinition[] = [
     emphasis: 'simulator',
     inlineDiagram: 'loop-cycle',
     requiresKeyInsight: true,
-    progressivePanelComponents: ['timeline'],
+    progressivePanelComponents: ['timeline', 'tool-path'],
   },
   {
     sceneId: 'tool-invocation',

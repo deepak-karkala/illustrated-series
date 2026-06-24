@@ -6,7 +6,7 @@ import type { FlightRecorderComponentId } from '../../src/story/scene';
 describe('progressive Flight Recorder reveal', () => {
   it('returns visible components for each FR scene', () => {
     const expectations: Record<string, FlightRecorderComponentId[]> = {
-      'first-loop': ['timeline'],
+      'first-loop': ['timeline', 'tool-path'],
       'tool-invocation': ['timeline', 'tool-path'],
       'permission-gate': ['timeline', 'tool-path', 'permission-gate'],
       'context-pressure': ['timeline', 'tool-path', 'permission-gate', 'context-meter'],
@@ -34,10 +34,10 @@ describe('progressive Flight Recorder reveal', () => {
     }
   });
 
-  it('first FR scene shows only timeline visible', () => {
+  it('first FR scene shows timeline and tool path visible', () => {
     const session = createDefaultSession();
     const s = reduceSession(session, { type: 'SET_SCENE', sceneId: 'first-loop' });
     const vm = selectViewModel(s);
-    expect(vm.panelProps.visibleComponents).toEqual(['timeline']);
+    expect(vm.panelProps.visibleComponents).toEqual(['timeline', 'tool-path']);
   });
 });

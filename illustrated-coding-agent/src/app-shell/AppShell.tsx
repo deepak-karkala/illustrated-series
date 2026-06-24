@@ -397,7 +397,7 @@ export function AppShell({ state, dispatch }: AppShellProps) {
           })}
         </div>
 
-        <aside className="sticky-panel" key={chapterId}>
+        <aside className="sticky-panel">
           <StickyDiagram chapterId={chapterId} vm={vm} toggles={validated.state.failureToggles} lensMode={lensMode} mobileControlsOpen={validated.state.mobileControlsOpen} dispatch={dispatch} />
         </aside>
       </div>

@@ -57,9 +57,9 @@ test.describe('toy example walkthrough', () => {
     });
     await page.waitForTimeout(500);
 
-    await expect(page.locator('.callout-analogy')).toBeVisible();
+    await expect(page.locator('[data-scene="toy-read"] .callout-analogy')).toBeVisible();
     await page.locator('[data-scene="toy-done"]').scrollIntoViewIfNeeded();
     await page.waitForTimeout(500);
-    await expect(page.locator('.callout-key-insight')).toBeVisible();
+    await expect(page.locator('[data-scene="toy-done"] .callout-key-insight')).toBeVisible();
   });
 });

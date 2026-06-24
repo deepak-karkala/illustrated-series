@@ -174,7 +174,7 @@ describe('scene definitions', () => {
     const contextPressure = getSceneDefinition('context-pressure');
     const compaction = getSceneDefinition('compaction');
 
-    expect(firstLoop?.progressivePanelComponents).toEqual(['timeline']);
+    expect(firstLoop?.progressivePanelComponents).toEqual(['timeline', 'tool-path']);
     expect(toolInvocation?.progressivePanelComponents).toEqual(['timeline', 'tool-path']);
     expect(permissionGate?.progressivePanelComponents).toEqual([
       'timeline',

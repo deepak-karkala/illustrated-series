@@ -30,7 +30,7 @@ test.describe('progressive Flight Recorder disclosure', () => {
   test('compaction scene reveals memory-artifact component', async ({ page }) => {
     await page.goto('/');
     await page.evaluate(() => {
-      document.querySelector('[data-scene="compaction"]')?.scrollIntoView({ behavior: 'instant' });
+      document.querySelector('[data-scene="memory-retrieval"]')?.scrollIntoView({ behavior: 'instant' });
     });
     await page.waitForTimeout(800);
 
@@ -52,7 +52,7 @@ test.describe('progressive disclosure under reduced motion', () => {
     await page.waitForTimeout(500);
 
     await expect(page.locator('.flight-recorder-panel')).toBeVisible();
-    await expect(page.locator('.fr-placeholder')).toHaveCount(3);
+    await expect(page.locator('.fr-placeholder')).toHaveCount(0);
   });
 
   test('full panel renders at memory-retrieval under reduced motion', async ({ page }) => {

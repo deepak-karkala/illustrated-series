@@ -11,6 +11,7 @@ export function LensToggle({ lensMode, dispatch }: LensToggleProps) {
     <div className="lens-toggle">
       <span className="lens-toggle-label">Lens</span>
       <button
+        type="button"
         className={`lens-toggle-btn ${lensMode === 'product' ? 'lens-toggle-active' : ''}`}
         onClick={() => dispatch({ type: 'SET_LENS', lensMode: 'product' })}
         aria-pressed={lensMode === 'product'}
@@ -18,6 +19,7 @@ export function LensToggle({ lensMode, dispatch }: LensToggleProps) {
         Product
       </button>
       <button
+        type="button"
         className={`lens-toggle-btn ${lensMode === 'harness' ? 'lens-toggle-active' : ''}`}
         onClick={() => dispatch({ type: 'SET_LENS', lensMode: 'harness' })}
         aria-pressed={lensMode === 'harness'}

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import type { ChapterId, SceneId } from '../story/state';
 
 export function useScrollChapter(): { chapterId: ChapterId; sceneId: SceneId } {
@@ -6,57 +6,54 @@ export function useScrollChapter(): { chapterId: ChapterId; sceneId: SceneId } {
     chapterId: 'hook',
     sceneId: 'teaser-cross-section',
   });
-  const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
-    const entries = new Map<Element, IntersectionObserverEntry>();
+    let frame = 0;
 
-    observerRef.current = new IntersectionObserver(
-      (obsEntries) => {
-        for (const entry of obsEntries) {
-          entries.set(entry.target, entry);
-        }
+    const updateActive = () => {
+      const scenes = Array.from(document.querySelectorAll<HTMLElement>('[data-scene]'));
+      if (scenes.length === 0) return;
 
-        let bestChapter: ChapterId = 'hook';
-        let bestScene: SceneId = 'teaser-cross-section';
-        let bestRatio = 0;
+      const visibleScenes = scenes.filter((el) => {
+        const rect = el.getBoundingClientRect();
+        return rect.bottom > 0 && rect.top < window.innerHeight;
+      });
 
-        for (const [el, entry] of entries) {
-          if (entry.intersectionRatio > bestRatio) {
-            bestRatio = entry.intersectionRatio;
-            const ch = el.getAttribute('data-chapter') as ChapterId | null;
-            const sc = el.getAttribute('data-scene') as SceneId | null;
-            if (ch) bestChapter = ch;
-            if (sc) bestScene = sc;
-          }
-        }
+      const viewportCenter = window.innerHeight / 2;
+      const sceneUnderMarker = visibleScenes
+        .map((el) => {
+          const rect = el.getBoundingClientRect();
+          const center = rect.top + rect.height / 2;
+          return { el, score: Math.abs(center - viewportCenter) };
+        })
+        .sort((a, b) => a.score - b.score)[0]?.el
+        ?? scenes[0];
 
-        setActive((prev) => {
-          if (prev.chapterId === bestChapter && prev.sceneId === bestScene) return prev;
-          return { chapterId: bestChapter, sceneId: bestScene };
-        });
-      },
-      { threshold: [0, 0.25, 0.5, 0.75, 1] },
-    );
+      const chapterId = sceneUnderMarker.getAttribute('data-chapter') as ChapterId | null;
+      const sceneId = sceneUnderMarker.getAttribute('data-scene') as SceneId | null;
+      if (!chapterId || !sceneId) return;
 
-    return () => observerRef.current?.disconnect();
-  }, []);
+      setActive((prev) => {
+        if (prev.chapterId === chapterId && prev.sceneId === sceneId) return prev;
+        return { chapterId, sceneId };
+      });
+    };
 
-  useEffect(() => {
-    const observer = observerRef.current;
-    if (!observer) return;
+    const requestUpdate = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(updateActive);
+    };
 
-    const elements = document.querySelectorAll('[data-scene]');
-    for (const el of elements) {
-      observer.observe(el);
-    }
+    requestUpdate();
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
 
     return () => {
-      for (const el of elements) {
-        observer.unobserve(el);
-      }
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', requestUpdate);
+      window.removeEventListener('resize', requestUpdate);
     };
-  });
+  }, []);
 
   return active;
 }

@@ -4,10 +4,12 @@ export function HarnessFrame({
   children,
   cropped = false,
   viewBox = '0 0 400 320',
+  ariaLabel = 'Coding agent system diagram',
 }: {
   children: ReactNode;
   cropped?: boolean;
   viewBox?: string;
+  ariaLabel?: string;
 }) {
   return (
     <svg
@@ -15,7 +17,7 @@ export function HarnessFrame({
       xmlns="http://www.w3.org/2000/svg"
       style={{ width: '100%', maxWidth: 'var(--max-content-width)', overflow: 'visible' }}
       role="img"
-      aria-label="Coding agent system diagram"
+      aria-label={ariaLabel}
     >
       <rect
         x={20}

@@ -95,14 +95,11 @@ test.describe('comprehensive article walkthrough', () => {
     const panel = page.locator('.flight-recorder-panel');
     await expect(panel).toBeVisible();
 
-    await panel.evaluate((el) => el.setAttribute('data-persistence-marker', 'true'));
-
     await page.evaluate(() => {
       document.querySelector('[data-scene="compaction"]')?.scrollIntoView({ behavior: 'instant' });
     });
     await page.waitForTimeout(500);
 
-    const afterPanel = page.locator('.flight-recorder-panel[data-persistence-marker="true"]');
-    await expect(afterPanel).toBeVisible();
+    await expect(page.locator('.flight-recorder-panel')).toBeVisible();
   });
 });

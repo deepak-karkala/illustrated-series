@@ -48,7 +48,11 @@ export function BareVsHarnessedDiagram() {
       {/* ── Bottom: Coding Agent ─────────────────── */}
       <div className="bare-vs-harnessed-col">
         <span className="bare-vs-harnessed-label">Coding Agent</span>
-        <HarnessFrame viewBox="0 0 400 280" cropped={false}>
+        <HarnessFrame
+          viewBox="0 0 400 280"
+          cropped={false}
+          ariaLabel="Harnessed coding agent comparison diagram"
+        >
           {/* User prompt */}
           <rect x={80} y={34} width={240} height={40} rx={8} fill="var(--color-human)" fillOpacity={0.1} stroke="var(--color-human)" strokeWidth={1.5} />
           <text x={200} y={59} fontFamily="var(--font-mono)" fontSize={13} fill="var(--color-human)" textAnchor="middle">User: "build a landing page"</text>

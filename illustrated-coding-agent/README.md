@@ -109,6 +109,20 @@ npm run preview     # Serve production build locally
 
 Open the URL shown in the terminal (default `http://localhost:4173`).
 
+### Vercel Deployment
+
+This project is a static Vite app, so Vercel can deploy it without any custom server code.
+
+1. Import the repository into Vercel.
+2. Keep the repository root as the project root.
+3. Use the Vite preset, or set the following values manually:
+   - Build command: `npm run build`
+   - Output directory: `dist`
+   - Install command: default package-manager install
+4. Leave environment variables empty unless a future feature adds them.
+5. Deploy a preview branch first, then promote the same commit to production after smoke testing.
+6. If a rollback is needed, redeploy the previous successful Vercel deployment.
+
 ### Pre-Release Checklist
 
 | Check | Command | Expected |
